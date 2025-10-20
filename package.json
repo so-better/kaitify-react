@@ -1,0 +1,53 @@
+{
+  "version": "0.0.1-beta.1",
+  "private": false,
+  "type": "module",
+  "author": "so-better",
+  "main": "lib/kaitify-react.umd.js",
+  "module": "lib/kaitify-react.es.js",
+  "types": "lib/index.d.ts",
+  "license": "MIT",
+  "description": "基于@kaitify/core开发的react富文本编辑器核心库",
+  "scripts": {
+    "dev": "vite",
+    "lib": "tsc && vite build",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs"
+  },
+  "dependencies": {
+    "@iconify/react": "^6.0.2",
+    "@kaitify/core": "^0.0.1",
+    "@popperjs/core": "^2.11.8",
+    "classnames": "^2.5.1",
+    "dap-util": "^1.6.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.6.0",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^5.0.4",
+    "less": "^3.0.4",
+    "less-loader": "^5.0.0",
+    "terser": "^5.16.9",
+    "typescript": "~5.9.3",
+    "vite": "^5.4.10",
+    "vite-plugin-css-injected-by-js": "^3.5.1",
+    "vite-plugin-dts": "^4.3.0",
+    "vitepress": "^1.5.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/so-better/kaitify-react"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  }
+}
