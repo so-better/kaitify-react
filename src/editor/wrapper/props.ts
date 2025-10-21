@@ -192,6 +192,10 @@ export type WrapperPropsType = {
  * 编辑器状态对象
  */
 export type StateType = {
-  editor?: Editor
-  selection?: Selection
+  editor: {
+    value?: Editor
+  }
+  selection: {
+    value?: Selection
+  }
 }

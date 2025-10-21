@@ -24,11 +24,14 @@ export default function Wrapper(props: WrapperPropsType) {
   const [updateKey, setUpdateKey] = useState<number>(0)
   //编辑器响应式对象
   const state = useMemo<StateType>(() => {
-    const data: StateType = {
-      editor: editor.current,
-      selection: editor.current?.selection
+    return {
+      editor: {
+        value: editor.current
+      },
+      selection: {
+        value: editor.current?.selection
+      }
     }
-    return data
   }, [updateKey, props.locale, editor.current])
 
   //渲染插槽

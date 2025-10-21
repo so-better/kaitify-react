@@ -33,7 +33,10 @@ export type WrapperContextType = {
 }
 
 export const WrapperContext = createContext<WrapperContextType>({
-  state: {},
+  state: {
+    editor: {},
+    selection: {}
+  },
   disabled: false,
   isMouseDown: false,
   el: null,

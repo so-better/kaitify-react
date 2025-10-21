@@ -34,14 +34,14 @@ export default function Bubble(props: BubblePropsType) {
 
   //获取编辑器内的光标位置
   const getVirtualDomRect = () => {
-    if (!state.editor || !el) {
+    if (!state.editor.value || !el) {
       return null
     }
-    if (!state.editor.selection.focused()) {
+    if (state.editor.value.selection.focused()) {
       if (props.match) {
-        const node = state.editor.getMatchNodeBySelection(props.match)
+        const node = state.editor.value.getMatchNodeBySelection(props.match)
         if (node) {
-          const dom = state.editor.findDom(node)
+          const dom = state.editor.value.findDom(node)
           return dom.getBoundingClientRect()
         }
       }
