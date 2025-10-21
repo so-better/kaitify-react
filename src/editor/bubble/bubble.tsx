@@ -1,11 +1,11 @@
-import { useEffect, useId, useMemo, useRef } from "react"
-import { Instance, createPopper } from "@popperjs/core"
-import { event as DapEvent } from "dap-util"
-import { Teleport } from "@/core/teleport"
-import { BubblePropsType } from "./props"
-import styles from "./style.module.less"
-import classNames from "classnames"
-import { useWrapperContext } from "../../hooks/use-wrapper-context"
+import { useEffect, useId, useMemo, useRef } from 'react'
+import { Instance, createPopper } from '@popperjs/core'
+import { event as DapEvent } from 'dap-util'
+import { Teleport } from '@/core/teleport'
+import { BubblePropsType } from './props'
+import styles from './style.module.less'
+import classNames from 'classnames'
+import { useWrapperContext } from '../../hooks/use-wrapper-context'
 
 /**
  * 气泡栏组件
@@ -14,7 +14,7 @@ export default function Bubble(props: BubblePropsType) {
   //唯一id
   const uid = useId()
   //上下文数据
-  const { editor, selection, disabled, isMouseDown } = useWrapperContext()
+  const { state } = useWrapperContext()
 
   //气泡元素
   const elRef = useRef<HTMLDivElement | null>(null)
@@ -23,30 +23,30 @@ export default function Bubble(props: BubblePropsType) {
 
   //是否显示气泡栏
   const visible = useMemo<boolean>(() => {
-    if (disabled) {
+    if (state.disabled) {
       return false
     }
-    if (isMouseDown && props.hideOnMousedown) {
+    if (state.isMouseDown && props.hideOnMousedown) {
       return false
     }
     return props.visible ?? false
-  }, [disabled, props.hideOnMousedown, isMouseDown, props.visible])
+  }, [state.disabled, props.hideOnMousedown, state.isMouseDown, props.visible])
 
   //获取编辑器内的光标位置
   const getVirtualDomRect = () => {
-    if (!editor) {
+    if (!state.editor) {
       return null
     }
-    if (selection.focused()) {
+    if (!state.editor.selection.focused()) {
       if (props.match) {
-        const node = editor.getMatchNodeBySelection(props.match)
+        const node = state.editor.getMatchNodeBySelection(props.match)
         if (node) {
-          const dom = editor.findDom(node)
+          const dom = state.editor.findDom(node)
           return dom.getBoundingClientRect()
         }
       }
       const _selection = window.getSelection()
-      if (!_selection || !_selection.rangeCount) return editor.$el!.getBoundingClientRect()
+      if (!_selection || !_selection.rangeCount) return state.editor.$el!.getBoundingClientRect()
       const range = _selection.getRangeAt(0)
       const rects = range.getClientRects()
       if (rects.length) {
@@ -60,15 +60,15 @@ export default function Bubble(props: BubblePropsType) {
           height: rect.height,
           x: rect.left,
           y: rect.top,
-          toJSON: () => { }
+          toJSON: () => {}
         } as DOMRect
       }
     }
-    return editor.$el!.getBoundingClientRect()
+    return state.editor.$el!.getBoundingClientRect()
   }
   //更新气泡位置
   const updatePosition = () => {
-    if (!props.visible || !elRef.current || !editor) {
+    if (!props.visible || !elRef.current || !state.editor) {
       return
     }
     const domRect = getVirtualDomRect()!
@@ -142,31 +142,25 @@ export default function Bubble(props: BubblePropsType) {
   }
 
   //监听光标变化
-  useEffect(
-    () => {
+  useEffect(() => {
+    //更新气泡位置
+    updatePosition()
+  }, [state.selection])
+
+  //监听编辑器实例
+  useEffect(() => {
+    if (state.el) {
       //更新气泡位置
       updatePosition()
-    },
-    [selection]
-  )
-
-  //监听编辑器实例传入
-  useEffect(
-    () => {
-      if (editor) {
-        //更新气泡位置
-        updatePosition()
-        //设置滚动监听
-        onScroll(editor.$el!)
-      }
-    },
-    [editor]
-  )
+      //设置滚动监听
+      onScroll(state.el)
+    }
+  }, [state.el])
 
   useEffect(() => {
     return () => {
-      if (editor?.$el) {
-        removeScroll(editor.$el)
+      if (state.el) {
+        removeScroll(state.el)
       }
       if (popperInstance.current) {
         popperInstance.current.destroy()
@@ -177,9 +171,11 @@ export default function Bubble(props: BubblePropsType) {
   if (!visible) {
     return null
   }
-  return <Teleport>
-    <div ref={elRef} className={classNames(styles['kaitify-bubble'], props.className)} style={{ zIndex: 5, ...props.style }}>
-      {props.children}
-    </div>
-  </Teleport>
+  return (
+    <Teleport>
+      <div ref={elRef} className={classNames(styles['kaitify-bubble'], props.className)} style={{ zIndex: 5, ...props.style }}>
+        {props.children}
+      </div>
+    </Teleport>
+  )
 }

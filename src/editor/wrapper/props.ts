@@ -1,7 +1,6 @@
 import { LocaleType } from '@/locale'
-import { Editor, EditorConfigureOptionType } from '@kaitify/core'
+import { Editor, Selection, EditorConfigureOptionType } from '@kaitify/core'
 import { CSSProperties, ReactNode } from 'react'
-import { WrapperContextType } from '../../hooks/use-wrapper-context'
 
 /**
  * 编辑器参数类型
@@ -30,7 +29,7 @@ export type WrapperPropsType = {
   /**
    * 子元素，用于渲染气泡栏组件
    */
-  children?: ReactNode | ((props: WrapperContextType) => ReactNode)
+  children?: ReactNode | ((state: StateType) => ReactNode)
   /**
    * before插槽挂载的元素，如果不设置，则就放置在编辑器前面
    */
@@ -42,11 +41,11 @@ export type WrapperPropsType = {
   /**
    * before插槽
    */
-  before?: ReactNode | ((props: WrapperContextType) => ReactNode)
+  before?: ReactNode | ((state: StateType) => ReactNode)
   /**
    * after插槽
    */
-  after?: ReactNode | ((props: WrapperContextType) => ReactNode)
+  after?: ReactNode | ((state: StateType) => ReactNode)
   /**
    * 是否自动聚焦
    */
@@ -187,4 +186,17 @@ export type WrapperPropsType = {
    * 编辑器视图更新后触发的事件
    */
   onAfterUpdateView?: EditorConfigureOptionType['onAfterUpdateView']
+}
+
+/**
+ * 编辑器状态对象
+ */
+export type StateType = {
+  el: HTMLElement | null
+  editor?: Editor
+  selection?: Selection
+  locale: LocaleType
+  t: (key: string) => string
+  disabled: boolean
+  isMouseDown: boolean
 }

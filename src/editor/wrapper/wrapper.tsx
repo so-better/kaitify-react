@@ -1,11 +1,12 @@
-import { Editor, Selection } from "@kaitify/core";
-import { ReactNode, useEffect, useRef, useState } from "react";
-import { data } from "dap-util";
-import classNames from "classnames";
-import { Teleport } from "@/core/teleport";
-import { WrapperPropsType } from "./props";
-import styles from "./style.module.less"
-import { WrapperContext, WrapperContextType } from "../../hooks/use-wrapper-context";
+import { Editor } from '@kaitify/core'
+import { ReactNode, useEffect, useMemo, useRef, useState } from 'react'
+import { data } from 'dap-util'
+import classNames from 'classnames'
+import { Teleport } from '@/core/teleport'
+import { translate } from '@/locale'
+import { StateType, WrapperPropsType } from './props'
+import { WrapperContext } from '../../hooks/use-wrapper-context'
+import styles from './style.module.less'
 
 /**
  * 编辑器编辑区域组件
@@ -14,23 +15,31 @@ export default function Wrapper(props: WrapperPropsType) {
   //dom
   const elRef = useRef<HTMLDivElement | null>(null)
   //编辑器实例
-  const editor = useRef<Editor | null>(null)
-  //编辑器响应式光标对象
-  const [selection, setSelection] = useState<Selection>(new Selection())
+  const editor = useRef<Editor | undefined>(undefined)
   //是否编辑器内部修改值
   const [internalModification, setInternalModification] = useState<boolean>(false)
   //是否鼠标按下
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false)
+  //编辑器更新标记
+  const [updateKey, setUpdateKey] = useState<number>(0)
+  //编辑器响应式对象
+  const state = useMemo<StateType>(() => {
+    const data: StateType = {
+      el: elRef.current,
+      editor: editor.current,
+      selection: editor.current?.selection,
+      locale: props.locale ?? 'zh-CN',
+      t: (key: string) => translate(props.locale ?? 'zh-CN', key),
+      disabled: props.disabled ?? false,
+      isMouseDown: isMouseDown
+    }
+    return data
+  }, [updateKey, props.locale, editor.current])
 
   //渲染插槽
-  const renderSlot = (value?: ReactNode | ((props: WrapperContextType) => ReactNode)) => {
+  const renderSlot = (value?: ReactNode | ((props: StateType) => ReactNode)) => {
     if (typeof value === 'function') {
-      return value({
-        editor: editor.current,
-        selection: selection,
-        disabled: props.disabled ?? false,
-        isMouseDown: isMouseDown
-      })
+      return value(state)
     }
     return value
   }
@@ -76,19 +85,14 @@ export default function Wrapper(props: WrapperPropsType) {
       onBlur: props.onBlur,
       onBeforeUpdateView: props.onBeforeUpdateView,
       onAfterUpdateView: props.onAfterUpdateView,
-      onChange: (v) => {
+      onChange: v => {
         setInternalModification(true)
         props.onChange?.(v)
       },
       onSelectionUpdate(selection) {
-        setSelection(() => {
-          const newSel = new Selection()
-          newSel.start = selection.start
-          newSel.end = selection.end
-          return newSel
-        })
+        setUpdateKey(oldValue => oldValue + 1)
         props.onSelectionUpdate?.apply(this, [selection])
-      },
+      }
     })
     props.onCreated?.(editor.current)
   }
@@ -106,6 +110,7 @@ export default function Wrapper(props: WrapperPropsType) {
           if (!props.disabled && props.autofocus) {
             editor.current?.setSelectionAfter()
             editor.current?.updateRealSelection()
+            setUpdateKey(oldValue => oldValue + 1)
           }
         })
       }
@@ -113,45 +118,36 @@ export default function Wrapper(props: WrapperPropsType) {
   }, [props.value])
 
   //监听以下属性变化，对编辑器进行更新
-  useEffect(
-    () => {
-      if (editor.current) {
-        editor.current.setEditable(props.disabled ?? false)
-        editor.current.setDark(props.dark ?? false)
-        editor.current.allowCopy = props.allowCopy ?? true
-        editor.current.allowCut = props.allowCut ?? true
-        editor.current.allowPaste = props.allowPaste ?? true
-        editor.current.allowPasteHtml = props.allowPasteHtml ?? false
-        editor.current.priorityPasteFiles = props.priorityPasteFiles ?? false
-      }
-    }, [props.disabled, props.dark, props.allowCopy, props.allowCut, props.allowPaste, props.allowPasteHtml, props.priorityPasteFiles]
-  )
+  useEffect(() => {
+    if (editor.current) {
+      editor.current.setEditable(props.disabled ?? false)
+      editor.current.setDark(props.dark ?? false)
+      editor.current.allowCopy = props.allowCopy ?? true
+      editor.current.allowCut = props.allowCut ?? true
+      editor.current.allowPaste = props.allowPaste ?? true
+      editor.current.allowPasteHtml = props.allowPasteHtml ?? false
+      editor.current.priorityPasteFiles = props.priorityPasteFiles ?? false
+      setUpdateKey(oldValue => oldValue + 1)
+    }
+  }, [props.disabled, props.dark, props.allowCopy, props.allowCut, props.allowPaste, props.allowPasteHtml, props.priorityPasteFiles])
 
   //创建编辑器
   useEffect(() => {
     createEditor()
   }, [elRef.current])
 
-  return <WrapperContext.Provider value={{
-    editor: editor.current,
-    selection: selection,
-    disabled: props.disabled ?? false,
-    isMouseDown: isMouseDown
-  }}>
-    <>
-      {/* before */}
-      {!!props.appendBeforeTo ? <Teleport to={props.appendBeforeTo}>
-        {renderSlot(props.before)}
-      </Teleport > : renderSlot(props.before)}
-      {/* 编辑区域 */}
-      <div ref={elRef} className={classNames(styles['kaitify-border'], props.className)} style={props.style} onMouseDown={() => setIsMouseDown(true)} onMouseUp={() => setIsMouseDown(false)} />
-      {/* after */}
-      {!!props.appendAfterTo ? <Teleport to={props.appendAfterTo}>
-        {renderSlot(props.after)}
-      </Teleport > : renderSlot(props.after)}
-      {/* 插槽 */}
-      {renderSlot(props.children)}
-    </>
-  </WrapperContext.Provider >
-
+  return (
+    <WrapperContext.Provider value={{ state }}>
+      <>
+        {/* before */}
+        {!!props.appendBeforeTo ? <Teleport to={props.appendBeforeTo}>{renderSlot(props.before)}</Teleport> : renderSlot(props.before)}
+        {/* 编辑区域 */}
+        <div ref={elRef} className={classNames(styles['kaitify-border'], props.className)} style={props.style} onMouseDown={() => setIsMouseDown(true)} onMouseUp={() => setIsMouseDown(false)} />
+        {/* after */}
+        {!!props.appendAfterTo ? <Teleport to={props.appendAfterTo}>{renderSlot(props.after)}</Teleport> : renderSlot(props.after)}
+        {/* 插槽 */}
+        {renderSlot(props.children)}
+      </>
+    </WrapperContext.Provider>
+  )
 }
