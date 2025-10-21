@@ -98,6 +98,7 @@ export default function Wrapper(props: WrapperPropsType) {
       //内部改变
       if (internalModification) {
         setInternalModification(false)
+        setUpdateKey(oldValue => oldValue + 1)
       }
       //外部改变，进行视图更新
       else {
