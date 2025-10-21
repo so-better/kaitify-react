@@ -14,7 +14,7 @@ export default function Bubble(props: BubblePropsType) {
   //唯一id
   const uid = useId()
   //上下文数据
-  const { state } = useWrapperContext()
+  const { state, disabled, isMouseDown, el } = useWrapperContext()
 
   //气泡元素
   const elRef = useRef<HTMLDivElement | null>(null)
@@ -23,18 +23,18 @@ export default function Bubble(props: BubblePropsType) {
 
   //是否显示气泡栏
   const visible = useMemo<boolean>(() => {
-    if (state.disabled) {
+    if (disabled) {
       return false
     }
-    if (state.isMouseDown && props.hideOnMousedown) {
+    if (isMouseDown && props.hideOnMousedown) {
       return false
     }
     return props.visible ?? false
-  }, [state.disabled, props.hideOnMousedown, state.isMouseDown, props.visible])
+  }, [disabled, isMouseDown, props.hideOnMousedown, props.visible])
 
   //获取编辑器内的光标位置
   const getVirtualDomRect = () => {
-    if (!state.editor) {
+    if (!state.editor || !el) {
       return null
     }
     if (!state.editor.selection.focused()) {
@@ -45,9 +45,9 @@ export default function Bubble(props: BubblePropsType) {
           return dom.getBoundingClientRect()
         }
       }
-      const _selection = window.getSelection()
-      if (!_selection || !_selection.rangeCount) return state.editor.$el!.getBoundingClientRect()
-      const range = _selection.getRangeAt(0)
+      const selection = window.getSelection()
+      if (!selection || !selection.rangeCount) return el.getBoundingClientRect()
+      const range = selection.getRangeAt(0)
       const rects = range.getClientRects()
       if (rects.length) {
         const rect = rects[rects.length - 1]
@@ -64,7 +64,7 @@ export default function Bubble(props: BubblePropsType) {
         } as DOMRect
       }
     }
-    return state.editor.$el!.getBoundingClientRect()
+    return el.getBoundingClientRect()
   }
   //更新气泡位置
   const updatePosition = () => {
@@ -149,18 +149,16 @@ export default function Bubble(props: BubblePropsType) {
 
   //监听编辑器实例
   useEffect(() => {
-    if (state.el) {
-      //更新气泡位置
-      updatePosition()
+    if (el) {
       //设置滚动监听
-      onScroll(state.el)
+      onScroll(el)
     }
-  }, [state.el])
+  }, [el])
 
   useEffect(() => {
     return () => {
-      if (state.el) {
-        removeScroll(state.el)
+      if (el) {
+        removeScroll(el)
       }
       if (popperInstance.current) {
         popperInstance.current.destroy()

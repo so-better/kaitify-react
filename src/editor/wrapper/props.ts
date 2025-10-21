@@ -192,11 +192,6 @@ export type WrapperPropsType = {
  * 编辑器状态对象
  */
 export type StateType = {
-  el: HTMLElement | null
   editor?: Editor
   selection?: Selection
-  locale: LocaleType
-  t: (key: string) => string
-  disabled: boolean
-  isMouseDown: boolean
 }

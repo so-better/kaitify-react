@@ -3,10 +3,10 @@ import { ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import { data } from 'dap-util'
 import classNames from 'classnames'
 import { Teleport } from '@/core/teleport'
-import { translate } from '@/locale'
 import { StateType, WrapperPropsType } from './props'
 import { WrapperContext } from '../../hooks/use-wrapper-context'
 import styles from './style.module.less'
+import { translate } from '@/locale'
 
 /**
  * 编辑器编辑区域组件
@@ -25,13 +25,8 @@ export default function Wrapper(props: WrapperPropsType) {
   //编辑器响应式对象
   const state = useMemo<StateType>(() => {
     const data: StateType = {
-      el: elRef.current,
       editor: editor.current,
-      selection: editor.current?.selection,
-      locale: props.locale ?? 'zh-CN',
-      t: (key: string) => translate(props.locale ?? 'zh-CN', key),
-      disabled: props.disabled ?? false,
-      isMouseDown: isMouseDown
+      selection: editor.current?.selection
     }
     return data
   }, [updateKey, props.locale, editor.current])
@@ -137,7 +132,16 @@ export default function Wrapper(props: WrapperPropsType) {
   }, [elRef.current])
 
   return (
-    <WrapperContext.Provider value={{ state }}>
+    <WrapperContext.Provider
+      value={{
+        state,
+        isMouseDown,
+        disabled: props.disabled ?? false,
+        el: elRef.current,
+        locale: props.locale ?? 'zh-CN',
+        t: (key: string) => translate(props.locale ?? 'zh-CN', key)
+      }}
+    >
       <>
         {/* before */}
         {!!props.appendBeforeTo ? <Teleport to={props.appendBeforeTo}>{renderSlot(props.before)}</Teleport> : renderSlot(props.before)}
