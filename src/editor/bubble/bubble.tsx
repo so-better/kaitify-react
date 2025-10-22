@@ -1,11 +1,12 @@
 import { useEffect, useId, useMemo, useRef } from 'react'
 import { Instance, createPopper } from '@popperjs/core'
 import { event as DapEvent } from 'dap-util'
+import classNames from 'classnames'
+import { CSSTransition } from 'react-transition-group'
 import { Teleport } from '@/core/teleport'
 import { BubblePropsType } from './props'
-import styles from './style.module.less'
-import classNames from 'classnames'
 import { useWrapperContext } from '../../hooks/use-wrapper-context'
+import styles from './style.module.less'
 
 /**
  * 气泡栏组件
@@ -166,14 +167,29 @@ export default function Bubble(props: BubblePropsType) {
     }
   }, [])
 
-  if (!visible) {
-    return null
-  }
   return (
     <Teleport>
-      <div ref={elRef} className={classNames(styles['kaitify-bubble'], props.className)} style={{ zIndex: 5, ...props.style }}>
-        {props.children}
-      </div>
+      <CSSTransition
+        in={visible}
+        timeout={50}
+        classNames={{
+          enter: styles['kaitify-bubble-enter'],
+          enterActive: styles['kaitify-bubble-enter-active'],
+          exit: styles['kaitify-bubble-exit'],
+          exitActive: styles['kaitify-bubble-exit-active']
+        }}
+        unmountOnExit
+        onEnter={props.onShow}
+        onEntering={props.onShowing}
+        onEntered={props.onShown}
+        onExit={props.onHide}
+        onExiting={props.onHiding}
+        onExited={props.onHidden}
+      >
+        <div ref={elRef} className={classNames(styles['kaitify-bubble'], props.className)} style={{ zIndex: 5, ...props.style }}>
+          {props.children}
+        </div>
+      </CSSTransition>
     </Teleport>
   )
 }

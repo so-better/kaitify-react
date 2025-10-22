@@ -14,11 +14,17 @@ html[kaitify-dark] .kaitify-bubble {
   box-shadow: 2px 2px 5px rgba(255, 255, 255, 0.04);
 }
 
-.kaitify-bubble-enter-from,
-.kaitify-bubble-leave-to {
+.kaitify-bubble-enter {
   opacity: 0;
 }
-.kaitify-bubble-enter-active,
-.kaitify-bubble-leave-active {
+.kaitify-bubble-exit {
+  opacity: 1;
+}
+.kaitify-bubble-enter-active {
+  opacity: 1;
+  transition: opacity 50ms linear;
+}
+.kaitify-bubble-exit-active {
+  opacity: 0;
   transition: opacity 50ms linear;
 }
