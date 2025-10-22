@@ -9,7 +9,7 @@ import { Teleport } from '../teleport'
 /**
  * 浮层组件
  */
-const Popover = forwardRef<PopoverRefType, PopoverPropsType>(({ placement = 'bottom', trigger = 'hover', delay = 0, ...props }, ref) => {
+const Popover = forwardRef<PopoverRefType, PopoverPropsType>(({ placement = 'bottom', trigger = 'hover', delay = 0, animation = 'translate', ...props }, ref) => {
   //唯一id
   const uid = useId()
   //是否显示
@@ -216,10 +216,10 @@ const Popover = forwardRef<PopoverRefType, PopoverPropsType>(({ placement = 'bot
             exit: 50
           }}
           classNames={{
-            enter: styles['kaitify-popover-enter'],
-            enterActive: styles['kaitify-popover-enter-active'],
-            exit: styles['kaitify-popover-exit'],
-            exitActive: styles['kaitify-popover-exit-active']
+            enter: animation === 'translate' ? styles['kaitify-popover-translate-enter'] : styles['kaitify-popover-fade-enter'],
+            enterActive: animation === 'translate' ? styles['kaitify-popover-translate-enter-active'] : styles['kaitify-popover-fade-enter-active'],
+            exit: animation === 'translate' ? styles['kaitify-popover-translate-exit'] : styles['kaitify-popover-fade-exit'],
+            exitActive: animation === 'translate' ? styles['kaitify-popover-translate-exit-active'] : styles['kaitify-popover-fade-exit-active']
           }}
           unmountOnExit
           onEnter={props.onShow}

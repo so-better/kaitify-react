@@ -56,6 +56,9 @@ export type BubblePropsType = {
   onHidden?: (el: Element) => void
 }
 
+/**
+ * 气泡栏组件实例类型
+ */
 export type BubbleRefType = {
   elRef: React.MutableRefObject<HTMLDivElement | null>
   popperInstance: React.MutableRefObject<Instance | null>

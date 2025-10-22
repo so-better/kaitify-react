@@ -8,7 +8,7 @@ import styles from './style.module.less'
  */
 export default function Icon(props: IconPropsType) {
   if (props.name.startsWith('kaitify-icon-')) {
-    return <i className={classNames(styles['kaitify-icon'], props.name)} style={{ fontSize: props.size }} />
+    return <i className={classNames(styles['kaitify-icon'], props.name, props.className)} style={{ fontSize: props.size, ...props.style }} />
   }
-  return <IconifyIcon mode='svg' icon={props.name} className={styles['kaitify-icon']} style={{ fontSize: props.size }} />
+  return <IconifyIcon mode='svg' icon={props.name} className={classNames(styles['kaitify-icon'], props.className)} style={{ fontSize: props.size, ...props.style }} />
 }

@@ -153,23 +153,44 @@
   }
 }
 
-.kaitify-popover-enter {
+.kaitify-popover-translate-enter {
   opacity: 0;
   transform: translateY(20px);
 }
-.kaitify-popover-exit {
+.kaitify-popover-translate-exit {
   opacity: 1;
   transform: translateY(0px);
 }
 
-.kaitify-popover-enter-active {
+.kaitify-popover-translate-enter-active {
   opacity: 1;
   transform: translateY(0px);
   transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
 }
 
-.kaitify-popover-exit-active {
+.kaitify-popover-translate-exit-active {
   opacity: 0;
   transform: translateY(20px);
+  transition: opacity 50ms ease-in-out, transform 50ms ease-in-out;
+}
+
+.kaitify-popover-fade-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+.kaitify-popover-fade-exit {
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+.kaitify-popover-fade-enter-active {
+  opacity: 1;
+  transform: translateY(0px);
   transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
+}
+
+.kaitify-popover-fade-exit-active {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 50ms ease-in-out, transform 50ms ease-in-out;
 }

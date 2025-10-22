@@ -1,0 +1,74 @@
+.kaitify-menu {
+	display: inline-flex;
+	justify-content: flex-start;
+	align-items: center;
+	padding: 2px;
+	position: relative;
+
+	&,
+	*,
+	*::before,
+	*::after {
+		box-sizing: border-box;
+		outline: none;
+	}
+
+	.kaitify-menu-caret {
+		font-size: 12px;
+		transform: scale(0.72);
+		margin-left: 4px;
+		transition: transform 300ms linear;
+
+		&.kaitify-menu-caret-rotate {
+			transform: scale(0.72) rotate(180deg);
+		}
+	}
+}
+
+.kaitify-menu-options {
+	padding: var(--kaitify-small-padding) 0;
+
+	&,
+	*,
+	*::before,
+	*::after {
+		box-sizing: border-box;
+		outline: none;
+	}
+
+	.kaitify-menu-option {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		padding: var(--kaitify-small-padding) var(--kaitify-padding);
+		font-size: var(--kaitify-font-size);
+		line-height: var(--kaitify-line-height);
+		color: var(--kaitify-font-color);
+		transition: background 300ms, color 300ms;
+
+		.kaitify-menu-option-icon {
+			margin-right: 4px;
+		}
+
+		&:not([disabled]):hover {
+			cursor: pointer;
+			background: var(--kaitify-lightest-theme);
+			color: var(--kaitify-theme);
+		}
+
+		&:not([disabled]):active {
+			background: var(--kaitify-lighter-theme);
+			color: var(--kaitify-theme);
+		}
+
+		&:not([disabled]).kaitify-menu-option-active {
+			background: var(--kaitify-lighter-theme);
+			color: var(--kaitify-theme);
+		}
+
+		&[disabled] {
+			opacity: 0.6;
+			cursor: not-allowed;
+		}
+	}
+}
