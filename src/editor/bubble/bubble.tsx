@@ -1,17 +1,17 @@
-import { useEffect, useId, useMemo, useRef } from 'react'
+import { forwardRef, useEffect, useId, useImperativeHandle, useMemo, useRef } from 'react'
 import { Instance, createPopper } from '@popperjs/core'
 import { event as DapEvent } from 'dap-util'
 import classNames from 'classnames'
 import { CSSTransition } from 'react-transition-group'
 import { Teleport } from '@/core/teleport'
-import { BubblePropsType } from './props'
+import { BubblePropsType, BubbleRefType } from './props'
 import { useWrapperContext } from '../../hooks/use-wrapper-context'
 import styles from './style.module.less'
 
 /**
  * 气泡栏组件
  */
-export default function Bubble(props: BubblePropsType) {
+const Bubble = forwardRef<BubbleRefType, BubblePropsType>((props, ref) => {
   //唯一id
   const uid = useId()
   //上下文数据
@@ -142,6 +142,11 @@ export default function Bubble(props: BubblePropsType) {
     }
   }
 
+  useImperativeHandle(ref, () => ({
+    elRef,
+    popperInstance
+  }))
+
   //监听光标变化
   useEffect(() => {
     //更新气泡位置
@@ -192,4 +197,6 @@ export default function Bubble(props: BubblePropsType) {
       </CSSTransition>
     </Teleport>
   )
-}
+})
+
+export default Bubble

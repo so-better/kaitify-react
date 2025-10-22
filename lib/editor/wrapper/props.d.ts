@@ -190,11 +190,14 @@ export type WrapperPropsType = {
  * 编辑器状态对象
  */
 export type StateType = {
-    el: HTMLElement | null;
-    editor?: Editor;
-    selection?: Selection;
-    locale: LocaleType;
-    t: (key: string) => string;
-    disabled: boolean;
-    isMouseDown: boolean;
+    editor: {
+        value?: Editor;
+    };
+    selection: {
+        value?: Selection;
+    };
+};
+export type WrapperRefType = {
+    elRef: React.MutableRefObject<HTMLDivElement | null>;
+    state: StateType;
 };

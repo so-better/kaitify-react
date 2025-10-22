@@ -199,3 +199,8 @@ export type StateType = {
     value?: Selection
   }
 }
+
+export type WrapperRefType = {
+  elRef: React.MutableRefObject<HTMLDivElement | null>
+  state: StateType
+}

@@ -1,4 +1,5 @@
 import { KNodeMatchOptionType } from '@/index'
+import { Instance } from '@popperjs/core'
 import { CSSProperties, ReactNode } from 'react'
 
 /**
@@ -53,4 +54,9 @@ export type BubblePropsType = {
    * 气泡隐藏后触发的事件
    */
   onHidden?: (el: Element) => void
+}
+
+export type BubbleRefType = {
+  elRef: React.MutableRefObject<HTMLDivElement | null>
+  popperInstance: React.MutableRefObject<Instance | null>
 }

@@ -1,9 +1,9 @@
 import { Editor } from '@kaitify/core'
-import { ReactNode, useEffect, useMemo, useRef, useState } from 'react'
+import { forwardRef, ReactNode, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
 import { data } from 'dap-util'
 import classNames from 'classnames'
 import { Teleport } from '@/core/teleport'
-import { StateType, WrapperPropsType } from './props'
+import { StateType, WrapperPropsType, WrapperRefType } from './props'
 import { WrapperContext } from '../../hooks/use-wrapper-context'
 import styles from './style.module.less'
 import { translate } from '@/locale'
@@ -11,7 +11,7 @@ import { translate } from '@/locale'
 /**
  * 编辑器编辑区域组件
  */
-export default function Wrapper(props: WrapperPropsType) {
+const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
   //dom
   const elRef = useRef<HTMLDivElement | null>(null)
   //编辑器实例
@@ -95,6 +95,11 @@ export default function Wrapper(props: WrapperPropsType) {
     props.onCreated?.(editor.current)
   }
 
+  useImperativeHandle(ref, () => ({
+    elRef,
+    state
+  }))
+
   //监听编辑器的值
   useEffect(() => {
     if (editor.current) {
@@ -158,4 +163,6 @@ export default function Wrapper(props: WrapperPropsType) {
       </>
     </WrapperContext.Provider>
   )
-}
+})
+
+export default Wrapper
