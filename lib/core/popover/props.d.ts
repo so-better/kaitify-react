@@ -35,7 +35,7 @@ export type PopoverPropsType = {
     /**
      * 浮层显示动画
      */
-    animation?: 'fade' | 'translate' | (string & {});
+    animation?: 'fade' | 'translate';
     /**
      * 浮层层级
      */
@@ -48,6 +48,14 @@ export type PopoverPropsType = {
      * 是否禁用浮层
      */
     disabled?: boolean;
+    /**
+     * 目标元素插槽
+     */
+    refer: ReactNode;
+    /**
+     * 浮层内容插槽
+     */
+    children: ReactNode;
     /**
      * 浮层显示前触发的事件
      */
@@ -72,15 +80,10 @@ export type PopoverPropsType = {
      * 浮层隐藏后触发的事件
      */
     onHidden?: (el: Element) => void;
-    /**
-     * 目标元素插槽
-     */
-    refer: ReactNode;
-    /**
-     * 浮层内容插槽
-     */
-    children: ReactNode;
 };
+/**
+ * 浮层组件实例类型
+ */
 export type PopoverRefType = {
     visible: boolean;
     showPopover: () => void;

@@ -4,7 +4,7 @@ import { useMemo } from 'react'
 import Menu from '../../menu'
 import { Icon } from '@/core/icon'
 
-export default function AlignCenterMenu(props: AlignLeftMenuPropsType) {
+export default function AlignLeftMenu(props: AlignLeftMenuPropsType) {
   const { state } = useWrapperContext()
 
   //是否激活

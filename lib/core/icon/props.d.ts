@@ -1,3 +1,4 @@
+import { CSSProperties } from 'react';
 /**
  * 图标组件的属性类型
  */
@@ -10,4 +11,12 @@ export type IconPropsType = {
      * 图标大小，如果是数值默认单位为px
      */
     size?: string | number;
+    /**
+     * 样式
+     */
+    style?: CSSProperties;
+    /**
+     * 样式类
+     */
+    className?: string;
 };

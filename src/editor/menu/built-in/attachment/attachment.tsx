@@ -51,7 +51,7 @@ export default function AttachmentMenu({
     return !!state.editor.value?.commands.getAttachment?.()
   }, [state.editor])
   //是否禁用
-  const isDisabled = useMemo<boolean>(() => {
+  const isDisabled = useMemo(() => {
     if (!state.editor.value?.selection.focused()) {
       return true
     }
