@@ -1,20 +1,27 @@
 import { useState } from 'react'
-import { Wrapper, Bubble, Menu } from '../src'
+import { Wrapper, Bubble, AlignCenterMenu, AlignLeftMenu, AlignRightMenu, AlignJustifyMenu, AttachmentMenu } from '../src'
+
 function App() {
   const [value, setValue] = useState('三国演义是四大名著之一')
+  const [bubbleVisible, setBubbleVisible] = useState(false)
 
   return (
     <>
       <div id='before'></div>
       <button onClick={() => setValue('hello')}>修改值</button>
+      <button onClick={() => setBubbleVisible(!bubbleVisible)}>修改气泡栏显示状态</button>
       <Wrapper
         value={value}
         onChange={v => setValue(v)}
         style={{ height: 300 }}
         before={
-          <div>
-            <Menu>hello</Menu>
-          </div>
+          <>
+            <AlignCenterMenu />
+            <AlignJustifyMenu />
+            <AlignLeftMenu />
+            <AlignRightMenu />
+            <AttachmentMenu popoverProps={{ arrow: true }} />
+          </>
         }
         after={<div>after</div>}
         autofocus
@@ -23,7 +30,7 @@ function App() {
       >
         {state => {
           return (
-            <Bubble visible match={{ tag: 'span' }} style={{ padding: 8 }}>
+            <Bubble visible={bubbleVisible} match={{ tag: 'span' }} style={{ padding: 8 }}>
               这是bubble
             </Bubble>
           )

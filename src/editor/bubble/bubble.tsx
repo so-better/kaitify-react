@@ -23,7 +23,7 @@ const Bubble = forwardRef<BubbleRefType, BubblePropsType>((props, ref) => {
   const popperInstance = useRef<Instance | null>(null)
 
   //是否显示气泡栏
-  const visible = useMemo<boolean>(() => {
+  const shouldVisible = useMemo<boolean>(() => {
     if (disabled) {
       return false
     }
@@ -33,6 +33,13 @@ const Bubble = forwardRef<BubbleRefType, BubblePropsType>((props, ref) => {
     return props.visible ?? false
   }, [disabled, isMouseDown, props.hideOnMousedown, props.visible])
 
+  //销毁popperjs实例
+  const destroyPopperjs = () => {
+    if (popperInstance.current) {
+      popperInstance.current.destroy()
+      popperInstance.current = null
+    }
+  }
   //获取编辑器内的光标位置
   const getVirtualDomRect = () => {
     if (!state.editor.value || !el) {
@@ -74,10 +81,7 @@ const Bubble = forwardRef<BubbleRefType, BubblePropsType>((props, ref) => {
     }
     const domRect = getVirtualDomRect()!
     //销毁当前popperjs实例
-    if (popperInstance.current) {
-      popperInstance.current.destroy()
-      popperInstance.current = null
-    }
+    destroyPopperjs()
     //重新创建popperjs实例
     popperInstance.current = createPopper(
       {
@@ -142,6 +146,33 @@ const Bubble = forwardRef<BubbleRefType, BubblePropsType>((props, ref) => {
     }
   }
 
+  //气泡栏显示前
+  const onShow = () => {
+    props.onShow?.(elRef.current as HTMLElement)
+  }
+  //气泡栏显示时
+  const onShowing = () => {
+    updatePosition()
+    props.onShowing?.(elRef.current as HTMLElement)
+  }
+  //气泡栏显示后
+  const onShown = () => {
+    props.onShown?.(elRef.current as HTMLElement)
+  }
+  //气泡栏隐藏前
+  const onHide = () => {
+    props.onHide?.(elRef.current as HTMLElement)
+  }
+  //气泡栏隐藏时
+  const onHiding = () => {
+    props.onHiding?.(elRef.current as HTMLElement)
+  }
+  //气泡栏隐藏后
+  const onHidden = () => {
+    destroyPopperjs()
+    props.onHidden?.(elRef.current as HTMLElement)
+  }
+
   useImperativeHandle(ref, () => ({
     elRef,
     popperInstance
@@ -163,11 +194,9 @@ const Bubble = forwardRef<BubbleRefType, BubblePropsType>((props, ref) => {
 
   useEffect(() => {
     return () => {
+      destroyPopperjs()
       if (el) {
         removeScroll(el)
-      }
-      if (popperInstance.current) {
-        popperInstance.current.destroy()
       }
     }
   }, [])
@@ -175,7 +204,7 @@ const Bubble = forwardRef<BubbleRefType, BubblePropsType>((props, ref) => {
   return (
     <Teleport>
       <CSSTransition
-        in={visible}
+        in={shouldVisible}
         timeout={50}
         classNames={{
           enter: styles['kaitify-bubble-enter'],
@@ -184,12 +213,13 @@ const Bubble = forwardRef<BubbleRefType, BubblePropsType>((props, ref) => {
           exitActive: styles['kaitify-bubble-exit-active']
         }}
         unmountOnExit
-        onEnter={props.onShow}
-        onEntering={props.onShowing}
-        onEntered={props.onShown}
-        onExit={props.onHide}
-        onExiting={props.onHiding}
-        onExited={props.onHidden}
+        nodeRef={elRef}
+        onEnter={onShow}
+        onEntering={onShowing}
+        onEntered={onShown}
+        onExit={onHide}
+        onExiting={onHiding}
+        onExited={onHidden}
       >
         <div ref={elRef} className={classNames(styles['kaitify-bubble'], props.className)} style={{ zIndex: 5, ...props.style }}>
           {props.children}

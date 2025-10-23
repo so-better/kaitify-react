@@ -1,12 +1,12 @@
-import { forwardRef, ReactNode, useEffect, useId, useImperativeHandle, useMemo, useRef } from 'react'
+import { forwardRef, ReactNode, useEffect, useId, useImperativeHandle, useRef, useState } from 'react'
 import { event as DapEvent, common as DapCommon } from 'dap-util'
+import classNames from 'classnames'
 import { Popover, PopoverRefType } from '@/core/popover'
 import { Icon } from '@/core/icon'
 import { Button } from '@/core/button'
-import { MenuDataType, MenuPropsType, MenuRefType } from './props'
 import { useWrapperContext } from '@/hooks/use-wrapper-context'
+import { MenuDataType, MenuPropsType, MenuRefType } from './props'
 import styles from './style.module.less'
-import classNames from 'classnames'
 
 /**
  * 菜单组件
@@ -32,12 +32,7 @@ const Menu = forwardRef<MenuRefType, MenuPropsType>(
     //popover组件实例
     const popoverRef = useRef<PopoverRefType | null>(null)
     //popover浮层是否显示
-    const popoverVisible = useMemo(() => {
-      if (popoverRef.current) {
-        return popoverRef.current.visible
-      }
-      return false
-    }, [popoverRef.current])
+    const [popoverVisible, setPopoverVisible] = useState(false)
 
     //关闭浮层
     const hidePopover = () => {
@@ -113,7 +108,7 @@ const Menu = forwardRef<MenuRefType, MenuPropsType>(
         <Popover
           ref={popoverRef}
           delay={100}
-          disabled={!popover}
+          disabled={props.disabled || !popover}
           zIndex={popoverProps.zIndex ?? 10}
           animation={popoverProps.animation ?? 'translate'}
           arrow={popoverProps.arrow}
@@ -122,14 +117,20 @@ const Menu = forwardRef<MenuRefType, MenuPropsType>(
           width={popoverProps.width}
           maxHeight={popoverProps.maxHeight}
           minWidth={popoverProps.minWidth}
-          onShow={popoverProps.onShow}
+          onShow={el => {
+            popoverProps.onShow?.(el)
+            setPopoverVisible(true)
+          }}
           onShowing={popoverProps.onShowing}
           onShown={popoverProps.onShown}
-          onHide={popoverProps.onHide}
+          onHide={el => {
+            popoverProps.onHide?.(el)
+            setPopoverVisible(false)
+          }}
           onHiding={popoverProps.onHiding}
           onHidden={popoverProps.onHidden}
           refer={
-            <Button>
+            <Button onClick={onOperate} disabled={props.disabled} active={props.active}>
               {props.children}
               {popover && (
                 <Icon
