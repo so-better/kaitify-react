@@ -4,8 +4,8 @@ import { event as DapEvent } from 'dap-util'
 import classNames from 'classnames'
 import { CSSTransition } from 'react-transition-group'
 import { Teleport } from '@/core/teleport'
+import { useWrapperContext } from '@/hooks/use-wrapper-context'
 import { BubblePropsType, BubbleRefType } from './props'
-import { useWrapperContext } from '../../hooks/use-wrapper-context'
 import styles from './style.module.less'
 
 /**

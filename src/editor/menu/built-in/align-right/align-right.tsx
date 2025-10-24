@@ -1,8 +1,8 @@
-import { useWrapperContext } from '@/hooks/use-wrapper-context'
-import { AlignRightMenuPropsType } from './props'
 import { useMemo } from 'react'
-import Menu from '../../menu'
+import { useWrapperContext } from '@/hooks/use-wrapper-context'
 import { Icon } from '@/core/icon'
+import Menu from '../../menu'
+import { AlignRightMenuPropsType } from './props'
 
 export default function AlignRightMenu(props: AlignRightMenuPropsType) {
   const { state } = useWrapperContext()

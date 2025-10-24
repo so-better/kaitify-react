@@ -1,8 +1,8 @@
-import { useWrapperContext } from '@/hooks/use-wrapper-context'
 import { useMemo } from 'react'
-import { BoldMenuPropsType } from './props'
-import Menu from '../../menu'
 import { Icon } from '@/core/icon'
+import { useWrapperContext } from '@/hooks/use-wrapper-context'
+import Menu from '../../menu'
+import { BoldMenuPropsType } from './props'
 
 export default function BoldMenu(props: BoldMenuPropsType) {
   const { state } = useWrapperContext()

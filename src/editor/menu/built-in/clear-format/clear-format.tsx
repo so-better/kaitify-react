@@ -1,8 +1,8 @@
-import { useWrapperContext } from '@/hooks/use-wrapper-context'
-import { ClearFormatMenuPropsType } from './props'
 import { useMemo } from 'react'
-import Menu from '../../menu'
+import { useWrapperContext } from '@/hooks/use-wrapper-context'
 import { Icon } from '@/core/icon'
+import Menu from '../../menu'
+import { ClearFormatMenuPropsType } from './props'
 
 export default function ClearFormatMenu(props: ClearFormatMenuPropsType) {
   const { state } = useWrapperContext()

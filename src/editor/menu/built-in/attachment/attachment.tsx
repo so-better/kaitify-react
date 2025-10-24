@@ -1,14 +1,14 @@
-import { useWrapperContext } from '@/hooks/use-wrapper-context'
 import React, { useMemo, useRef, useState } from 'react'
 import { file as DapFile } from 'dap-util'
 import { SetAttachmentOptionType, UpdateAttachmentOptionType } from '@kaitify/core'
 import { Tabs, TabsPropsType } from '@/core/tabs'
-import { AttachmentMenuPropsType } from './props'
-import { MenuRefType } from '../../props'
-import Menu from '../../menu'
-import { Icon } from '@/core/icon'
-import styles from './style.module.less'
 import { Button } from '@/core/button'
+import { Icon } from '@/core/icon'
+import { useWrapperContext } from '@/hooks/use-wrapper-context'
+import Menu from '../../menu'
+import { MenuRefType } from '../../props'
+import { AttachmentMenuPropsType } from './props'
+import styles from './style.module.less'
 
 export default function AttachmentMenu({
   tabs = {

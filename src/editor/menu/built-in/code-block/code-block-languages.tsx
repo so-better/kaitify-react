@@ -1,9 +1,9 @@
 import { useCallback, useMemo, useRef } from 'react'
 import { HljsLanguages, HljsLanguageType } from '@kaitify/core'
 import { useWrapperContext } from '@/hooks/use-wrapper-context'
-import { CodeBlockLanguagesMenuPropsType } from './props'
 import { MenuDataType, MenuRefType } from '../../props'
 import Menu from '../../menu'
+import { CodeBlockLanguagesMenuPropsType } from './props'
 
 export default function CodeBlockLanguagesMenu({ languages = [...HljsLanguages], ...props }: CodeBlockLanguagesMenuPropsType) {
   const { state, t } = useWrapperContext()

@@ -1,8 +1,8 @@
-import { useWrapperContext } from '@/hooks/use-wrapper-context'
-import { CodeBlockMenuPropsType } from './props'
 import { useMemo } from 'react'
-import Menu from '../../menu'
+import { useWrapperContext } from '@/hooks/use-wrapper-context'
 import { Icon } from '@/core/icon'
+import Menu from '../../menu'
+import { CodeBlockMenuPropsType } from './props'
 
 export default function CodeBlockMenu(props: CodeBlockMenuPropsType) {
   const { state } = useWrapperContext()

@@ -2,11 +2,11 @@ import { Editor } from '@kaitify/core'
 import { forwardRef, ReactNode, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
 import { data } from 'dap-util'
 import classNames from 'classnames'
-import { Teleport } from '@/core/teleport'
-import { StateType, WrapperPropsType, WrapperRefType } from './props'
-import { WrapperContext } from '../../hooks/use-wrapper-context'
-import styles from './style.module.less'
 import { translate } from '@/locale'
+import { Teleport } from '@/core/teleport'
+import { WrapperContext } from '@/hooks/use-wrapper-context'
+import { StateType, WrapperPropsType, WrapperRefType } from './props'
+import styles from './style.module.less'
 
 /**
  * 编辑器编辑区域组件

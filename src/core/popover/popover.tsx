@@ -2,9 +2,9 @@ import React, { forwardRef, useEffect, useId, useImperativeHandle, useMemo, useR
 import { createPopper, Instance } from '@popperjs/core'
 import { event as DapEvent } from 'dap-util'
 import { CSSTransition } from 'react-transition-group'
+import { Teleport } from '../teleport'
 import { PopoverPropsType, PopoverPlacementType, PopoverRefType } from './props'
 import styles from './style.module.less'
-import { Teleport } from '../teleport'
 
 /**
  * 浮层组件

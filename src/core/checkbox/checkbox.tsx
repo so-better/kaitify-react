@@ -1,7 +1,7 @@
+import React from 'react'
 import classNames from 'classnames'
 import { CheckboxPropsType } from './props'
 import styles from './style.module.less'
-import React from 'react'
 
 /**
  * 复选框
