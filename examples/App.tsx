@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import { Wrapper, Bubble, AlignCenterMenu, AlignLeftMenu, AlignRightMenu, AlignJustifyMenu, AttachmentMenu, BackColorMenu, BlockquoteMenu, BoldMenu, ClearFormatMenu, CodeMenu, CodeBlockMenu, CodeBlockLanguagesMenu, ColorMenu } from '../src'
+import { Wrapper, Bubble, AlignCenterMenu, AlignLeftMenu, AlignRightMenu, AlignJustifyMenu, AttachmentMenu, BackColorMenu, BlockquoteMenu, BoldMenu, ClearFormatMenu, CodeMenu, CodeBlockMenu, CodeBlockLanguagesMenu, ColorMenu, DecreaseIndentMenu, EmojiMenu, FontFamilyMenu, FontSizeMenu, FullScreenMenu, HeadingMenu, HorizontalMenu, ImageMenu, IncreaseIndentMenu, ItalicMenu } from '../src'
 
 function App() {
   const [value, setValue] = useState('三国演义是四大名著之一')
   const [bubbleVisible, setBubbleVisible] = useState(false)
 
   return (
-    <>
+    <div id='wrap'>
       <div id='before'></div>
       <button onClick={() => setValue('hello')}>修改值</button>
       <button onClick={() => setBubbleVisible(!bubbleVisible)}>修改气泡栏显示状态</button>
@@ -29,6 +29,16 @@ function App() {
             <CodeBlockMenu />
             <CodeBlockLanguagesMenu />
             <ColorMenu />
+            <IncreaseIndentMenu />
+            <DecreaseIndentMenu />
+            <EmojiMenu />
+            <FontFamilyMenu />
+            <FontSizeMenu />
+            <FullScreenMenu target='#wrap' />
+            <HeadingMenu />
+            <HorizontalMenu />
+            <ImageMenu />
+            <ItalicMenu />
           </>
         }
         after={<div>after</div>}
@@ -44,7 +54,7 @@ function App() {
           )
         }}
       </Wrapper>
-    </>
+    </div>
   )
 }
 

@@ -1,5 +1,5 @@
 import { MenuPropsType } from '../../props';
-export type BackColorMenuPropsType = {
+export type ColorMenuPropsType = {
     /**
      * 是否禁用
      */

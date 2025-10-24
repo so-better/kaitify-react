@@ -1,26 +1,14 @@
-import { HljsLanguageType } from '@kaitify/core'
 import { MenuDataType, MenuPropsType } from '@/editor/menu/props'
 
-export type CodeBlockMenuPropsType = {
+export type HeadingMenuPropsType = {
   /**
    * 是否禁用
    */
   disabled?: boolean
   /**
-   * 快捷键设置
+   * 选项数组
    */
-  shortcut?: (e: KeyboardEvent) => boolean
-}
-
-export type CodeBlockLanguagesMenuPropsType = {
-  /**
-   * 是否禁用
-   */
-  disabled?: boolean
-  /**
-   * 语言列表
-   */
-  languages?: HljsLanguageType[]
+  data?: MenuDataType[]
   /**
    * 浮层属性
    */

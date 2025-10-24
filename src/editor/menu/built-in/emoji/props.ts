@@ -1,14 +1,14 @@
 import { MenuPropsType } from '@/editor/menu/props'
 
-export type BackColorMenuPropsType = {
+export type EmojiMenuPropsType = {
   /**
    * 是否禁用
    */
   disabled?: boolean
   /**
-   * 颜色数组
+   * 表情数组
    */
-  colors?: string[]
+  data?: string[]
   /**
    * 浮层属性
    */

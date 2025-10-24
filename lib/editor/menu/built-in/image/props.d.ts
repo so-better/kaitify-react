@@ -1,9 +1,13 @@
 import { MenuPropsType } from '../../props';
-export type AttachmentMenuPropsType = {
+export type ImageMenuPropsType = {
     /**
      * 是否禁用
      */
     disabled?: boolean;
+    /**
+     * 初始图片宽度
+     */
+    width?: string | number;
     /**
      * tabs配置
      */
@@ -12,15 +16,11 @@ export type AttachmentMenuPropsType = {
         default: 'remote' | 'upload';
     };
     /**
-     * 浮层属性
-     */
-    popoverProps?: Omit<NonNullable<MenuPropsType['popoverProps']>, 'onShow' | 'onShowing' | 'onShown' | 'onHide' | 'onHiding' | 'onHidden'>;
-    /**
-     * 附件logo图片地址
-     */
-    iconUrl?: string;
-    /**
      * 自定义上传方法
      */
     customUpload?: (file: File) => string | Promise<string>;
+    /**
+     * 浮层属性
+     */
+    popoverProps?: Omit<NonNullable<MenuPropsType['popoverProps']>, 'onShow' | 'onShowing' | 'onShown' | 'onHide' | 'onHiding' | 'onHidden'>;
 };

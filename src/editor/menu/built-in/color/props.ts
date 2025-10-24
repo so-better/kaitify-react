@@ -12,5 +12,5 @@ export type ColorMenuPropsType = {
   /**
    * 浮层属性
    */
-  popoverProps?: MenuPropsType['popoverProps']
+  popoverProps?: Omit<NonNullable<MenuPropsType['popoverProps']>, 'onShow' | 'onShowing' | 'onShown' | 'onHide' | 'onHiding' | 'onHidden'>
 }
