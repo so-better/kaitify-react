@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { Wrapper, Bubble, AlignCenterMenu, AlignLeftMenu, AlignRightMenu, AlignJustifyMenu, AttachmentMenu, BackColorMenu, BlockquoteMenu, BoldMenu, ClearFormatMenu, CodeMenu, CodeBlockMenu, CodeBlockLanguagesMenu, ColorMenu, DecreaseIndentMenu, EmojiMenu, FontFamilyMenu, FontSizeMenu, FullScreenMenu, HeadingMenu, HorizontalMenu, ImageMenu, IncreaseIndentMenu, ItalicMenu } from '../src'
+import { Wrapper, Bubble, AlignCenterMenu, AlignLeftMenu, AlignRightMenu, AlignJustifyMenu, AttachmentMenu, BackColorMenu, BlockquoteMenu, BoldMenu, ClearFormatMenu, CodeMenu, CodeBlockMenu, CodeBlockLanguagesMenu, ColorMenu, DecreaseIndentMenu, EmojiMenu, FontFamilyMenu, FontSizeMenu, FullScreenMenu, HeadingMenu, HorizontalMenu, ImageMenu, IncreaseIndentMenu, ItalicMenu, LineHeightMenu } from '../src'
 
 function App() {
-  const [value, setValue] = useState('三国演义是四大名著之一')
+  const [value, setValue] = useState('<p style="background:#000;color:#fff;">三国演义是四大名著之一</p>')
   const [bubbleVisible, setBubbleVisible] = useState(false)
 
   return (
@@ -39,6 +39,7 @@ function App() {
             <HorizontalMenu />
             <ImageMenu />
             <ItalicMenu />
+            <LineHeightMenu />
           </>
         }
         after={<div>after</div>}
