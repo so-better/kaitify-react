@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Wrapper, Bubble, AlignCenterMenu, AlignLeftMenu, AlignRightMenu, AlignJustifyMenu, AttachmentMenu, BackColorMenu, BlockquoteMenu, BoldMenu, ClearFormatMenu } from '../src'
+import { Wrapper, Bubble, AlignCenterMenu, AlignLeftMenu, AlignRightMenu, AlignJustifyMenu, AttachmentMenu, BackColorMenu, BlockquoteMenu, BoldMenu, ClearFormatMenu, CodeMenu, CodeBlockMenu, CodeBlockLanguagesMenu } from '../src'
 
 function App() {
   const [value, setValue] = useState('三国演义是四大名著之一')
@@ -25,6 +25,9 @@ function App() {
             <BlockquoteMenu />
             <BoldMenu />
             <ClearFormatMenu />
+            <CodeMenu />
+            <CodeBlockMenu />
+            <CodeBlockLanguagesMenu />
           </>
         }
         after={<div>after</div>}

@@ -229,10 +229,7 @@ const Popover = forwardRef<PopoverRefType, PopoverPropsType>(({ placement = 'bot
       <Teleport to='body'>
         <CSSTransition
           in={visible}
-          timeout={{
-            enter: 300,
-            exit: 100
-          }}
+          timeout={200}
           classNames={{
             enter: animation === 'translate' ? styles['kaitify-popover-translate-enter'] : styles['kaitify-popover-fade-enter'],
             enterActive: animation === 'translate' ? styles['kaitify-popover-translate-enter-active'] : styles['kaitify-popover-fade-enter-active'],

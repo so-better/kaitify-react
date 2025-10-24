@@ -151,6 +151,7 @@ const Menu = forwardRef<MenuRefType, MenuPropsType>(
               {data.map(item => (
                 <div
                   key={item.value}
+                  onClick={() => onSelect(item)}
                   data-disabled={props.itemDisabled?.(item)}
                   className={classNames(styles['kaitify-menu-option'], {
                     [styles['kaitify-menu-option-active']]: props.itemActive?.(item) ?? false
