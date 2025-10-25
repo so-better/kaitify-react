@@ -41,7 +41,7 @@ export default function App() {
           <EditorWrapper
             autofocus
             ref={v => setState(v?.state)}
-            locale='en-US'
+            locale='zh-CN'
             disabled={disabled}
             dark={isDark}
             style={{ width: '100%', height: 500 }}
