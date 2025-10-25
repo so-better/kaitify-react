@@ -16,3 +16,5 @@ export * from './editor/wrapper'
 export * from './editor/bubble'
 //菜单
 export * from './editor/menu'
+//hooks
+export * from './hooks'
