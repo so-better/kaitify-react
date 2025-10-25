@@ -1,11 +1,11 @@
 import { useMemo } from 'react'
 import { Icon } from '@/core/icon'
-import { useWrapperContext } from '@/hooks/use-wrapper-context'
+import { useEditor } from '@/hooks/use-editor'
 import Menu from '../../menu'
 import { BoldMenuPropsType } from './props'
 
 export default function BoldMenu(props: BoldMenuPropsType) {
-  const { state } = useWrapperContext()
+  const { state } = useEditor()
 
   //是否激活
   const isActive = useMemo(() => {

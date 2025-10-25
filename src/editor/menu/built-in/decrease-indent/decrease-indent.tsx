@@ -1,11 +1,11 @@
 import { useMemo } from 'react'
-import { useWrapperContext } from '@/hooks/use-wrapper-context'
+import { useEditor } from '@/hooks/use-editor'
 import { Icon } from '@/core/icon'
 import Menu from '../../menu'
 import { DecreaseIndentMenuPropsType } from './props'
 
 export default function DecreaseIndentMenu(props: DecreaseIndentMenuPropsType) {
-  const { state } = useWrapperContext()
+  const { state } = useEditor()
 
   //是否禁用
   const isDisabled = useMemo(() => {

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Wrapper, Bubble, AlignCenterMenu, AlignLeftMenu, AlignRightMenu, AlignJustifyMenu, AttachmentMenu, BackColorMenu, BlockquoteMenu, BoldMenu, ClearFormatMenu, CodeMenu, CodeBlockMenu, CodeBlockLanguagesMenu, ColorMenu, DecreaseIndentMenu, EmojiMenu, FontFamilyMenu, FontSizeMenu, FullScreenMenu, HeadingMenu, HorizontalMenu, ImageMenu, IncreaseIndentMenu, ItalicMenu, LineHeightMenu, LinkMenu, LinkUnsetMenu, MathMenu, OrderedListMenu, RedoMenu, StrikethroughMenu, SubscriptMenu, SuperscriptMenu } from '../src'
+import { Wrapper, Bubble, AlignCenterMenu, AlignLeftMenu, AlignRightMenu, AlignJustifyMenu, AttachmentMenu, BackColorMenu, BlockquoteMenu, BoldMenu, ClearFormatMenu, CodeMenu, CodeBlockMenu, CodeBlockLanguagesMenu, ColorMenu, DecreaseIndentMenu, EmojiMenu, FontFamilyMenu, FontSizeMenu, FullScreenMenu, HeadingMenu, HorizontalMenu, ImageMenu, IncreaseIndentMenu, ItalicMenu, LineHeightMenu, LinkMenu, LinkUnsetMenu, MathMenu, OrderedListMenu, RedoMenu, StrikethroughMenu, SubscriptMenu, SuperscriptMenu, TableMenu, TableAddColumnMenu, TableDeleteColumnMenu, TableAddRowMenu, TableDeleteRowMenu, TableMergeCellMenu, TableUnsetMenu, TaskMenu, UnderlineMenu, UndoMenu, UnorderedListMenu, VideoMenu, VideoLoopMenu, VideoMutedMenu, VideoControlsMenu, WrapUpMenu, WrapDownMenu } from '../src'
 
 function App() {
   const [value, setValue] = useState('<p style="background:#000;color:#fff;">三国演义是四大名著之一</p>')
@@ -44,10 +44,32 @@ function App() {
             <LinkUnsetMenu />
             <MathMenu />
             <OrderedListMenu />
+            <UndoMenu />
             <RedoMenu />
             <StrikethroughMenu />
             <SubscriptMenu />
             <SuperscriptMenu />
+            <TableMenu />
+            <TableAddColumnMenu type='left' />
+            <TableAddColumnMenu type='right' />
+            <TableDeleteColumnMenu />
+            <TableAddRowMenu type='top' />
+            <TableAddRowMenu type='bottom' />
+            <TableDeleteRowMenu />
+            <TableMergeCellMenu direction={'left'} />
+            <TableMergeCellMenu direction={'right'} />
+            <TableMergeCellMenu direction={'top'} />
+            <TableMergeCellMenu direction={'bottom'} />
+            <TableUnsetMenu />
+            <TaskMenu />
+            <UnderlineMenu />
+            <UnorderedListMenu />
+            <VideoMenu />
+            <VideoLoopMenu />
+            <VideoMutedMenu />
+            <VideoControlsMenu />
+            <WrapUpMenu match={{ tag: 'p' }} />
+            <WrapDownMenu match={{ tag: 'p' }} />
           </>
         }
         after={<div>after</div>}

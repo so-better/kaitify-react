@@ -4,7 +4,7 @@ import { event as DapEvent } from 'dap-util'
 import classNames from 'classnames'
 import { CSSTransition } from 'react-transition-group'
 import { Teleport } from '@/core/teleport'
-import { useWrapperContext } from '@/hooks/use-wrapper-context'
+import { useEditor } from '@/hooks/use-editor'
 import { BubblePropsType, BubbleRefType } from './props'
 import styles from './style.module.less'
 
@@ -15,7 +15,7 @@ const Bubble = forwardRef<BubbleRefType, BubblePropsType>((props, ref) => {
   //唯一id
   const uid = useId()
   //上下文数据
-  const { state, disabled, isMouseDown, el } = useWrapperContext()
+  const { state, disabled, isMouseDown, el } = useEditor()
 
   //气泡元素
   const elRef = useRef<HTMLDivElement | null>(null)

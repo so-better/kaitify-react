@@ -1,6 +1,6 @@
 import { useMemo, useRef } from 'react'
 import { Icon } from '@/core/icon'
-import { useWrapperContext } from '@/hooks/use-wrapper-context'
+import { useEditor } from '@/hooks/use-editor'
 import { MenuRefType } from '../../props'
 import Menu from '../../menu'
 import { EmojiMenuPropsType } from './props'
@@ -101,7 +101,7 @@ const defaultEmoji: string[] = [
 ]
 
 export default function EmojiMenu({ data = defaultEmoji, ...props }: EmojiMenuPropsType) {
-  const { state } = useWrapperContext()
+  const { state } = useEditor()
 
   //菜单组件实例
   const menuRef = useRef<MenuRefType | null>(null)

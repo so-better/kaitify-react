@@ -1,4 +1,4 @@
-import { useWrapperContext } from '@/hooks/use-wrapper-context'
+import { useEditor } from '@/hooks/use-editor'
 import { file as DapFile } from 'dap-util'
 import { ImageMenuPropsType } from './props'
 import React, { useMemo, useRef, useState } from 'react'
@@ -17,7 +17,7 @@ export default function ImageMenu({
   },
   ...props
 }: ImageMenuPropsType) {
-  const { state, t } = useWrapperContext()
+  const { state, t } = useEditor()
 
   //菜单组件实例
   const menuRef = useRef<MenuRefType | null>(null)

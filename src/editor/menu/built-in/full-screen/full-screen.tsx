@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { useWrapperContext } from '@/hooks/use-wrapper-context'
+import { useEditor } from '@/hooks/use-editor'
 import { Icon } from '@/core/icon'
 import Menu from '../../menu'
 import { FullScreenMenuPropsType } from './props'
 
 export default function FullScreenMenu({ zIndex = 100, ...props }: FullScreenMenuPropsType) {
-  const { state } = useWrapperContext()
+  const { state } = useEditor()
 
   //绑定的全屏dom
   const targetDom = useRef<HTMLElement | null>(null)

@@ -3,7 +3,7 @@ import { LocaleType } from '../locale';
 /**
  * 上下文数据类型
  */
-export type WrapperContextType = {
+export type EditorContextType = {
     /**
      * 编辑器状态数据
      */
@@ -29,5 +29,5 @@ export type WrapperContextType = {
      */
     locale: LocaleType;
 };
-export declare const WrapperContext: import('react').Context<WrapperContextType>;
-export declare const useWrapperContext: () => WrapperContextType;
+export declare const EditorContext: import('react').Context<EditorContextType>;
+export declare const useEditor: () => EditorContextType;

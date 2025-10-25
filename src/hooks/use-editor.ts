@@ -5,7 +5,7 @@ import { createContext, useContext } from 'react'
 /**
  * 上下文数据类型
  */
-export type WrapperContextType = {
+export type EditorContextType = {
   /**
    * 编辑器状态数据
    */
@@ -32,7 +32,7 @@ export type WrapperContextType = {
   locale: LocaleType
 }
 
-export const WrapperContext = createContext<WrapperContextType>({
+export const EditorContext = createContext<EditorContextType>({
   state: {
     editor: {},
     selection: {}
@@ -44,4 +44,4 @@ export const WrapperContext = createContext<WrapperContextType>({
   t: (key: string) => translate('zh-CN', key)
 })
 
-export const useWrapperContext = () => useContext(WrapperContext)
+export const useEditor = () => useContext(EditorContext)

@@ -4,7 +4,7 @@ import { data } from 'dap-util'
 import classNames from 'classnames'
 import { translate } from '@/locale'
 import { Teleport } from '@/core/teleport'
-import { WrapperContext } from '@/hooks/use-wrapper-context'
+import { EditorContext } from '@/hooks/use-editor'
 import { StateType, WrapperPropsType, WrapperRefType } from './props'
 import styles from './style.module.less'
 
@@ -141,7 +141,7 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
   }, [elRef.current])
 
   return (
-    <WrapperContext.Provider
+    <EditorContext.Provider
       value={{
         state,
         isMouseDown,
@@ -161,7 +161,7 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
         {/* 插槽 */}
         {renderSlot(props.children)}
       </>
-    </WrapperContext.Provider>
+    </EditorContext.Provider>
   )
 })
 

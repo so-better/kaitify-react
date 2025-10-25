@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import { Popover, PopoverRefType } from '@/core/popover'
 import { Icon } from '@/core/icon'
 import { Button } from '@/core/button'
-import { useWrapperContext } from '@/hooks/use-wrapper-context'
+import { useEditor } from '@/hooks/use-editor'
 import { MenuDataType, MenuPropsType, MenuRefType } from './props'
 import styles from './style.module.less'
 
@@ -28,7 +28,7 @@ const Menu = forwardRef<MenuRefType, MenuPropsType>(
     ref
   ) => {
     const uid = useId()
-    const { el } = useWrapperContext()
+    const { el } = useEditor()
     //popover组件实例
     const popoverRef = useRef<PopoverRefType | null>(null)
     //popover浮层是否显示

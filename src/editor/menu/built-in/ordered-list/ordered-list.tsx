@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useRef } from 'react'
 import { OrderedListType } from '@kaitify/core'
-import { useWrapperContext } from '@/hooks/use-wrapper-context'
+import { useEditor } from '@/hooks/use-editor'
 import { Icon } from '@/core/icon'
 import { Button } from '@/core/button'
 import { MenuRefType } from '../../props'
@@ -9,7 +9,7 @@ import { OrderedListMenuPropsType } from './props'
 import styles from './style.module.less'
 
 export default function OrderedListMenu(props: OrderedListMenuPropsType) {
-  const { state } = useWrapperContext()
+  const { state } = useEditor()
   //有序列表序标列表
   const listTypes: OrderedListType[] = ['decimal', 'lower-alpha', 'upper-alpha', 'lower-roman', 'upper-roman', 'lower-greek', 'cjk-ideographic']
 

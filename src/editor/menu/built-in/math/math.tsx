@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from 'react'
-import { useWrapperContext } from '@/hooks/use-wrapper-context'
+import { useEditor } from '@/hooks/use-editor'
 import { Button } from '@/core/button'
 import { Icon } from '@/core/icon'
 import { MenuRefType } from '../../props'
@@ -10,7 +10,7 @@ import styles from './style.module.less'
 //  \sum_{i=1}^{n} i = \frac{n(n+1)}{2}
 
 export default function MathMenu(props: MathMenuPropsType) {
-  const { state, t } = useWrapperContext()
+  const { state, t } = useEditor()
 
   //菜单组件实例
   const menuRef = useRef<MenuRefType | null>(null)

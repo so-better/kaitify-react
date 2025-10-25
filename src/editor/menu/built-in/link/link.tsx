@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from 'react'
 import { SetLinkOptionType, UpdateLinkOptionType } from '@kaitify/core'
-import { useWrapperContext } from '@/hooks/use-wrapper-context'
+import { useEditor } from '@/hooks/use-editor'
 import { Checkbox } from '@/core/checkbox'
 import { Button } from '@/core/button'
 import { Icon } from '@/core/icon'
@@ -10,7 +10,7 @@ import { LinkMenuPropsType } from './props'
 import styles from './style.module.less'
 
 export default function LinkMenu(props: LinkMenuPropsType) {
-  const { state, t } = useWrapperContext()
+  const { state, t } = useEditor()
 
   //菜单组件实例
   const menuRef = useRef<MenuRefType | null>(null)

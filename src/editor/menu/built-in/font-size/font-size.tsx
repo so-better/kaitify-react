@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef } from 'react'
-import { useWrapperContext } from '@/hooks/use-wrapper-context'
+import { useEditor } from '@/hooks/use-editor'
 import { MenuDataType, MenuRefType } from '../../props'
 import Menu from '../../menu'
 import { FontSizeMenuPropsType } from './props'
@@ -49,7 +49,7 @@ export default function FontSizeMenu({
   ],
   ...props
 }: FontSizeMenuPropsType) {
-  const { state, t } = useWrapperContext()
+  const { state, t } = useEditor()
 
   //菜单组件实例
   const menuRef = useRef<MenuRefType | null>(null)
