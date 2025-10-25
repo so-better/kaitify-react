@@ -147,7 +147,6 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
         isMouseDown,
         disabled: props.disabled ?? false,
         el: elRef.current,
-        locale: props.locale ?? 'zh-CN',
         t: (key: string) => translate(props.locale ?? 'zh-CN', key)
       }}
     >

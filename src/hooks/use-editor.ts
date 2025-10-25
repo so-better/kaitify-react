@@ -1,5 +1,5 @@
 import { StateType } from '@/editor/wrapper'
-import { LocaleType, translate } from '@/locale'
+import { translate } from '@/locale'
 import { createContext, useContext } from 'react'
 
 /**
@@ -26,10 +26,6 @@ export type EditorContextType = {
    * 翻译函数
    */
   t: (key: string) => string
-  /**
-   * 语言环境
-   */
-  locale: LocaleType
 }
 
 export const EditorContext = createContext<EditorContextType>({
@@ -40,7 +36,6 @@ export const EditorContext = createContext<EditorContextType>({
   disabled: false,
   isMouseDown: false,
   el: null,
-  locale: 'zh-CN',
   t: (key: string) => translate('zh-CN', key)
 })
 
