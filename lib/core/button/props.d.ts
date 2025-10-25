@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { CSSProperties, ReactNode } from 'react';
 /**
  * 按钮组件的属性类型
  */
@@ -23,6 +23,14 @@ export type ButtonPropsType = {
      * 默认插槽
      */
     children?: ReactNode;
+    /**
+     * 样式
+     */
+    style?: CSSProperties;
+    /**
+     * 样式类
+     */
+    className?: string;
     /**
      * 点击
      */

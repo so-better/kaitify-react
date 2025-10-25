@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Wrapper, Bubble, AlignCenterMenu, AlignLeftMenu, AlignRightMenu, AlignJustifyMenu, AttachmentMenu, BackColorMenu, BlockquoteMenu, BoldMenu, ClearFormatMenu, CodeMenu, CodeBlockMenu, CodeBlockLanguagesMenu, ColorMenu, DecreaseIndentMenu, EmojiMenu, FontFamilyMenu, FontSizeMenu, FullScreenMenu, HeadingMenu, HorizontalMenu, ImageMenu, IncreaseIndentMenu, ItalicMenu, LineHeightMenu } from '../src'
+import { Wrapper, Bubble, AlignCenterMenu, AlignLeftMenu, AlignRightMenu, AlignJustifyMenu, AttachmentMenu, BackColorMenu, BlockquoteMenu, BoldMenu, ClearFormatMenu, CodeMenu, CodeBlockMenu, CodeBlockLanguagesMenu, ColorMenu, DecreaseIndentMenu, EmojiMenu, FontFamilyMenu, FontSizeMenu, FullScreenMenu, HeadingMenu, HorizontalMenu, ImageMenu, IncreaseIndentMenu, ItalicMenu, LineHeightMenu, LinkMenu, LinkUnsetMenu, MathMenu, OrderedListMenu, RedoMenu, StrikethroughMenu, SubscriptMenu, SuperscriptMenu } from '../src'
 
 function App() {
   const [value, setValue] = useState('<p style="background:#000;color:#fff;">三国演义是四大名著之一</p>')
@@ -40,6 +40,14 @@ function App() {
             <ImageMenu />
             <ItalicMenu />
             <LineHeightMenu />
+            <LinkMenu />
+            <LinkUnsetMenu />
+            <MathMenu />
+            <OrderedListMenu />
+            <RedoMenu />
+            <StrikethroughMenu />
+            <SubscriptMenu />
+            <SuperscriptMenu />
           </>
         }
         after={<div>after</div>}
