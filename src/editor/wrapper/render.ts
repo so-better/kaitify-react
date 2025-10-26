@@ -27,6 +27,6 @@ export const createReactNode = (options: KNodeRenderOptionType) => {
 /**
  * 创建ReactNode数组
  */
-export const createReactNodes = (editor: Editor) => {
+export const createReactNodes = (editor: Editor): ReactNode[] => {
   return editor.stackNodes.map(item => createReactNode(getNodeRenderOptions(editor, item)))
 }

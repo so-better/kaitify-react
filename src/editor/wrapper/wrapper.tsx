@@ -1,10 +1,12 @@
-import { Editor } from '@kaitify/core'
 import { forwardRef, ReactNode, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
+import ReactDOM from 'react-dom'
+import { Editor } from '@kaitify/core'
 import { data } from 'dap-util'
 import classNames from 'classnames'
 import { translate } from '@/locale'
 import { Teleport } from '@/core/teleport'
 import { EditorContext } from '@/hooks/use-editor'
+import { createReactNodes } from './render'
 import { StateType, WrapperPropsType, WrapperRefType } from './props'
 import styles from './style.module.less'
 
@@ -90,6 +92,10 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
       onSelectionUpdate(selection) {
         setUpdateKey(oldValue => oldValue + 1)
         props.onSelectionUpdate?.apply(this, [selection])
+      },
+      onUpdateView() {
+        ReactDOM.render(<>{createReactNodes(this)}</>, elRef.current)
+        return false
       }
     })
     props.onCreated?.(editor.current)
@@ -139,6 +145,13 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
   useEffect(() => {
     createEditor()
   }, [elRef.current])
+
+  //卸载时销毁编辑器
+  useEffect(() => {
+    return () => {
+      editor.current?.destroy()
+    }
+  }, [])
 
   return (
     <EditorContext.Provider

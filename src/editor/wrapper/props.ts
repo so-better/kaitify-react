@@ -200,6 +200,9 @@ export type StateType = {
   }
 }
 
+/**
+ * 编辑器实例对象
+ */
 export type WrapperRefType = {
   elRef: React.MutableRefObject<HTMLDivElement | null>
   state: StateType
