@@ -1,12 +1,9 @@
 import { forwardRef, ReactNode, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
-import ReactDOM from 'react-dom'
 import { Editor } from '@kaitify/core'
-import { data } from 'dap-util'
 import classNames from 'classnames'
 import { translate } from '@/locale'
 import { Teleport } from '@/core/teleport'
 import { EditorContext } from '@/hooks/use-editor'
-import { createReactNodes } from './render'
 import { StateType, WrapperPropsType, WrapperRefType } from './props'
 import styles from './style.module.less'
 
@@ -46,11 +43,8 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
 
   //创建编辑器
   const createEditor = async () => {
-    if (!elRef.current || editor.current || data.get(elRef.current, 'kaitify-init')) {
-      return
-    }
-    editor.current = await Editor.configure({
-      el: elRef.current,
+    Editor.configure({
+      el: elRef.current!,
       value: props.value ?? '',
       placeholder: props.placeholder,
       dark: props.dark,
@@ -85,6 +79,8 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
       onBlur: props.onBlur,
       onBeforeUpdateView: props.onBeforeUpdateView,
       onAfterUpdateView: props.onAfterUpdateView,
+      onCreate: ed => (editor.current = ed),
+      onCreated: props.onCreated,
       onChange: v => {
         setInternalModification(true)
         props.onChange?.(v)
@@ -92,13 +88,8 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
       onSelectionUpdate(selection) {
         setUpdateKey(oldValue => oldValue + 1)
         props.onSelectionUpdate?.apply(this, [selection])
-      },
-      onUpdateView() {
-        ReactDOM.render(<>{createReactNodes(this)}</>, elRef.current)
-        return false
       }
     })
-    props.onCreated?.(editor.current)
   }
 
   useImperativeHandle(ref, () => ({
@@ -144,12 +135,10 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
   //创建编辑器
   useEffect(() => {
     createEditor()
-  }, [elRef.current])
-
-  //卸载时销毁编辑器
-  useEffect(() => {
+    //卸载时销毁编辑器
     return () => {
       editor.current?.destroy()
+      editor.current = undefined
     }
   }, [])
 
