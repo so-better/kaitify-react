@@ -127,7 +127,7 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
   //监听以下属性变化，对编辑器进行更新
   useEffect(() => {
     if (editor.current) {
-      editor.current.setEditable(props.disabled ?? false)
+      editor.current.setEditable(!props.disabled)
       editor.current.setDark(props.dark ?? false)
       editor.current.allowCopy = props.allowCopy ?? true
       editor.current.allowCut = props.allowCut ?? true
@@ -156,7 +156,8 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
         isMouseDown,
         disabled: props.disabled ?? false,
         el: elRef.current,
-        t: (key: string) => translate(props.locale ?? 'zh-CN', key)
+        t: (key: string) => translate(props.locale ?? 'zh-CN', key),
+        dark: props.dark ?? false
       }}
     >
       <>

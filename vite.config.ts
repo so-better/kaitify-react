@@ -38,7 +38,11 @@ export default defineConfig({
     preprocessorOptions: {
       less: {
         // 使用 less 编写样式的 UI 库（如 antd）时建议加入这个设置
-        javascriptEnabled: true
+        javascriptEnabled: true,
+        // 全局引入的 Less 文件路径
+        additionalData: `
+          @import "${path.resolve(__dirname, 'src/var.less')}";
+        `
       }
     }
   },

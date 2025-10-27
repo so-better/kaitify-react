@@ -26,6 +26,10 @@ export type EditorContextType = {
    * 翻译函数
    */
   t: (key: string) => string
+  /**
+   * 是否深色模式
+   */
+  dark: boolean
 }
 
 export const EditorContext = createContext<EditorContextType>({
@@ -36,7 +40,8 @@ export const EditorContext = createContext<EditorContextType>({
   disabled: false,
   isMouseDown: false,
   el: null,
-  t: (key: string) => translate('zh-CN', key)
+  t: (key: string) => translate('zh-CN', key),
+  dark: false
 })
 
 export const useEditor = () => useContext(EditorContext)

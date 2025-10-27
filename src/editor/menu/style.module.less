@@ -26,7 +26,7 @@
 }
 
 .kaitify-menu-options {
-  padding: var(--kaitify-small-padding) 0;
+  padding: @small-padding 0;
 
   &,
   *,
@@ -40,10 +40,10 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding: var(--kaitify-small-padding) var(--kaitify-padding);
-    font-size: var(--kaitify-font-size);
-    line-height: var(--kaitify-line-height);
-    color: var(--kaitify-font-color);
+    padding: @small-padding @padding;
+    font-size: @font-size;
+    line-height: @line-height;
+    color: @font-color;
     transition: background 300ms, color 300ms;
 
     .kaitify-menu-option-icon {
@@ -52,18 +52,18 @@
 
     &:not([data-disabled]):hover {
       cursor: pointer;
-      background: var(--kaitify-lightest-theme);
-      color: var(--kaitify-theme);
+      background: @lightest-theme;
+      color: @theme;
     }
 
     &:not([data-disabled]):active {
-      background: var(--kaitify-lighter-theme);
-      color: var(--kaitify-theme);
+      background: @lighter-theme;
+      color: @theme;
     }
 
     &:not([data-disabled]).kaitify-menu-option-active {
-      background: var(--kaitify-lighter-theme);
-      color: var(--kaitify-theme);
+      background: @lighter-theme;
+      color: @theme;
     }
 
     &[data-disabled] {
