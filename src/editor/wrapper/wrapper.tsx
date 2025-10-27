@@ -121,7 +121,7 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
         setUpdateKey(oldValue => oldValue + 1)
       },
       async onUpdateView() {
-        //渲染内容
+        //渲染内容并等待视图渲染完成后
         await renderChildrenSync()
         //阻止默认渲染
         return false
