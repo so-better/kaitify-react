@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef } from 'react'
-import { useEditor } from '@/hooks/use-editor'
+import { useEditor } from '@/hooks'
 import { MenuDataType, MenuRefType } from '../../props'
 import Menu from '../../menu'
 import { FontFamilyMenuPropsType } from './props'

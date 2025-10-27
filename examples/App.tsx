@@ -7,7 +7,7 @@ export default function App() {
     '<p kaitify-node="91"><span kaitify-node="92" style="font-weight: bold; font-size: 18px;">Publications</span></p ><p kaitify-node="93" style="line-height: 2.5;"><span kaitify-node="94" style="font-size: 14px; font-weight: bold;">Lastest metaRLK article</span><span kaitify-node="95"> </span></p ><p kaitify-node="96" style="line-height: 2;"><span kaitify-node="98">Curation,&nbsp;nomenclature,&nbsp;and&nbsp;topological&nbsp;classification&nbsp;of&nbsp;receptor&nbsp;like&nbsp;kinases&nbsp;from&nbsp;528&nbsp;plant&nbsp;species&nbsp;for&nbsp;novel&nbsp;domain&nbsp;discovery&nbsp;and&nbsp;functional&nbsp;inference[J].&nbsp;Molecular&nbsp;Plant,&nbsp;2024,&nbsp;17(4):&nbsp;658-671.&nbsp;&nbsp; </span></p><p kaitify-node="91"><span kaitify-node="92" style="font-weight: bold; font-size: 18px;">Publications</span></p ><p kaitify-node="93" style="line-height: 2.5;"><span kaitify-node="94" style="font-size: 14px; font-weight: bold;">Lastest metaRLK article</span><span kaitify-node="95"> </span></p ><p kaitify-node="96" style="line-height: 2;"><span kaitify-node="98">Curation, nomenclature, and topological classification of receptor like kinases from 528 plant species for novel domain discovery and functional inference[J]. Molecular Plant, 2024, 17(4): 658-671. </span></p>'
   )
   const [show, setShow] = useState(true)
-  const [dark, setDark] = useState(true)
+  const [dark, setDark] = useState(false)
   const [disabled] = useState(false)
   const [state, setState] = useState<StateType | undefined>(undefined)
 

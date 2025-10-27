@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from 'react'
 import { SetLinkOptionType, UpdateLinkOptionType } from '@kaitify/core'
-import { useEditor } from '@/hooks/use-editor'
+import { useEditor } from '@/hooks'
 import { Checkbox } from '@/core/checkbox'
 import { Button } from '@/core/button'
 import { Icon } from '@/core/icon'

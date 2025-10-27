@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from 'react'
-import { useEditor } from '@/hooks/use-editor'
+import { useEditor } from '@/hooks'
 import { Button } from '@/core/button'
 import { Icon } from '@/core/icon'
 import { MenuRefType } from '../../props'

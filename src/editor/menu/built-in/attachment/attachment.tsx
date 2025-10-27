@@ -5,7 +5,7 @@ import { SetAttachmentOptionType, UpdateAttachmentOptionType } from '@kaitify/co
 import { Tabs, TabsPropsType } from '@/core/tabs'
 import { Button } from '@/core/button'
 import { Icon } from '@/core/icon'
-import { useEditor } from '@/hooks/use-editor'
+import { useEditor } from '@/hooks'
 import Menu from '../../menu'
 import { MenuRefType } from '../../props'
 import { AttachmentMenuPropsType } from './props'
@@ -75,11 +75,15 @@ export default function AttachmentMenu({
   const menuShowing = () => {
     const info = state.editor.value?.commands.getAttachmentInfo?.()
     if (info) {
-      updateData.text = info.text
-      updateData.url = info.url
+      setUpdateData({
+        text: info.text,
+        url: info.url
+      })
     } else {
-      remoteData.text = ''
-      remoteData.url = ''
+      setRemoteData({
+        text: '',
+        url: ''
+      })
     }
   }
   //选择本地文件

@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { useEditor } from '@/hooks/use-editor'
+import { useEditor } from '@/hooks'
 import { Icon } from '@/core/icon'
 import Menu from '../../menu'
 import { IncreaseIndentMenuPropsType } from './props'

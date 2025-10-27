@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useRef } from 'react'
 import { OrderedListType } from '@kaitify/core'
-import { useEditor } from '@/hooks/use-editor'
+import { useEditor } from '@/hooks'
 import { Icon } from '@/core/icon'
 import { Button } from '@/core/button'
 import { MenuRefType } from '../../props'

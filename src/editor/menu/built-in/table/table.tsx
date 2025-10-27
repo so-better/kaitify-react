@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from 'react'
 import classNames from 'classnames'
-import { useEditor } from '@/hooks/use-editor'
+import { useEditor } from '@/hooks'
 import { Icon } from '@/core/icon'
 import { MenuRefType } from '../../props'
 import Menu from '../../menu'
@@ -111,22 +111,24 @@ export default function TableMenu({ maxRows = 10, maxColumns = 10, ...props }: T
           })}
         >
           <table>
-            {tableGrids.map((row, rowIndex) => (
-              <tr key={rowIndex}>
-                {row.map((column, colIndex) => (
-                  <td
-                    key={`${rowIndex}-${colIndex}`}
-                    className={classNames({
-                      [styles['kaitify-table-inside']]: column.inside
-                    })}
-                    onMouseEnter={() => changeTableSize(column)}
-                    onClick={() => insert(column)}
-                  >
-                    <span />
-                  </td>
-                ))}
-              </tr>
-            ))}
+            <tbody>
+              {tableGrids.map((row, rowIndex) => (
+                <tr key={rowIndex}>
+                  {row.map((column, colIndex) => (
+                    <td
+                      key={`${rowIndex}-${colIndex}`}
+                      className={classNames({
+                        [styles['kaitify-table-inside']]: column.inside
+                      })}
+                      onMouseEnter={() => changeTableSize(column)}
+                      onClick={() => insert(column)}
+                    >
+                      <span />
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
           </table>
           {specification && (
             <div className={styles['kaitify-table-footer']}>

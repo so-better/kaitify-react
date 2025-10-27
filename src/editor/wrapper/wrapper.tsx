@@ -1,4 +1,5 @@
 import { forwardRef, ReactNode, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
+import { flushSync } from 'react-dom'
 import { createRoot, Root } from 'react-dom/client'
 import { Editor } from '@kaitify/core'
 import classNames from 'classnames'
@@ -44,6 +45,24 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
       return value(state)
     }
     return value
+  }
+
+  //渲染编辑器内容
+  const renderChildrenSync = () => {
+    return new Promise<void>(resolve => {
+      //在微任务里调用 flushSync，避开渲染栈限制
+      queueMicrotask(() => {
+        //使用flushSync能够捕获render完成
+        flushSync(() => {
+          //初始创建
+          if (!rootRef.current) {
+            rootRef.current = createRoot(elRef.current!)
+          }
+          rootRef.current.render(<>{createReactNodes(editor.current!)}</>)
+        })
+        resolve()
+      })
+    })
   }
 
   //创建编辑器
@@ -96,17 +115,16 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
         props.onCreated?.(ed)
         setUpdateKey(oldValue => oldValue + 1)
         isCreated.current = true
-        rootRef.current = createRoot(elRef.current!)
       },
       onSelectionUpdate(selection) {
         props.onSelectionUpdate?.apply(this, [selection])
         setUpdateKey(oldValue => oldValue + 1)
       },
-      onUpdateView(init) {
-        console.log('init', init)
-        // const nodes = createReactNodes(this)
-        // rootRef.current?.render(<>{nodes}</>)
-        return true
+      async onUpdateView() {
+        //渲染内容
+        await renderChildrenSync()
+        //阻止默认渲染
+        return false
       },
       onChange: v => {
         setInternalModification(true)
@@ -163,9 +181,13 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
     return () => {
       //解决StrictMode模式下第一次还没创建完成就销毁导致的一系列问题，只有创建完成了才能进行销毁
       if (isCreated.current) {
-        rootRef.current?.unmount()
         editor.current?.destroy()
         editor.current = undefined
+        //放到微任务中去执行
+        queueMicrotask(() => {
+          rootRef.current?.unmount()
+          rootRef.current = null
+        })
       }
     }
   }, [])

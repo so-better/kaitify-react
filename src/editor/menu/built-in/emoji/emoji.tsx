@@ -1,6 +1,6 @@
 import { useMemo, useRef } from 'react'
 import { Icon } from '@/core/icon'
-import { useEditor } from '@/hooks/use-editor'
+import { useEditor } from '@/hooks'
 import { MenuRefType } from '../../props'
 import Menu from '../../menu'
 import { EmojiMenuPropsType } from './props'

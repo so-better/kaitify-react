@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import { Popover, PopoverRefType } from '@/core/popover'
 import { Icon } from '@/core/icon'
 import { Button } from '@/core/button'
-import { useEditor } from '@/hooks/use-editor'
+import { useEditor } from '@/hooks'
 import { MenuDataType, MenuPropsType, MenuRefType } from './props'
 import styles from './style.module.less'
 

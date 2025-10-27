@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useRef } from 'react'
 import { HeadingLevelType } from '@kaitify/core'
-import { useEditor } from '@/hooks/use-editor'
+import { useEditor } from '@/hooks'
 import { MenuDataType, MenuRefType } from '../../props'
 import Menu from '../../menu'
 import { HeadingMenuPropsType } from './props'

@@ -1,4 +1,4 @@
-import { useEditor } from '@/hooks/use-editor'
+import { useEditor } from '@/hooks'
 import { useCallback, useMemo, useRef } from 'react'
 import classNames from 'classnames'
 import { Icon } from '@/core/icon'

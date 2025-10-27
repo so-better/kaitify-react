@@ -1,6 +1,6 @@
 import React, { useMemo, useRef, useState } from 'react'
 import { file as DapFile } from 'dap-util'
-import { useEditor } from '@/hooks/use-editor'
+import { useEditor } from '@/hooks'
 import { SetVideoOptionType } from '@kaitify/core'
 import { Tabs, TabsPropsType } from '@/core/tabs'
 import { Checkbox } from '@/core/checkbox'

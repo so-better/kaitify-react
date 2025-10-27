@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { Icon } from '@/core/icon'
-import { useEditor } from '@/hooks/use-editor'
+import { useEditor } from '@/hooks'
 import Menu from '../../menu'
 import { BoldMenuPropsType } from './props'
 

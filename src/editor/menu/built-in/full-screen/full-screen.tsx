@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { useEditor } from '@/hooks/use-editor'
+import { useEditor } from '@/hooks'
 import { Icon } from '@/core/icon'
 import Menu from '../../menu'
 import { FullScreenMenuPropsType } from './props'

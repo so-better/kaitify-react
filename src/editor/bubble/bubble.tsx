@@ -4,7 +4,7 @@ import { event as DapEvent } from 'dap-util'
 import classNames from 'classnames'
 import { CSSTransition } from 'react-transition-group'
 import { Teleport } from '@/core/teleport'
-import { useEditor } from '@/hooks/use-editor'
+import { useEditor } from '@/hooks'
 import { BubblePropsType, BubbleRefType } from './props'
 import styles from './style.module.less'
 

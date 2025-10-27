@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { KNode } from '@kaitify/core'
-import { useEditor } from '@/hooks/use-editor'
+import { useEditor } from '@/hooks'
 import { Icon } from '@/core/icon'
 import Menu from '../../menu'
 import { WrapDownMenuPropsType } from './props'

@@ -1,4 +1,4 @@
-import { useEditor } from '@/hooks/use-editor'
+import { useEditor } from '@/hooks'
 import { file as DapFile } from 'dap-util'
 import { ImageMenuPropsType } from './props'
 import React, { useMemo, useRef, useState } from 'react'
@@ -74,11 +74,15 @@ export default function ImageMenu({
   const menuShowing = () => {
     const imageNode = state.editor.value?.commands.getImage?.()
     if (imageNode) {
-      updateData.src = imageNode.marks!.src as string
-      updateData.alt = (imageNode.marks!.alt as string) || ''
+      setUpdateData({
+        src: imageNode.marks!.src as string,
+        alt: (imageNode.marks!.alt as string) || ''
+      })
     } else {
-      remoteData.src = ''
-      remoteData.alt = ''
+      setRemoteData({
+        src: '',
+        alt: ''
+      })
     }
   }
   //选择本地图片
