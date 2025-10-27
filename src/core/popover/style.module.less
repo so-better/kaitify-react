@@ -10,6 +10,10 @@
   line-height: @line-height;
   font-family: @font-family;
   box-sizing: border-box;
+
+  &.kaitify-dark {
+    color: @font-color-dark;
+  }
 }
 
 .kaitify-popover {
@@ -148,6 +152,53 @@
         bottom: auto;
         left: auto;
         margin-top: -6px;
+      }
+    }
+  }
+
+  &.kaitify-dark {
+    .kaitify-popover-wrapper {
+      background: @background-color-dark;
+      border-color: @border-color-dark;
+    }
+
+    .kaitify-popover-content {
+      color: @font-color-dark;
+    }
+
+    .kaitify-popover-arrow {
+      &[data-placement^='bottom'] {
+        border-bottom-color: @border-color-dark;
+
+        &::before {
+          border-bottom-color: @background-color-dark;
+        }
+      }
+
+      &[data-placement^='top'] {
+        border-top-color: @border-color-dark;
+
+        &::before {
+          border-top-color: @background-color-dark;
+        }
+      }
+
+      &[data-placement='right'] {
+        border-left: none;
+        border-right-color: @border-color-dark;
+        right: 100%;
+
+        &::before {
+          border-right-color: @background-color-dark;
+        }
+      }
+
+      &[data-placement='left'] {
+        border-left-color: @border-color-dark;
+
+        &::before {
+          border-left-color: @background-color-dark;
+        }
       }
     }
   }

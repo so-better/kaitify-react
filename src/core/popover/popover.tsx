@@ -1,7 +1,9 @@
 import React, { forwardRef, useEffect, useId, useImperativeHandle, useMemo, useRef, useState } from 'react'
+import classNames from 'classnames'
 import { createPopper, Instance } from '@popperjs/core'
 import { event as DapEvent } from 'dap-util'
 import { CSSTransition } from 'react-transition-group'
+import { useEditor } from '@/hooks'
 import { Teleport } from '../teleport'
 import { PopoverPropsType, PopoverPlacementType, PopoverRefType } from './props'
 import styles from './style.module.less'
@@ -12,6 +14,8 @@ import styles from './style.module.less'
 const Popover = forwardRef<PopoverRefType, PopoverPropsType>(({ placement = 'bottom', trigger = 'hover', delay = 0, animation = 'translate', ...props }, ref) => {
   //唯一id
   const uid = useId()
+  //深色模式
+  const { dark } = useEditor()
   //是否显示
   const [visible, setVisible] = useState<boolean>(false)
   //浮层真实位置
@@ -223,7 +227,15 @@ const Popover = forwardRef<PopoverRefType, PopoverPropsType>(({ placement = 'bot
 
   return (
     <>
-      <div ref={referRef} className={styles['kaitify-popover-refer']} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={handleClick}>
+      <div
+        ref={referRef}
+        className={classNames(styles['kaitify-popover-refer'], {
+          [styles['kaitify-dark']]: dark
+        })}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onClick={handleClick}
+      >
         {props.refer}
       </div>
       <Teleport to='body'>
@@ -245,7 +257,16 @@ const Popover = forwardRef<PopoverRefType, PopoverPropsType>(({ placement = 'bot
           onExiting={onHiding}
           onExited={onHidden}
         >
-          <div ref={popoverRef} className={styles['kaitify-popover']} onMouseLeave={handleMouseLeave} data-arrow={props.arrow} data-placement={realPlacement} style={{ zIndex: props.zIndex ?? 10 }}>
+          <div
+            ref={popoverRef}
+            className={classNames(styles['kaitify-popover'], {
+              [styles['kaitify-dark']]: dark
+            })}
+            onMouseLeave={handleMouseLeave}
+            data-arrow={props.arrow}
+            data-placement={realPlacement}
+            style={{ zIndex: props.zIndex ?? 10 }}
+          >
             {/* 主体 */}
             <div className={styles['kaitify-popover-wrapper']}>
               {/* 内容区域 */}

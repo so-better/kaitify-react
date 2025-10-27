@@ -8,9 +8,10 @@ import { MenuRefType } from '../../props'
 import Menu from '../../menu'
 import { LinkMenuPropsType } from './props'
 import styles from './style.module.less'
+import classNames from 'classnames'
 
 export default function LinkMenu(props: LinkMenuPropsType) {
-  const { state, t } = useEditor()
+  const { state, t, dark } = useEditor()
 
   //菜单组件实例
   const menuRef = useRef<MenuRefType | null>(null)
@@ -108,7 +109,11 @@ export default function LinkMenu(props: LinkMenuPropsType) {
       popover
       popoverProps={{ width: props.popoverProps?.width ?? 300, maxHeight: props.popoverProps?.maxHeight, minWidth: props.popoverProps?.minWidth, animation: props.popoverProps?.animation, arrow: props.popoverProps?.arrow, placement: props.popoverProps?.placement, trigger: props.popoverProps?.trigger, zIndex: props.popoverProps?.zIndex, onShow: menuShow }}
       customPopover={
-        <div className={styles['kaitify-link']}>
+        <div
+          className={classNames(styles['kaitify-link'], {
+            [styles['kaitify-dark']]: dark
+          })}
+        >
           {isActive ? (
             // 修改链接
             <>
@@ -139,37 +144,4 @@ export default function LinkMenu(props: LinkMenuPropsType) {
       <Icon name='kaitify-icon-link' />
     </Menu>
   )
-}
-
-{
-  /* <template>
-  <Menu ref="menuRef" :disabled="isDisabled" :active="isActive" popover :popover-props="{ width: popoverProps?.width ?? 300, maxHeight: popoverProps?.maxHeight, minWidth: popoverProps?.minWidth, animation: popoverProps?.animation, arrow: popoverProps?.arrow, placement: popoverProps?.placement, trigger: popoverProps?.trigger, zIndex: popoverProps?.zIndex }" @popover-show="menuShow">
-    <Icon name="kaitify-icon-link" />
-    <template #popover>
-      <div class="kaitify-link">
-        <!-- 修改链接 -->
-        <template v-if="isActive">
-          <input v-model.trim="updateData.href" :placeholder="t('链接地址')" type="url" />
-          <div class="kaitify-link-footer">
-            <Checkbox v-model="updateData.newOpen" :label="t('新窗口打开')" />
-            <Button @click="update" :disabled="!updateData.href">{{ t('更新') }}</Button>
-          </div>
-        </template>
-        <!-- 插入链接 -->
-        <template v-else>
-          <input v-if="state.editor?.selection.collapsed()" v-model.trim="formData.text" :placeholder="t('链接文字')" type="text" />
-          <input v-model.trim="formData.href" :placeholder="t('链接地址')" type="url" />
-          <div class="kaitify-link-footer">
-            <Checkbox v-model="formData.newOpen" :label="t('新窗口打开')" />
-            <Button @click="insert" :disabled="!formData.href || (state.editor?.selection.collapsed() && !formData.text)">{{ t('插入') }}</Button>
-          </div>
-        </template>
-      </div>
-    </template>
-  </Menu>
-</template>
-<script setup lang="ts">
-
-</script>
-<style src="./style.less" scoped></style> */
 }

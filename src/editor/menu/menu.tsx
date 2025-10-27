@@ -28,7 +28,7 @@ const Menu = forwardRef<MenuRefType, MenuPropsType>(
     ref
   ) => {
     const uid = useId()
-    const { el } = useEditor()
+    const { el, dark } = useEditor()
     //popover组件实例
     const popoverRef = useRef<PopoverRefType | null>(null)
     //popover浮层是否显示
@@ -147,14 +147,18 @@ const Menu = forwardRef<MenuRefType, MenuPropsType>(
           {props.customPopover}
           {/* 可选浮层内容 */}
           {!props.customPopover && data.length > 0 && (
-            <div className={styles['kaitify-menu-options']}>
+            <div
+              className={classNames(styles['kaitify-menu-options'], {
+                [styles['kaitify-dark']]: dark
+              })}
+            >
               {data.map(item => (
                 <div
                   key={item.value}
                   onClick={() => onSelect(item)}
-                  data-disabled={props.itemDisabled?.(item)}
                   className={classNames(styles['kaitify-menu-option'], {
-                    [styles['kaitify-menu-option-active']]: props.itemActive?.(item) ?? false
+                    [styles['kaitify-menu-option-active']]: props.itemActive?.(item),
+                    [styles['kaitify-disabled']]: props.itemDisabled?.(item)
                   })}
                 >
                   {props.customIcon ? renderSlot(item, props.customIcon) : !!item.icon && <Icon name={item.icon} className={styles['kaitify-menu-option-icon']} />}

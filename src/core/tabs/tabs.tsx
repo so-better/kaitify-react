@@ -1,14 +1,21 @@
 import { useState } from 'react'
 import classNames from 'classnames'
+import { useEditor } from '@/hooks'
 import { TabsPropsType } from './props'
 import styles from './style.module.less'
 
 export default function Tabs({ data = [], ...props }: TabsPropsType) {
+  const { dark } = useEditor()
+
   //当前选项
   const [current, setCurrent] = useState<string | number>(props.defaultValue)
 
   return (
-    <div className={styles['kaitify-tabs']}>
+    <div
+      className={classNames(styles['kaitify-tabs'], {
+        [styles['kaitify-dark']]: dark
+      })}
+    >
       <div className={styles['kaitify-tabs-header']}>
         {data.map(item => (
           <div

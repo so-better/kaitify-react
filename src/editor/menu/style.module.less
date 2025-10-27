@@ -17,7 +17,7 @@
     font-size: 12px;
     transform: scale(0.72);
     margin-left: 4px;
-    transition: transform 200ms linear;
+    transition: transform 300ms linear;
 
     &.kaitify-menu-caret-rotate {
       transform: scale(0.72) rotate(180deg);
@@ -50,25 +50,31 @@
       margin-right: 4px;
     }
 
-    &:not([data-disabled]):hover {
+    &:not(.kaitify-disabled):hover {
       cursor: pointer;
       background: @lightest-theme;
       color: @theme;
     }
 
-    &:not([data-disabled]):active {
+    &:not(.kaitify-disabled):active {
       background: @lighter-theme;
       color: @theme;
     }
 
-    &:not([data-disabled]).kaitify-menu-option-active {
+    &:not(.kaitify-disabled).kaitify-menu-option-active {
       background: @lighter-theme;
       color: @theme;
     }
 
-    &[data-disabled] {
+    &.kaitify-disabled {
       opacity: 0.6;
       cursor: not-allowed;
+    }
+  }
+
+  &.kaitify-dark {
+    .kaitify-menu-option {
+      color: @font-color-dark;
     }
   }
 }

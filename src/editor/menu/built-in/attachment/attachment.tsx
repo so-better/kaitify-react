@@ -1,5 +1,6 @@
 import React, { useMemo, useRef, useState } from 'react'
 import { file as DapFile } from 'dap-util'
+import classNames from 'classnames'
 import { SetAttachmentOptionType, UpdateAttachmentOptionType } from '@kaitify/core'
 import { Tabs, TabsPropsType } from '@/core/tabs'
 import { Button } from '@/core/button'
@@ -17,7 +18,7 @@ export default function AttachmentMenu({
   },
   ...props
 }: AttachmentMenuPropsType) {
-  const { state, t } = useEditor()
+  const { state, t, dark } = useEditor()
   //菜单组件实例
   const menuRef = useRef<MenuRefType | null>(null)
   //远程附件数据
@@ -71,7 +72,7 @@ export default function AttachmentMenu({
   }, [state.editor, props.disabled, isActive])
 
   //浮层显示
-  const menuShow = () => {
+  const menuShowing = () => {
     const info = state.editor.value?.commands.getAttachmentInfo?.()
     if (info) {
       updateData.text = info.text
@@ -128,10 +129,14 @@ export default function AttachmentMenu({
       disabled={isDisabled}
       active={isActive}
       popover
-      popoverProps={{ width: props.popoverProps?.width ?? 300, maxHeight: props.popoverProps?.maxHeight, minWidth: props.popoverProps?.minWidth, animation: props.popoverProps?.animation, arrow: props.popoverProps?.arrow, placement: props.popoverProps?.placement, trigger: props.popoverProps?.trigger, zIndex: props.popoverProps?.zIndex, onShow: menuShow }}
+      popoverProps={{ width: props.popoverProps?.width ?? 300, maxHeight: props.popoverProps?.maxHeight, minWidth: props.popoverProps?.minWidth, animation: props.popoverProps?.animation, arrow: props.popoverProps?.arrow, placement: props.popoverProps?.placement, trigger: props.popoverProps?.trigger, zIndex: props.popoverProps?.zIndex, onShowing: menuShowing }}
       customPopover={
         isActive ? (
-          <div className={styles['kaitify-attachment-update']}>
+          <div
+            className={classNames(styles['kaitify-attachment-update'], {
+              [styles['kaitify-dark']]: dark
+            })}
+          >
             <input value={updateData.text} onChange={e => setUpdateData(oldValue => ({ ...oldValue, text: e.target.value }))} placeholder={t('附件名称')} type='text' />
             <input value={updateData.url} onChange={e => setUpdateData(oldValue => ({ ...oldValue, url: e.target.value }))} placeholder={t('附件地址')} type='url' />
             <div className={styles['kaitify-attachment-update-footer']}>
@@ -145,7 +150,11 @@ export default function AttachmentMenu({
             {current => (
               <>
                 {current === 'remote' && (
-                  <div className={styles['kaitify-attachment-remote']}>
+                  <div
+                    className={classNames(styles['kaitify-attachment-remote'], {
+                      [styles['kaitify-dark']]: dark
+                    })}
+                  >
                     <input value={remoteData.text} onChange={e => setRemoteData(oldValue => ({ ...oldValue, text: e.target.value }))} placeholder={t('附件名称')} type='text' />
                     <input value={remoteData.url} onChange={e => setRemoteData(oldValue => ({ ...oldValue, url: e.target.value }))} placeholder={t('附件地址')} type='url' />
                     <div className={styles['kaitify-attachment-remote-footer']}>
@@ -156,7 +165,11 @@ export default function AttachmentMenu({
                   </div>
                 )}
                 {current === 'upload' && (
-                  <div className={styles['kaitify-attachment-upload']}>
+                  <div
+                    className={classNames(styles['kaitify-attachment-upload'], {
+                      [styles['kaitify-dark']]: dark
+                    })}
+                  >
                     <input type='file' accept='*' onChange={fileChange} />
                     <Icon name='kaitify-icon-upload' />
                   </div>

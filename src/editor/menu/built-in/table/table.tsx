@@ -8,7 +8,7 @@ import { TableGridType, TableMenuPropsType } from './props'
 import styles from './style.module.less'
 
 export default function TableMenu({ maxRows = 10, maxColumns = 10, ...props }: TableMenuPropsType) {
-  const { state } = useEditor()
+  const { state, dark } = useEditor()
 
   //菜单组件实例
   const menuRef = useRef<MenuRefType | null>(null)
@@ -105,7 +105,11 @@ export default function TableMenu({ maxRows = 10, maxColumns = 10, ...props }: T
       popover
       popoverProps={{ width: props.popoverProps?.width, maxHeight: props.popoverProps?.maxHeight, minWidth: props.popoverProps?.minWidth, animation: props.popoverProps?.animation, arrow: props.popoverProps?.arrow, placement: props.popoverProps?.placement, trigger: props.popoverProps?.trigger, zIndex: props.popoverProps?.zIndex }}
       customPopover={
-        <div className={styles['kaitify-table']}>
+        <div
+          className={classNames(styles['kaitify-table'], {
+            [styles['kaitify-dark']]: dark
+          })}
+        >
           <table>
             {tableGrids.map((row, rowIndex) => (
               <tr key={rowIndex}>

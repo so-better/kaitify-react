@@ -9,6 +9,7 @@ import Menu from '../../menu'
 import { Icon } from '@/core/icon'
 import styles from './style.module.less'
 import { Button } from '@/core/button'
+import classNames from 'classnames'
 
 export default function ImageMenu({
   tabs = {
@@ -17,7 +18,7 @@ export default function ImageMenu({
   },
   ...props
 }: ImageMenuPropsType) {
-  const { state, t } = useEditor()
+  const { state, t, dark } = useEditor()
 
   //菜单组件实例
   const menuRef = useRef<MenuRefType | null>(null)
@@ -70,7 +71,7 @@ export default function ImageMenu({
   }, [state.editor])
 
   //浮层显示
-  const menuShow = () => {
+  const menuShowing = () => {
     const imageNode = state.editor.value?.commands.getImage?.()
     if (imageNode) {
       updateData.src = imageNode.marks!.src as string
@@ -127,10 +128,14 @@ export default function ImageMenu({
       disabled={isDisabled}
       active={isActive}
       popover
-      popoverProps={{ width: props.popoverProps?.width ?? 300, maxHeight: props.popoverProps?.maxHeight, minWidth: props.popoverProps?.minWidth, animation: props.popoverProps?.animation, arrow: props.popoverProps?.arrow, placement: props.popoverProps?.placement, trigger: props.popoverProps?.trigger, zIndex: props.popoverProps?.zIndex, onShow: menuShow }}
+      popoverProps={{ width: props.popoverProps?.width ?? 300, maxHeight: props.popoverProps?.maxHeight, minWidth: props.popoverProps?.minWidth, animation: props.popoverProps?.animation, arrow: props.popoverProps?.arrow, placement: props.popoverProps?.placement, trigger: props.popoverProps?.trigger, zIndex: props.popoverProps?.zIndex, onShowing: menuShowing }}
       customPopover={
         isActive ? (
-          <div className={styles['kaitify-image-update']}>
+          <div
+            className={classNames(styles['kaitify-image-update'], {
+              [styles['kaitify-dark']]: dark
+            })}
+          >
             <input value={updateData.alt} onChange={e => setUpdateData(oldValue => ({ ...oldValue, alt: e.target.value }))} placeholder={t('图片名称')} type='text' />
             <input value={updateData.src} onChange={e => setUpdateData(oldValue => ({ ...oldValue, src: e.target.value }))} placeholder={t('图片地址')} type='url' />
             <div className={styles['kaitify-image-update-footer']}>
@@ -144,7 +149,11 @@ export default function ImageMenu({
             {current => (
               <>
                 {current === 'remote' && (
-                  <div className={styles['kaitify-image-remote']}>
+                  <div
+                    className={classNames(styles['kaitify-image-remote'], {
+                      [styles['kaitify-dark']]: dark
+                    })}
+                  >
                     <input value={remoteData.alt} onChange={e => setRemoteData(oldValue => ({ ...oldValue, alt: e.target.value }))} placeholder={t('图片名称')} type='text' />
                     <input value={remoteData.src} onChange={e => setRemoteData(oldValue => ({ ...oldValue, src: e.target.value }))} placeholder={t('图片地址')} type='url' />
                     <div className={styles['kaitify-image-remote-footer']}>
@@ -155,7 +164,11 @@ export default function ImageMenu({
                   </div>
                 )}
                 {current === 'upload' && (
-                  <div className={styles['kaitify-image-upload']}>
+                  <div
+                    className={classNames(styles['kaitify-image-upload'], {
+                      [styles['kaitify-dark']]: dark
+                    })}
+                  >
                     <input type='file' accept='*' onChange={fileChange} />
                     <Icon name='kaitify-icon-upload' />
                   </div>

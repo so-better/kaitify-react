@@ -6,11 +6,12 @@ import { MenuRefType } from '../../props'
 import Menu from '../../menu'
 import { MathMenuPropsType } from './props'
 import styles from './style.module.less'
+import classNames from 'classnames'
 
 //  \sum_{i=1}^{n} i = \frac{n(n+1)}{2}
 
 export default function MathMenu(props: MathMenuPropsType) {
-  const { state, t } = useEditor()
+  const { state, t, dark } = useEditor()
 
   //菜单组件实例
   const menuRef = useRef<MenuRefType | null>(null)
@@ -42,7 +43,7 @@ export default function MathMenu(props: MathMenuPropsType) {
   }, [state.editor, props.disabled])
 
   //浮层显示
-  const menuShow = () => {
+  const menuShowing = () => {
     const mathNode = state.editor.value?.commands.getMath?.()
     setMathText(mathNode ? (mathNode.marks!['kaitify-math'] as string) || '' : '')
   }
@@ -69,9 +70,13 @@ export default function MathMenu(props: MathMenuPropsType) {
       disabled={isDisabled}
       active={isActive}
       popover
-      popoverProps={{ width: props.popoverProps?.width ?? 300, maxHeight: props.popoverProps?.maxHeight, minWidth: props.popoverProps?.minWidth, animation: props.popoverProps?.animation, arrow: props.popoverProps?.arrow, placement: props.popoverProps?.placement, trigger: props.popoverProps?.trigger, zIndex: props.popoverProps?.zIndex, onShow: menuShow }}
+      popoverProps={{ width: props.popoverProps?.width ?? 300, maxHeight: props.popoverProps?.maxHeight, minWidth: props.popoverProps?.minWidth, animation: props.popoverProps?.animation, arrow: props.popoverProps?.arrow, placement: props.popoverProps?.placement, trigger: props.popoverProps?.trigger, zIndex: props.popoverProps?.zIndex, onShowing: menuShowing }}
       customPopover={
-        <div className={styles['kaitify-math']}>
+        <div
+          className={classNames(styles['kaitify-math'], {
+            [styles['kaitify-dark']]: dark
+          })}
+        >
           <textarea className={styles['kaitify-math-textarea']} value={mathText} onChange={e => setMathText(e.target.value)} placeholder={t('输入Latex数学公式')} />
           <div className={styles['kaitify-math-footer']}>
             {isActive ? (

@@ -8,10 +8,13 @@
   line-height: @line-height;
   border-radius: @border-radius;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.06);
-}
 
-html[kaitify-dark] .kaitify-bubble {
-  box-shadow: 2px 2px 5px rgba(255, 255, 255, 0.04);
+  &.kaitify-dark {
+    background: @background-color-dark;
+    border-color: @border-color-dark;
+    color: @font-color-dark;
+    box-shadow: 2px 2px 5px rgba(255, 255, 255, 0.04);
+  }
 }
 
 .kaitify-bubble-enter {

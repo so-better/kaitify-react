@@ -15,7 +15,7 @@ const Bubble = forwardRef<BubbleRefType, BubblePropsType>((props, ref) => {
   //唯一id
   const uid = useId()
   //上下文数据
-  const { state, disabled, isMouseDown, el } = useEditor()
+  const { state, disabled, isMouseDown, el, dark } = useEditor()
 
   //气泡元素
   const elRef = useRef<HTMLDivElement | null>(null)
@@ -221,7 +221,17 @@ const Bubble = forwardRef<BubbleRefType, BubblePropsType>((props, ref) => {
         onExiting={onHiding}
         onExited={onHidden}
       >
-        <div ref={elRef} className={classNames(styles['kaitify-bubble'], props.className)} style={{ zIndex: 5, ...props.style }}>
+        <div
+          ref={elRef}
+          className={classNames(
+            styles['kaitify-bubble'],
+            {
+              [styles['kaitify-dark']]: dark
+            },
+            props.className
+          )}
+          style={{ zIndex: 5, ...props.style }}
+        >
           {props.children}
         </div>
       </CSSTransition>

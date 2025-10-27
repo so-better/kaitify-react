@@ -27,6 +27,10 @@
       cursor: pointer;
     }
   }
+
+  &.kaitify-dark {
+    color: @font-color-dark;
+  }
 }
 
 .kaitify-attachment-remote {
@@ -67,6 +71,18 @@
     align-items: center;
     width: 100%;
   }
+
+  &.kaitify-dark {
+    input[type='text'],
+    input[type='url'] {
+      border-bottom-color: @border-color-dark;
+      color: @font-color-dark;
+
+      &:focus {
+        border-bottom-color: @theme;
+      }
+    }
+  }
 }
 
 .kaitify-attachment-update {
@@ -106,5 +122,17 @@
     justify-content: flex-end;
     align-items: center;
     width: 100%;
+  }
+
+  &.kaitify-dark {
+    input[type='text'],
+    input[type='url'] {
+      border-bottom-color: @border-color-dark;
+      color: @font-color-dark;
+
+      &:focus {
+        border-bottom-color: @theme;
+      }
+    }
   }
 }

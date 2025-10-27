@@ -10,6 +10,7 @@ import { MenuRefType } from '../../props'
 import Menu from '../../menu'
 import { VideoMenuPropsType } from './props'
 import styles from './style.module.less'
+import classNames from 'classnames'
 
 export default function VideoMenu({
   tabs = {
@@ -18,7 +19,7 @@ export default function VideoMenu({
   },
   ...props
 }: VideoMenuPropsType) {
-  const { state, t } = useEditor()
+  const { state, t, dark } = useEditor()
 
   //菜单组件实例
   const menuRef = useRef<MenuRefType | null>(null)
@@ -101,7 +102,11 @@ export default function VideoMenu({
           {current => (
             <>
               {current === 'remote' && (
-                <div className={styles['kaitify-video-remote']}>
+                <div
+                  className={classNames(styles['kaitify-video-remote'], {
+                    [styles['kaitify-dark']]: dark
+                  })}
+                >
                   <input value={remoteData.src} onChange={e => setRemoteData(oldValue => ({ ...oldValue, src: e.target.value }))} placeholder={t('视频地址')} type='url' />
                   <div className={styles['kaitify-video-remote-footer']}>
                     <Checkbox checked={remoteData.autoplay} onChange={v => setRemoteData(oldValue => ({ ...oldValue, autoplay: v }))} label={t('是否自动播放')} />
