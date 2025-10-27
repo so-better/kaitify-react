@@ -1,10 +1,12 @@
 import { forwardRef, ReactNode, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
+import { createRoot, Root } from 'react-dom/client'
 import { Editor } from '@kaitify/core'
 import classNames from 'classnames'
 import { translate } from '@/locale'
 import { Teleport } from '@/core/teleport'
 import { EditorContext } from '@/hooks/use-editor'
 import { StateType, WrapperPropsType, WrapperRefType } from './props'
+import { createReactNodes } from './render'
 import styles from './style.module.less'
 
 /**
@@ -16,11 +18,11 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
   //编辑器实例
   const editor = useRef<Editor | undefined>(undefined)
   //是否编辑器内部修改值
-  const [internalModification, setInternalModification] = useState<boolean>(false)
+  const [internalModification, setInternalModification] = useState(false)
   //是否鼠标按下
-  const [isMouseDown, setIsMouseDown] = useState<boolean>(false)
+  const [isMouseDown, setIsMouseDown] = useState(false)
   //编辑器更新标记
-  const [updateKey, setUpdateKey] = useState<number>(0)
+  const [updateKey, setUpdateKey] = useState(0)
   //编辑器响应式对象
   const state = useMemo<StateType>(() => {
     return {
@@ -34,6 +36,7 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
   }, [updateKey])
   //编辑器是否创建完成
   const isCreated = useRef(false)
+  const rootRef = useRef<Root | null>(null)
 
   //渲染插槽
   const renderSlot = (value?: ReactNode | ((props: StateType) => ReactNode)) => {
@@ -93,10 +96,17 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
         props.onCreated?.(ed)
         setUpdateKey(oldValue => oldValue + 1)
         isCreated.current = true
+        rootRef.current = createRoot(elRef.current!)
       },
       onSelectionUpdate(selection) {
         props.onSelectionUpdate?.apply(this, [selection])
         setUpdateKey(oldValue => oldValue + 1)
+      },
+      onUpdateView(init) {
+        console.log('init', init)
+        // const nodes = createReactNodes(this)
+        // rootRef.current?.render(<>{nodes}</>)
+        return true
       },
       onChange: v => {
         setInternalModification(true)
@@ -112,7 +122,7 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
 
   //监听编辑器的值
   useEffect(() => {
-    if (editor.current) {
+    if (editor.current && isCreated.current) {
       //内部改变
       if (internalModification) {
         setInternalModification(false)
@@ -133,7 +143,7 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
 
   //监听以下属性变化，对编辑器进行更新
   useEffect(() => {
-    if (editor.current) {
+    if (editor.current && isCreated.current) {
       editor.current.setEditable(!props.disabled)
       editor.current.setDark(props.dark ?? false)
       editor.current.allowCopy = props.allowCopy ?? true
@@ -153,6 +163,7 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
     return () => {
       //解决StrictMode模式下第一次还没创建完成就销毁导致的一系列问题，只有创建完成了才能进行销毁
       if (isCreated.current) {
+        rootRef.current?.unmount()
         editor.current?.destroy()
         editor.current = undefined
       }
