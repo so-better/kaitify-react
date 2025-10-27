@@ -31,7 +31,7 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
         value: editor.current?.selection
       }
     }
-  }, [updateKey, props.locale, editor.current])
+  }, [updateKey])
 
   //渲染插槽
   const renderSlot = (value?: ReactNode | ((props: StateType) => ReactNode)) => {
@@ -79,15 +79,21 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
       onBlur: props.onBlur,
       onBeforeUpdateView: props.onBeforeUpdateView,
       onAfterUpdateView: props.onAfterUpdateView,
-      onCreate: ed => (editor.current = ed),
-      onCreated: props.onCreated,
+      onCreate(ed) {
+        editor.current = ed
+        setUpdateKey(oldValue => oldValue + 1)
+      },
+      onCreated(ed) {
+        props.onCreated?.(ed)
+        setUpdateKey(oldValue => oldValue + 1)
+      },
+      onSelectionUpdate(selection) {
+        props.onSelectionUpdate?.apply(this, [selection])
+        setUpdateKey(oldValue => oldValue + 1)
+      },
       onChange: v => {
         setInternalModification(true)
         props.onChange?.(v)
-      },
-      onSelectionUpdate(selection) {
-        setUpdateKey(oldValue => oldValue + 1)
-        props.onSelectionUpdate?.apply(this, [selection])
       }
     })
   }
@@ -132,8 +138,9 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
     }
   }, [props.disabled, props.dark, props.allowCopy, props.allowCut, props.allowPaste, props.allowPasteHtml, props.priorityPasteFiles])
 
-  //创建编辑器
+  //初始化
   useEffect(() => {
+    //创建编辑器
     createEditor()
     //卸载时销毁编辑器
     return () => {
