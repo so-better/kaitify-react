@@ -32,6 +32,8 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
       }
     }
   }, [updateKey])
+  //编辑器是否创建完成
+  const isCreated = useRef(false)
 
   //渲染插槽
   const renderSlot = (value?: ReactNode | ((props: StateType) => ReactNode)) => {
@@ -43,6 +45,10 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
 
   //创建编辑器
   const createEditor = async () => {
+    //StrictMode模式下第二次渲染存在这个了，则阻止创建
+    if (editor.current) {
+      return
+    }
     Editor.configure({
       el: elRef.current!,
       value: props.value ?? '',
@@ -86,6 +92,7 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
       onCreated(ed) {
         props.onCreated?.(ed)
         setUpdateKey(oldValue => oldValue + 1)
+        isCreated.current = true
       },
       onSelectionUpdate(selection) {
         props.onSelectionUpdate?.apply(this, [selection])
@@ -144,8 +151,11 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
     createEditor()
     //卸载时销毁编辑器
     return () => {
-      editor.current?.destroy()
-      editor.current = undefined
+      //解决StrictMode模式下第一次还没创建完成就销毁导致的一系列问题，只有创建完成了才能进行销毁
+      if (isCreated.current) {
+        editor.current?.destroy()
+        editor.current = undefined
+      }
     }
   }, [])
 
