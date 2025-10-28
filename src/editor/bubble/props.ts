@@ -3,7 +3,7 @@ import { Instance } from '@popperjs/core'
 import { CSSProperties, ReactNode } from 'react'
 
 /**
- * 气泡组件的属性类型
+ * 气泡栏组件的属性类型
  */
 export type BubblePropsType = {
   /**
@@ -31,27 +31,27 @@ export type BubblePropsType = {
    */
   className?: string
   /**
-   * 气泡显示前触发的事件
+   * 气泡栏显示前触发的事件
    */
   onShow?: (el: Element) => void
   /**
-   * 气泡显示时触发的事件
+   * 气泡栏显示时触发的事件
    */
   onShowing?: (el: Element) => void
   /**
-   * 气泡显示后触发的事件
+   * 气泡栏显示后触发的事件
    */
   onShown?: (el: Element) => void
   /**
-   * 气泡隐藏前触发的事件
+   * 气泡栏隐藏前触发的事件
    */
   onHide?: (el: Element) => void
   /**
-   * 气泡隐藏时触发的事件
+   * 气泡栏隐藏时触发的事件
    */
   onHiding?: (el: Element) => void
   /**
-   * 气泡隐藏后触发的事件
+   * 气泡栏隐藏后触发的事件
    */
   onHidden?: (el: Element) => void
 }
