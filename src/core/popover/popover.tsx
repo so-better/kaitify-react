@@ -17,7 +17,7 @@ const Popover = forwardRef<PopoverRefType, PopoverPropsType>(({ placement = 'bot
   //深色模式
   const { dark } = useEditor()
   //是否显示
-  const [visible, setVisible] = useState<boolean>(false)
+  const [visible, setVisible] = useState(false)
   //浮层真实位置
   const [realPlacement, setRealPlacement] = useState<PopoverPlacementType>(placement)
   //目标元素

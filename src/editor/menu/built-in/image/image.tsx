@@ -66,7 +66,7 @@ export default function ImageMenu({
     return props.disabled ?? false
   }, [state.editor, props.disabled])
   //是否激活
-  const isActive = useMemo<boolean>(() => {
+  const isActive = useMemo(() => {
     return !!state.editor.value?.commands.getImage?.()
   }, [state.editor])
 

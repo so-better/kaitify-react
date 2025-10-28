@@ -23,7 +23,7 @@ const Bubble = forwardRef<BubbleRefType, BubblePropsType>((props, ref) => {
   const popperInstance = useRef<Instance | null>(null)
 
   //是否显示气泡栏
-  const shouldVisible = useMemo<boolean>(() => {
+  const shouldVisible = useMemo(() => {
     if (disabled) {
       return false
     }
@@ -76,7 +76,7 @@ const Bubble = forwardRef<BubbleRefType, BubblePropsType>((props, ref) => {
   }
   //更新气泡位置
   const updatePosition = () => {
-    if (!props.visible || !elRef.current || !state.editor) {
+    if (!shouldVisible || !elRef.current || !state.editor.value) {
       return
     }
     const domRect = getVirtualDomRect()!
@@ -130,7 +130,7 @@ const Bubble = forwardRef<BubbleRefType, BubblePropsType>((props, ref) => {
   //滚动监听
   const onScroll = (el: HTMLElement) => {
     DapEvent.on(el, `scroll.kaitify_bubble_${uid}`, () => {
-      if (props.visible) {
+      if (shouldVisible) {
         updatePosition()
       }
     })
@@ -184,13 +184,15 @@ const Bubble = forwardRef<BubbleRefType, BubblePropsType>((props, ref) => {
     updatePosition()
   }, [state.selection])
 
-  //监听编辑器实例
+  //滚动监听设置
   useEffect(() => {
-    if (el) {
-      //设置滚动监听
+    if (el && shouldVisible) {
+      //先移滚动除监听
+      removeScroll(el)
+      //再设置滚动监听
       onScroll(el)
     }
-  }, [el])
+  }, [el, shouldVisible])
 
   useEffect(() => {
     return () => {
