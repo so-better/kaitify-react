@@ -8,14 +8,6 @@ title: align-justify 两端对齐
 
 ## 使用方法
 
-- 引入组件
-
-```ts
-import { AlignJustifyMenu } from '@kaitify/react'
-```
-
-- 在 `Wrapper` 包裹器插槽中使用
-
 ```tsx
 import { useState } from 'react'
 import { Wrapper, AlignJustifyMenu } from '@kaitify/react'

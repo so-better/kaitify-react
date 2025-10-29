@@ -8,14 +8,6 @@ title: color 文本字体颜色
 
 ## 使用方法
 
-- 引入组件
-
-```ts
-import { ColorMenu } from '@kaitify/vue'
-```
-
-- 在 `Wrapper` 包裹器插槽中使用
-
 ```tsx
 import { useState } from 'react'
 import { Wrapper, ColorMenu } from '@kaitify/react'

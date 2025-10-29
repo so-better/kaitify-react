@@ -8,14 +8,6 @@ title: align-left 左对齐
 
 ## 使用方法
 
-- 引入组件
-
-```ts
-import { AlignLeftMenu } from '@kaitify/react'
-```
-
-- 在 `Wrapper` 包裹器插槽中使用
-
 ```tsx
 import { useState } from 'react'
 import { Wrapper, AlignLeftMenu } from '@kaitify/react'

@@ -8,14 +8,6 @@ title: decrease-indent 减少缩进
 
 ## 使用方法
 
-- 引入组件
-
-```ts
-import { DecreaseIndentMenu } from '@kaitify/react'
-```
-
-- 在 `Wrapper` 包裹器插槽中使用
-
 ```tsx
 import { useState } from 'react'
 import { Wrapper, DecreaseIndentMenu } from '@kaitify/react'

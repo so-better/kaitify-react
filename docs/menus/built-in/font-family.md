@@ -8,14 +8,6 @@ title: font-family 字体
 
 ## 使用方法
 
-- 引入组件
-
-```ts
-import { FontFamilyMenu } from '@kaitify/react'
-```
-
-- 在 `Wrapper` 包裹器插槽中使用
-
 ```tsx
 import { useState } from 'react'
 import { Wrapper, FontFamilyMenu } from '@kaitify/react'

@@ -8,20 +8,14 @@ title: heading 标题
 
 ## 使用方法
 
-- 引入组件
+```tsx
+import { useState } from 'react'
+import { Wrapper, HeadingMenu } from '@kaitify/react'
 
-```ts
-import { HeadingMenu } from '@kaitify/vue'
-```
-
-- 在 `Wrapper` 包裹器插槽中使用
-
-```html
-<Wrapper v-model="content">
-  <template #before>
-    <HeadingMenu />
-  </template>
-</Wrapper>
+export default function App() {
+  const [content, setContent] = useState('<p>hello</p>')
+  return <Wrapper value={content} onChange={v => setContent(v)} before={<HeadingMenu />}></Wrapper>
+}
 ```
 
 ## Props 参数
@@ -63,28 +57,10 @@ import { HeadingMenu } from '@kaitify/vue'
 ]
 ```
 
-##### popoverProps <Badge type="danger" text="MenuPropsType['popoverProps']" />
+##### popoverProps <Badge type="danger" text="Omit<NonNullable<MenuPropsType['popoverProps']>, 'onShow' | 'onShowing' | 'onShown' | 'onHide' | 'onHiding' | 'onHidden'>" />
 
-浮层属性配置，同 `Menu` 的 `popoverProps` 属性
+浮层属性配置，参考 `Menu` 的 `popoverProps` 属性
 
 ##### shortcut <Badge type="danger" text="{ [key: MenuDataType['value']]: (e: KeyboardEvent) => boolean }" />
 
 菜单快捷键实现，继承自 `Menu` 组件的同名属性，具体使用可参考 [Menu 组件的 shortcut](/guide/menu#shortcut)
-
-## 代码示例
-
-<Wrapper :dark="isDark" v-model="content" placeholder="输入内容..." style="width:100%;height:200px;">
-  <template #before>
-    <div style="margin-bottom:10px;">
-      <HeadingMenu />
-    </div>
-  </template>
-</Wrapper>
-
-<script lang="ts" setup>
-import { useData } from 'vitepress'
-import { Wrapper,HeadingMenu } from '../../../lib/kaitify-vue.es.js'
-import { ref, computed } from 'vue'
-const { isDark } = useData()
-const content = ref('<p>hello</p>')
-</script>

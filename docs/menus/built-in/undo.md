@@ -8,20 +8,14 @@ title: undo 撤销
 
 ## 使用方法
 
-- 引入组件
+```tsx
+import { useState } from 'react'
+import { Wrapper, UndoMenu } from '@kaitify/react'
 
-```ts
-import { UndoMenu } from '@kaitify/vue'
-```
-
-- 在 `Wrapper` 包裹器插槽中使用
-
-```html
-<Wrapper v-model="content">
-  <template #before>
-    <UndoMenu />
-  </template>
-</Wrapper>
+export default function App() {
+  const [content, setContent] = useState('<p>hello</p>')
+  return <Wrapper value={content} onChange={v => setContent(v)} before={<UndoMenu />}></Wrapper>
+}
 ```
 
 ## Props 参数
@@ -29,21 +23,3 @@ import { UndoMenu } from '@kaitify/vue'
 ##### disabled <Badge type="danger" text="boolean" />
 
 是否禁用该菜单，默认为 `false`
-
-## 代码示例
-
-<Wrapper :dark="isDark" v-model="content" placeholder="输入内容..." style="width:100%;height:200px;">
-  <template #before>
-    <div style="margin-bottom:10px;">
-      <UndoMenu />
-    </div>
-  </template>
-</Wrapper>
-
-<script lang="ts" setup>
-import { useData } from 'vitepress'
-import { Wrapper, UndoMenu } from '../../../lib/kaitify-vue.es.js'
-import { ref } from 'vue'
-const { isDark } = useData()
-const content = ref('<p>hello</p>')
-</script>

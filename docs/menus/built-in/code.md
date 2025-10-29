@@ -8,14 +8,6 @@ title: code 行内代码
 
 ## 使用方法
 
-- 引入组件
-
-```ts
-import { CodeMenu } from '@kaitify/react'
-```
-
-- 在 `Wrapper` 包裹器插槽中使用
-
 ```tsx
 import { useState } from 'react'
 import { Wrapper, CodeMenu } from '@kaitify/react'

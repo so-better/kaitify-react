@@ -8,20 +8,14 @@ title: table-delete-row 表格删除行
 
 ## 使用方法
 
-- 引入组件
+```tsx
+import { useState } from 'react'
+import { Wrapper, TableDeleteRowMenu } from '@kaitify/react'
 
-```ts
-import { TableDeleteRowMenu } from '@kaitify/vue'
-```
-
-- 在 `Wrapper` 包裹器插槽中使用
-
-```html
-<Wrapper v-model="content">
-  <template #before>
-    <TableDeleteRowMenu />
-  </template>
-</Wrapper>
+export default function App() {
+  const [content, setContent] = useState('<p>hello</p>')
+  return <Wrapper value={content} onChange={v => setContent(v)} before={<TableDeleteRowMenu />}></Wrapper>
+}
 ```
 
 ## Props 参数
@@ -33,21 +27,3 @@ import { TableDeleteRowMenu } from '@kaitify/vue'
 ##### shortcut <Badge type="danger" text="(e: KeyboardEvent) => boolean" />
 
 菜单快捷键实现，继承自 `Menu` 组件的同名属性，具体使用可参考 [Menu 组件的 shortcut](/guide/menu#shortcut)
-
-## 代码示例
-
-<Wrapper :dark="isDark" v-model="content" placeholder="输入内容..." style="width:100%;height:200px;">
-  <template #before>
-    <div style="margin-bottom:10px;">
-      <TableDeleteRowMenu />
-    </div>
-  </template>
-</Wrapper>
-
-<script lang="ts" setup>
-import { useData } from 'vitepress'
-import { Wrapper, TableDeleteRowMenu } from '../../../lib/kaitify-vue.es.js'
-import { ref } from 'vue'
-const { isDark } = useData()
-const content = ref('<table><tr><td><br></td><td><br></td><td><br></td></tr><tr><td><br></td><td><br></td><td><br></td></tr><tr><td><br></td><td><br></td><td><br></td></tr></table>')
-</script>

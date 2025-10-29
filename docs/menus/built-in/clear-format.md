@@ -8,14 +8,6 @@ title: clear-format 清除格式
 
 ## 使用方法
 
-- 引入组件
-
-```ts
-import { ClearFormatMenu } from '@kaitify/react'
-```
-
-- 在 `Wrapper` 包裹器插槽中使用
-
 ```tsx
 import { useState } from 'react'
 import { Wrapper, ClearFormatMenu } from '@kaitify/react'

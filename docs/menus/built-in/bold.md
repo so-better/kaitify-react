@@ -8,14 +8,6 @@ title: bold 加粗
 
 ## 使用方法
 
-- 引入组件
-
-```ts
-import { BoldMenu } from '@kaitify/react'
-```
-
-- 在 `Wrapper` 包裹器插槽中使用
-
 ```tsx
 import { useState } from 'react'
 import { Wrapper, BoldMenu } from '@kaitify/react'

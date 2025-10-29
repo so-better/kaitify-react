@@ -8,20 +8,14 @@ title: unordered-list 无序列表
 
 ## 使用方法
 
-- 引入组件
+```tsx
+import { useState } from 'react'
+import { Wrapper, UnorderedListMenu } from '@kaitify/react'
 
-```ts
-import { UnorderedListMenu } from '@kaitify/vue'
-```
-
-- 在 `Wrapper` 包裹器插槽中使用
-
-```html
-<Wrapper v-model="content">
-  <template #before>
-    <UnorderedListMenu />
-  </template>
-</Wrapper>
+export default function App() {
+  const [content, setContent] = useState('<p>hello</p>')
+  return <Wrapper value={content} onChange={v => setContent(v)} before={<UnorderedListMenu />}></Wrapper>
+}
 ```
 
 ## Props 参数
@@ -30,24 +24,6 @@ import { UnorderedListMenu } from '@kaitify/vue'
 
 是否禁用该菜单，默认为 `false`
 
-##### popoverProps <Badge type="danger" text="MenuPropsType['popoverProps']" />
+##### popoverProps <Badge type="danger" text="Omit<NonNullable<MenuPropsType['popoverProps']>, 'onShow' | 'onShowing' | 'onShown' | 'onHide' | 'onHiding' | 'onHidden'>" />
 
-浮层属性配置，同 `Menu` 的 `popoverProps` 属性
-
-## 代码示例
-
-<Wrapper :dark="isDark" v-model="content" placeholder="输入内容..." style="width:100%;height:200px;">
-  <template #before>
-    <div style="margin-bottom:10px;">
-      <UnorderedListMenu />
-    </div>
-  </template>
-</Wrapper>
-
-<script lang="ts" setup>
-import { useData } from 'vitepress'
-import { Wrapper, UnorderedListMenu } from '../../../lib/kaitify-vue.es.js'
-import { ref } from 'vue'
-const { isDark } = useData()
-const content = ref('<p>hello</p>')
-</script>
+浮层属性配置，参考 `Menu` 的 `popoverProps` 属性
