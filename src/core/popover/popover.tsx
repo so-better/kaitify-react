@@ -28,6 +28,8 @@ const Popover = forwardRef<PopoverRefType, PopoverPropsType>(({ placement = 'bot
   const popoverRef = useRef<HTMLDivElement | null>(null)
   //popperjs实例
   const popperInstance = useRef<Instance | undefined>()
+  //计时器实例
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>()
 
   //浮层剩余位置
   const popoverRemainingPlacements = useMemo<PopoverPlacementType[]>(() => {
@@ -111,7 +113,8 @@ const Popover = forwardRef<PopoverRefType, PopoverPropsType>(({ placement = 'bot
     }
     //延迟显示
     if (delay > 0) {
-      setTimeout(() => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current)
+      timeoutRef.current = setTimeout(() => {
         setVisible(true)
       }, delay)
       return
@@ -121,9 +124,6 @@ const Popover = forwardRef<PopoverRefType, PopoverPropsType>(({ placement = 'bot
   }
   //隐藏浮层
   const hidePopover = () => {
-    if (props.disabled) {
-      return
-    }
     setVisible(false)
   }
 

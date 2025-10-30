@@ -6,7 +6,7 @@ title: 安装
 
 ## 下载 kaitify-react 本地到使用
 
-- 下载地址：[kaitify-react](https://registry.npmmirror.com/@kaitify/react/download/@kaitify/react-0.0.1-beta.2.tgz)
+- 下载地址：[kaitify-react](https://registry.npmmirror.com/@kaitify/react/download/@kaitify/react-0.0.1-beta.3.tgz)
 - 下载完成后最终解压得到一个 package 文件夹，进入 package 文件夹后，将 package 目录下的整个 lib 目录拷贝到你的项目下
 - 在 html 页面中引入 js
 
@@ -28,7 +28,7 @@ title: 安装
 
 ```html
 <!-- 引入固定版本的kaitify -->
-<script src="https://unpkg.com/@kaitify/react@0.0.1-beta.2/lib/kaitify-react.umd.js"></script>
+<script src="https://unpkg.com/@kaitify/react@0.0.1-beta.3/lib/kaitify-react.umd.js"></script>
 <!-- 始终引入最新的kaitify -->
 <script src="https://unpkg.com/@kaitify/react/lib/kaitify-react.umd.js"></script>
 ```
@@ -50,21 +50,21 @@ title: 安装
 npm install @kaitify/react
 
 # 安装指定版本
-npm install @kaitify/react@0.0.1-beta.2
+npm install @kaitify/react@0.0.1-beta.3
 ```
 
 ```bash [yarn]
 yarn install @kaitify/react
 
 # 安装指定版本
-yarn install @kaitify/react@0.0.1-beta.2
+yarn install @kaitify/react@0.0.1-beta.3
 ```
 
 ```bash [pnpm]
 pnpm install @kaitify/react
 
 # 安装指定版本
-pnpm install @kaitify/react@0.0.1-beta.2
+pnpm install @kaitify/react@0.0.1-beta.3
 ```
 
 :::
