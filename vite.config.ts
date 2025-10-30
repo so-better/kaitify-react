@@ -54,5 +54,8 @@ export default defineConfig({
   },
   server: {
     host: '0.0.0.0'
+  },
+  define: {
+    'process.env.NODE_ENV': JSON.stringify('production')
   }
 })
