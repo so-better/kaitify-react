@@ -40,9 +40,16 @@ export default function App() {
         <div style={{ padding: 5 }}>
           <button onClick={() => setDark(!dark)}>深色/浅色主题</button>
           <button onClick={() => setShow(!show)}>显示/隐藏编辑器</button>
+          <button
+            onClick={() => {
+              console.log(state?.editor.value?.getHTML())
+            }}
+          >
+            获取HTML
+          </button>
         </div>
-        <div id='before' style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 100, background: dark ? '#1b1b1f' : '#fff' }}></div>
         <div id='area'>
+          <div id='before' style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 100, background: dark ? '#1b1b1f' : '#fff' }}></div>
           {show && (
             <EditorWrapper
               autofocus
@@ -100,7 +107,7 @@ export default function App() {
                   <VideoMenu tabs={{ data: ['remote', 'upload'], default: 'upload' }} popoverProps={{ zIndex: 100, arrow: true }} />
                   <MathMenu />
                   <TableMenu />
-                  <FullScreenMenu target='#area' />
+                  <FullScreenMenu target='#area' zIndex={2} />
                 </>
               }
               after={<>总字数：{state?.editor.value?.getContent().length ?? 0}</>}

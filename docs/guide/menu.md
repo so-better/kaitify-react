@@ -59,7 +59,7 @@ export default function App() {
 
 - label <Badge type="danger" text="string" />：选项内容
 - value <Badge type="danger" text="string | number" />：选项的值
-- icon <Badge type="danger" text="string | number" />：选项左侧显示的图标，只能是 `kaitify-vue` 内置的图标名称，如果需要自定义图标只能通过 `icon` 插槽来实现
+- icon <Badge type="danger" text="string | number" />：选项左侧显示的图标，只能是 `kaitify-react` 内置的图标名称，如果需要自定义图标只能通过 `icon` 插槽来实现
 
 ##### itemDisabled <Badge type="danger" text="(item: MenuDataType) => boolean" />
 

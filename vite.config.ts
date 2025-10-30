@@ -5,7 +5,13 @@ import path from 'path'
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 
 export default defineConfig({
-  plugins: [react(), dts(), cssInjectedByJsPlugin({ topExecutionPriority: false })],
+  plugins: [
+    react(),
+    dts({
+      exclude: ['examples']
+    }),
+    cssInjectedByJsPlugin({ topExecutionPriority: false })
+  ],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')

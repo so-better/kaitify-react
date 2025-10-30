@@ -19,7 +19,7 @@ export default function App() {
 
 ##### name <Badge type="danger" text="string" />
 
-图标的值，目前仅支持 `kaitify` 内置图标（暂不对外提供具体的使用）和 `@iconify/vue` 图标，可在[https://icon-sets.iconify.design/](https://icon-sets.iconify.design/)上查找你想用的图标并复制其 `name` 使用
+图标的值，目前仅支持 `kaitify` 内置图标（暂不对外提供具体的使用）和 `@iconify/react` 图标，可在[https://icon-sets.iconify.design/](https://icon-sets.iconify.design/)上查找你想用的图标并复制其 `name` 使用
 
 ##### size <Badge type="danger" text="string | number" />
 

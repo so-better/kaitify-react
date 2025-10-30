@@ -10,7 +10,7 @@ title: Checkbox 复选框
 
 ```tsx
 import { useState } from 'react'
-import { Checkbox } from '@kaitify/vue'
+import { Checkbox } from '@kaitify/react'
 
 export default function App() {
   const [checked, setChecked] = useState(false)

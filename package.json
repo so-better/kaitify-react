@@ -1,4 +1,5 @@
 {
+  "name": "@kaitify/react",
   "version": "0.0.1-beta.1",
   "private": false,
   "type": "module",
