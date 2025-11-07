@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { Wrapper as EditorWrapper, BoldMenu, AlignLeftMenu, AlignCenterMenu, AlignRightMenu, AlignJustifyMenu, AttachmentMenu, BackColorMenu, BlockquoteMenu, CodeMenu, CodeBlockMenu, ColorMenu, FontFamilyMenu, FontSizeMenu, HeadingMenu, RedoMenu, UndoMenu, HorizontalMenu, ImageMenu, IncreaseIndentMenu, DecreaseIndentMenu, ItalicMenu, LineHeightMenu, LinkMenu, OrderedListMenu, UnorderedListMenu, MathMenu, StrikethroughMenu, SubscriptMenu, SuperscriptMenu, TableMenu, UnderlineMenu, VideoMenu, TaskMenu, ClearFormatMenu, Divider, FullScreenMenu, EmojiMenu, Editor, StateType, KNodeMatchOptionType, Bubble, VideoControlsMenu, VideoMutedMenu, VideoLoopMenu, WrapUpMenu, CodeBlockLanguagesMenu, WrapDownMenu, LinkUnsetMenu, TableAddRowMenu, TableDeleteRowMenu, TableAddColumnMenu, TableDeleteColumnMenu, TableMergeCellMenu, TableUnsetMenu } from '../src/index'
+import { Wrapper as EditorWrapper, BoldMenu, AlignLeftMenu, AlignCenterMenu, AlignRightMenu, AlignJustifyMenu, AttachmentMenu, BackColorMenu, BlockquoteMenu, CodeMenu, CodeBlockMenu, ColorMenu, FontFamilyMenu, FontSizeMenu, HeadingMenu, RedoMenu, UndoMenu, HorizontalMenu, ImageMenu, IncreaseIndentMenu, DecreaseIndentMenu, ItalicMenu, LineHeightMenu, LinkMenu, OrderedListMenu, UnorderedListMenu, MathMenu, StrikethroughMenu, SubscriptMenu, SuperscriptMenu, TableMenu, UnderlineMenu, VideoMenu, TaskMenu, ClearFormatMenu, Divider, FullScreenMenu, EmojiMenu, Editor, StateType, KNodeMatchOptionType, Bubble, VideoControlsMenu, VideoMutedMenu, VideoLoopMenu, WrapUpMenu, CodeBlockLanguagesMenu, WrapDownMenu, LinkUnsetMenu, TableAddRowMenu, TableDeleteRowMenu, TableAddColumnMenu, TableDeleteColumnMenu, TableMergeCellMenu, TableUnsetMenu, Menu } from '../src/index'
 import './style.less'
 
 export default function App() {
@@ -38,15 +38,7 @@ export default function App() {
     <>
       <div style={{ padding: 10 }}>
         <div style={{ padding: 5 }}>
-          <button onClick={() => setDark(!dark)}>深色/浅色主题</button>
           <button onClick={() => setShow(!show)}>显示/隐藏编辑器</button>
-          <button
-            onClick={() => {
-              console.log(state?.editor.value?.getHTML())
-            }}
-          >
-            获取HTML
-          </button>
         </div>
         <div id='area'>
           <div id='before' style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 100, background: dark ? '#1b1b1f' : '#fff' }}></div>
@@ -64,8 +56,18 @@ export default function App() {
               onChange={setContent}
               onCreated={onCreated}
               appendBeforeTo={'#before'}
-              before={
+              before={state => (
                 <>
+                  <Menu
+                    onOperate={() => {
+                      console.log(state?.editor.value?.getHTML())
+                    }}
+                  >
+                    获取HTML
+                  </Menu>
+                  <Menu onOperate={() => setDark(!dark)} active={state.editor.value?.isDark()}>
+                    深色主题
+                  </Menu>
                   <UndoMenu />
                   <RedoMenu />
                   <Divider />
@@ -109,7 +111,7 @@ export default function App() {
                   <TableMenu />
                   <FullScreenMenu target='#area' zIndex={2} />
                 </>
-              }
+              )}
               after={<>总字数：{state?.editor.value?.getContent().length ?? 0}</>}
             >
               <Bubble visible={shouldBubble.visible} match={shouldBubble.match} style={{ padding: 5 }}>
