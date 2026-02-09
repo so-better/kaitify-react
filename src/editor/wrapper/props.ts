@@ -151,6 +151,10 @@ export type WrapperPropsType = {
    */
   onBeforePatchNodeToFormat?: EditorConfigureOptionType['onBeforePatchNodeToFormat']
   /**
+   * 编辑器进行光标纠正时触发，在这里可以修改虚拟光标的位置
+   */
+  onRedressSelection?: EditorConfigureOptionType['onRedressSelection']
+  /**
    * 编辑器光标发生变化触发的事件
    */
   onSelectionUpdate?: EditorConfigureOptionType['onSelectionUpdate']

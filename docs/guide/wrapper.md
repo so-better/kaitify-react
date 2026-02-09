@@ -216,6 +216,10 @@ export default function App() {
 
 编辑器 `updateView` 执行时，通过比对新旧节点数组获取需要格式化的节点，在这些节点被格式化前，触发此方法，回调参数即当前需要被格式化的节点，该方法返回一个节点，返回的节点将会被格式化，如果你不需要任何特殊处理，返回入参提供的节点即可
 
+##### onRedressSelection <Badge type="danger" text="(this: Editor) => void" />
+
+编辑器进行光标纠正时触发，在这里可以修改虚拟光标的位置
+
 ##### onSelectionUpdate <Badge type="danger" text="(this: Editor, selection: Selection) => void" />
 
 编辑器光标发生变化触发的事件，回调参数为编辑器的 `Selection` 对象实例

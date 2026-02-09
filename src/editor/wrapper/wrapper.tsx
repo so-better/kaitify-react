@@ -99,6 +99,7 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
       onPasteFile: props.onPasteFile,
       onDetachMentBlockFromParent: props.onDetachMentBlockFromParent,
       onBeforePatchNodeToFormat: props.onBeforePatchNodeToFormat,
+      onRedressSelection: props.onRedressSelection,
       onInsertParagraph: props.onInsertParagraph,
       onDeleteComplete: props.onDeleteComplete,
       onKeydown: props.onKeydown,
