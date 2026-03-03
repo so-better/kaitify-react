@@ -5,6 +5,10 @@ title: 更新日志
 
 # 更新日志
 
+## v0.0.1-beta.6 <Badge type="tip" text='2026.03.03' />
+
+- 更新 `@kaitify/core` 的依赖版本，修复一些问题
+
 ## v0.0.1-beta.5 <Badge type="tip" text='2026.02.09' />
 
 - 更新 `@kaitify/core` 的依赖版本
