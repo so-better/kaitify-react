@@ -75,8 +75,8 @@ export default function ImageMenu({
     const imageNode = state.editor.value?.commands.getImage?.()
     if (imageNode) {
       setUpdateData({
-        src: imageNode.marks!.src as string,
-        alt: (imageNode.marks!.alt as string) || ''
+        src: imageNode.marks!['data-scr'] as string,
+        alt: (imageNode.marks!['data-alt'] as string) || ''
       })
     } else {
       setRemoteData({

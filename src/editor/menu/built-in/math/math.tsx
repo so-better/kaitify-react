@@ -45,7 +45,7 @@ export default function MathMenu(props: MathMenuPropsType) {
   //浮层显示
   const menuShowing = () => {
     const mathNode = state.editor.value?.commands.getMath?.()
-    setMathText(mathNode ? (mathNode.marks!['kaitify-math'] as string) || '' : '')
+    setMathText(mathNode ? (mathNode.marks!['data-value'] as string) || '' : '')
   }
   //插入数学公式
   const insert = () => {

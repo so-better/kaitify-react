@@ -13,7 +13,7 @@ export default function VideoMutedMenu(props: VideoMutedMenuPropsType) {
     if (!videoNode) {
       return false
     }
-    return videoNode.hasMarks() && videoNode.marks!.hasOwnProperty('muted')
+    return videoNode.hasMarks() && videoNode.marks!.hasOwnProperty('data-muted')
   }, [state.editor])
 
   //是否禁用

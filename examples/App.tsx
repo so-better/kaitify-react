@@ -8,7 +8,7 @@ export default function App() {
   )
   const [show, setShow] = useState(true)
   const [dark, setDark] = useState(false)
-  const [disabled] = useState(false)
+  const [disabled, setDisabled] = useState(false)
   const [state, setState] = useState<StateType | undefined>(undefined)
 
   const shouldBubble = useMemo<{ visible: boolean; match?: KNodeMatchOptionType; type?: number }>(() => {
@@ -39,6 +39,7 @@ export default function App() {
       <div style={{ padding: 10 }}>
         <div style={{ padding: 5 }}>
           <button onClick={() => setShow(!show)}>显示/隐藏编辑器</button>
+          <button onClick={() => setDisabled(!disabled)}>启用/禁用编辑器</button>
         </div>
         <div id='area'>
           <div id='before' style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 100, background: dark ? '#1b1b1f' : '#fff' }}></div>

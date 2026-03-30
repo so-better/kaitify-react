@@ -13,7 +13,7 @@ export default function VideoLoopMenu(props: VideoLoopMenuPropsType) {
     if (!videoNode) {
       return false
     }
-    return videoNode.hasMarks() && videoNode.marks!.hasOwnProperty('loop')
+    return videoNode.hasMarks() && videoNode.marks!.hasOwnProperty('data-loop')
   }, [state.editor])
   //是否禁用
   const isDisabled = useMemo(() => {

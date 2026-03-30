@@ -13,7 +13,7 @@ export default function VideoControlsMenu(props: VideoControlsMenuPropsType) {
     if (!videoNode) {
       return false
     }
-    return videoNode.hasMarks() && videoNode.marks!.hasOwnProperty('controls')
+    return videoNode.hasMarks() && videoNode.marks!.hasOwnProperty('data-controls')
   }, [state.editor])
   //是否禁用
   const isDisabled = useMemo(() => {
