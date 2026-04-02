@@ -14,7 +14,7 @@ import { Wrapper, WrapDownMenu } from '@kaitify/react'
 
 export default function App() {
   const [content, setContent] = useState('<p>hello</p>')
-  return <Wrapper value={content} onChange={v => setContent(v)} before={<WrapDownMenu />}></Wrapper>
+  return <Wrapper value={content} onChange={v => setContent(v)} before={<WrapDownMenu match={{ tag: 'pre' }} />}></Wrapper>
 }
 ```
 

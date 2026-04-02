@@ -15,7 +15,7 @@ const Popover = forwardRef<PopoverRefType, PopoverPropsType>(({ placement = 'bot
   //唯一id
   const uid = useId()
   //深色模式
-  const { dark } = useEditor()
+  const { state } = useEditor()
   //是否显示
   const [visible, setVisible] = useState(false)
   //浮层真实位置
@@ -200,7 +200,8 @@ const Popover = forwardRef<PopoverRefType, PopoverPropsType>(({ placement = 'bot
     setRealPlacement(placement)
     if (popperInstance.current && visible) {
       popperInstance.current.state.options.placement = placement
-      popperInstance.current.state.options.modifiers.find(mod => mod.name === 'flip').options.fallbackPlacements = popoverRemainingPlacements
+      const flipMod = popperInstance.current.state.options.modifiers.find(mod => mod.name === 'flip')
+      if (flipMod) flipMod.options.fallbackPlacements = popoverRemainingPlacements
       update()
     }
   }, [placement])
@@ -230,7 +231,7 @@ const Popover = forwardRef<PopoverRefType, PopoverPropsType>(({ placement = 'bot
       <div
         ref={referRef}
         className={classNames(styles['kaitify-popover-refer'], {
-          [styles['kaitify-dark']]: dark
+          [styles['kaitify-dark']]: state.editor.value?.isDark()
         })}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -260,7 +261,7 @@ const Popover = forwardRef<PopoverRefType, PopoverPropsType>(({ placement = 'bot
           <div
             ref={popoverRef}
             className={classNames(styles['kaitify-popover'], {
-              [styles['kaitify-dark']]: dark
+              [styles['kaitify-dark']]: state.editor.value?.isDark()
             })}
             onMouseLeave={handleMouseLeave}
             data-arrow={props.arrow}

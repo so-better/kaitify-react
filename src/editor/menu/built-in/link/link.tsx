@@ -11,7 +11,7 @@ import styles from './style.module.less'
 import classNames from 'classnames'
 
 export default function LinkMenu(props: LinkMenuPropsType) {
-  const { state, t, dark } = useEditor()
+  const { state, t } = useEditor()
 
   //菜单组件实例
   const menuRef = useRef<MenuRefType | null>(null)
@@ -29,17 +29,18 @@ export default function LinkMenu(props: LinkMenuPropsType) {
 
   //是否激活
   const isActive = useMemo(() => {
+    if (!state.editor.value?.isEditable()) {
+      return false
+    }
     return !!state.editor.value?.commands.getLink?.()
   }, [state.editor])
+
   //是否禁用
   const isDisabled = useMemo(() => {
+    if (!state.editor.value?.isEditable()) {
+      return true
+    }
     if (!state.editor.value?.selection.focused()) {
-      return true
-    }
-    if (state.editor.value.commands.hasAttachment?.()) {
-      return true
-    }
-    if (state.editor.value.commands.hasMath?.()) {
       return true
     }
     if (state.editor.value.commands.hasLink?.() && !isActive) {
@@ -68,7 +69,7 @@ export default function LinkMenu(props: LinkMenuPropsType) {
     }
   }
   //插入链接
-  const insert = async () => {
+  const insert = () => {
     if (!formData.href) {
       return
     }
@@ -90,7 +91,7 @@ export default function LinkMenu(props: LinkMenuPropsType) {
     menuRef.current?.hidePopover()
   }
   //更新链接
-  const update = async () => {
+  const update = () => {
     if (!updateData.href) {
       return
     }
@@ -111,7 +112,7 @@ export default function LinkMenu(props: LinkMenuPropsType) {
       customPopover={
         <div
           className={classNames(styles['kaitify-link'], {
-            [styles['kaitify-dark']]: dark
+            [styles['kaitify-dark']]: state.editor.value?.isDark()
           })}
         >
           {isActive ? (

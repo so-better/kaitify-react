@@ -15,7 +15,7 @@ const Bubble = forwardRef<BubbleRefType, BubblePropsType>((props, ref) => {
   //唯一id
   const uid = useId()
   //上下文数据
-  const { state, disabled, isMouseDown, el, dark } = useEditor()
+  const { state, isMouseDown, wrapperRef } = useEditor()
 
   //气泡元素
   const elRef = useRef<HTMLDivElement | null>(null)
@@ -24,14 +24,14 @@ const Bubble = forwardRef<BubbleRefType, BubblePropsType>((props, ref) => {
 
   //是否显示气泡栏
   const shouldVisible = useMemo(() => {
-    if (disabled) {
+    if (!state.editor.value?.isEditable()) {
       return false
     }
     if (isMouseDown && props.hideOnMousedown) {
       return false
     }
     return props.visible ?? false
-  }, [disabled, isMouseDown, props.hideOnMousedown, props.visible])
+  }, [state.editor, isMouseDown, props.hideOnMousedown, props.visible])
 
   //销毁popperjs实例
   const destroyPopperjs = () => {
@@ -42,7 +42,7 @@ const Bubble = forwardRef<BubbleRefType, BubblePropsType>((props, ref) => {
   }
   //获取编辑器内的光标位置
   const getVirtualDomRect = () => {
-    if (!state.editor.value || !el) {
+    if (!state.editor.value || !wrapperRef.current) {
       return null
     }
     if (state.editor.value.selection.focused()) {
@@ -54,7 +54,7 @@ const Bubble = forwardRef<BubbleRefType, BubblePropsType>((props, ref) => {
         }
       }
       const selection = window.getSelection()
-      if (!selection || !selection.rangeCount) return el.getBoundingClientRect()
+      if (!selection || !selection.rangeCount) return wrapperRef.current.getBoundingClientRect()
       const range = selection.getRangeAt(0)
       const rects = range.getClientRects()
       if (rects.length) {
@@ -72,7 +72,7 @@ const Bubble = forwardRef<BubbleRefType, BubblePropsType>((props, ref) => {
         } as DOMRect
       }
     }
-    return el.getBoundingClientRect()
+    return wrapperRef.current.getBoundingClientRect()
   }
   //更新气泡位置
   const updatePosition = () => {
@@ -186,19 +186,19 @@ const Bubble = forwardRef<BubbleRefType, BubblePropsType>((props, ref) => {
 
   //滚动监听设置
   useEffect(() => {
-    if (el && shouldVisible) {
-      //先移滚动除监听
-      removeScroll(el)
+    if (wrapperRef.current && shouldVisible) {
+      //先移除滚动监听
+      removeScroll(wrapperRef.current)
       //再设置滚动监听
-      onScroll(el)
+      onScroll(wrapperRef.current)
     }
-  }, [el, shouldVisible])
+  }, [wrapperRef.current, shouldVisible])
 
   useEffect(() => {
     return () => {
       destroyPopperjs()
-      if (el) {
-        removeScroll(el)
+      if (wrapperRef.current) {
+        removeScroll(wrapperRef.current)
       }
     }
   }, [])
@@ -228,7 +228,7 @@ const Bubble = forwardRef<BubbleRefType, BubblePropsType>((props, ref) => {
           className={classNames(
             styles['kaitify-bubble'],
             {
-              [styles['kaitify-dark']]: dark
+              [styles['kaitify-dark']]: state.editor.value?.isDark()
             },
             props.className
           )}

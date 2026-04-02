@@ -8,14 +8,14 @@ import styles from './style.module.less'
  * 复选框
  */
 export default function Checkbox(props: CheckboxPropsType) {
-  const { dark } = useEditor()
+  const { state } = useEditor()
 
   //复选框变更
-  const onChange = (e: React.ChangeEvent) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (props.disabled) {
       return
     }
-    const checked = (e.target as HTMLInputElement).checked
+    const checked = e.target.checked
     props.onChange?.(checked)
   }
 
@@ -23,7 +23,7 @@ export default function Checkbox(props: CheckboxPropsType) {
     <label
       className={classNames(styles['kaitify-checkbox'], {
         [styles['kaitify-disabled']]: props.disabled,
-        [styles['kaitify-dark']]: dark
+        [styles['kaitify-dark']]: state.editor.value?.isDark()
       })}
     >
       <span

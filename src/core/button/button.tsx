@@ -7,7 +7,7 @@ import styles from './style.module.less'
  * 菜单按钮组件
  */
 export default function Button(props: ButtonPropsType) {
-  const { dark } = useEditor()
+  const { state } = useEditor()
 
   return (
     <button
@@ -15,7 +15,7 @@ export default function Button(props: ButtonPropsType) {
         [styles['kaitify-button-active']]: props.active,
         [styles['kaitify-button-block']]: props.block,
         [styles['kaitify-button-large']]: props.large,
-        [styles['kaitify-dark']]: dark
+        [styles['kaitify-dark']]: state.editor.value?.isDark()
       })}
       style={props.style}
       disabled={props.disabled}

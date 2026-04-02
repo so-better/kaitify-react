@@ -11,7 +11,7 @@ import classNames from 'classnames'
 //  \sum_{i=1}^{n} i = \frac{n(n+1)}{2}
 
 export default function MathMenu(props: MathMenuPropsType) {
-  const { state, t, dark } = useEditor()
+  const { state, t } = useEditor()
 
   //菜单组件实例
   const menuRef = useRef<MenuRefType | null>(null)
@@ -19,24 +19,24 @@ export default function MathMenu(props: MathMenuPropsType) {
   const [mathText, setMathText] = useState('')
   //是否激活
   const isActive = useMemo(() => {
+    if (!state.editor.value?.isEditable()) {
+      return false
+    }
     return !!state.editor.value?.commands.getMath?.()
   }, [state.editor])
 
   //是否禁用
   const isDisabled = useMemo(() => {
-    if (!state.editor.value?.selection.focused()) {
+    if (!state.editor.value?.isEditable()) {
       return true
     }
-    if (state.editor.value.commands.hasAttachment?.()) {
+    if (!state.editor.value?.selection.focused()) {
       return true
     }
     if (state.editor.value.commands.hasLink?.()) {
       return true
     }
     if (state.editor.value.commands.hasCodeBlock?.()) {
-      return true
-    }
-    if (state.editor.value.commands.hasMath?.() && !isActive) {
       return true
     }
     return props.disabled ?? false
@@ -56,7 +56,7 @@ export default function MathMenu(props: MathMenuPropsType) {
     menuRef.current?.hidePopover()
   }
   //更新数学公式
-  const update = async () => {
+  const update = () => {
     if (!mathText) {
       return
     }
@@ -74,7 +74,7 @@ export default function MathMenu(props: MathMenuPropsType) {
       customPopover={
         <div
           className={classNames(styles['kaitify-math'], {
-            [styles['kaitify-dark']]: dark
+            [styles['kaitify-dark']]: state.editor.value?.isDark()
           })}
         >
           <textarea className={styles['kaitify-math-textarea']} value={mathText} onChange={e => setMathText(e.target.value)} placeholder={t('输入Latex数学公式')} />

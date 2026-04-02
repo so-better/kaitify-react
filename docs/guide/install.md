@@ -54,10 +54,10 @@ npm install @kaitify/react@0.0.1-beta.14
 ```
 
 ```bash [yarn]
-yarn install @kaitify/react
+yarn add @kaitify/react
 
 # 安装指定版本
-yarn install @kaitify/react@0.0.1-beta.14
+yarn add @kaitify/react@0.0.1-beta.14
 ```
 
 ```bash [pnpm]

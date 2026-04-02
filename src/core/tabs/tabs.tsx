@@ -5,7 +5,7 @@ import { TabsPropsType } from './props'
 import styles from './style.module.less'
 
 export default function Tabs({ data = [], ...props }: TabsPropsType) {
-  const { dark } = useEditor()
+  const { state } = useEditor()
 
   //当前选项
   const [current, setCurrent] = useState<string | number>(props.defaultValue)
@@ -13,7 +13,7 @@ export default function Tabs({ data = [], ...props }: TabsPropsType) {
   return (
     <div
       className={classNames(styles['kaitify-tabs'], {
-        [styles['kaitify-dark']]: dark
+        [styles['kaitify-dark']]: state.editor.value?.isDark()
       })}
     >
       <div className={styles['kaitify-tabs-header']}>

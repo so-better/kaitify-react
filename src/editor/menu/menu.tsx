@@ -28,7 +28,7 @@ const Menu = forwardRef<MenuRefType, MenuPropsType>(
     ref
   ) => {
     const uid = useId()
-    const { el, dark } = useEditor()
+    const { wrapperRef, state } = useEditor()
     //popover组件实例
     const popoverRef = useRef<PopoverRefType | null>(null)
     //popover浮层是否显示
@@ -73,9 +73,9 @@ const Menu = forwardRef<MenuRefType, MenuPropsType>(
 
     //设置快捷键
     useEffect(() => {
-      if (el && props.shortcut) {
-        DapEvent.off(el, `keydown.kaitify_menu_${uid}`)
-        DapEvent.on(el, `keydown.kaitify_menu_${uid}`, e => {
+      if (wrapperRef.current && props.shortcut) {
+        DapEvent.off(wrapperRef.current, `keydown.kaitify_menu_${uid}`)
+        DapEvent.on(wrapperRef.current, `keydown.kaitify_menu_${uid}`, e => {
           //popover的菜单
           if (popover && DapCommon.isObject(props.shortcut)) {
             const shortcut = props.shortcut as { [key: MenuDataType['value']]: (e: KeyboardEvent) => boolean }
@@ -93,12 +93,12 @@ const Menu = forwardRef<MenuRefType, MenuPropsType>(
           }
         })
       }
-    }, [el])
+    }, [wrapperRef.current, props.shortcut, props.disabled, props.itemDisabled, props.onSelect, props.onOperate, popover, data])
 
     useEffect(() => {
       return () => {
-        if (el) {
-          DapEvent.off(el, `keydown.kaitify_menu_${uid}`)
+        if (wrapperRef.current) {
+          DapEvent.off(wrapperRef.current, `keydown.kaitify_menu_${uid}`)
         }
       }
     }, [])
@@ -149,7 +149,7 @@ const Menu = forwardRef<MenuRefType, MenuPropsType>(
           {!props.customPopover && data.length > 0 && (
             <div
               className={classNames(styles['kaitify-menu-options'], {
-                [styles['kaitify-dark']]: dark
+                [styles['kaitify-dark']]: state.editor.value?.isDark()
               })}
             >
               {data.map(item => (

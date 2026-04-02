@@ -22,6 +22,6 @@ import { Wrapper, BoldMenu } from '@kaitify/react'
 
 export default function App() {
   const [content, setContent] = useState('<p>hello</p>')
-  return <Wrapper value={content} onChange={v => setContent(v)} placeholder='输入正文内容...' before={<BoldMenu />}></Wrapper>
+  return <Wrapper value={content} onChange={v => setContent(v)} options={{ placeholder: '输入正文内容...' }} before={<BoldMenu />}></Wrapper>
 }
 ```

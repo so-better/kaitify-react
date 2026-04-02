@@ -2,13 +2,16 @@ import { useMemo } from 'react'
 import { useEditor } from '@/hooks'
 import { Icon } from '@/core/icon'
 import Menu from '../../menu'
-import { TableAddRowMenuPropsType } from './props'
+import { TableDeleteRowMenuPropsType } from './props'
 
-export default function TableDeleteRowMenu(props: TableAddRowMenuPropsType) {
+export default function TableDeleteRowMenu(props: TableDeleteRowMenuPropsType) {
   const { state } = useEditor()
 
   //是否禁用
   const isDisabled = useMemo(() => {
+    if (!state.editor.value?.isEditable()) {
+      return true
+    }
     if (!state.editor.value?.selection.focused()) {
       return true
     }

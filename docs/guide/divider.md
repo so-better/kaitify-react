@@ -20,7 +20,7 @@ export default function App() {
     <Wrapper
       value={content}
       onChange={v => setContent(v)}
-      placeholder='输入正文内容...'
+      options={{ placeholder: '输入正文内容...' }}
       before={
         <>
           <Menu>菜单1</Menu>

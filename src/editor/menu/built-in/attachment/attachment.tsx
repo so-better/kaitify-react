@@ -18,7 +18,7 @@ export default function AttachmentMenu({
   },
   ...props
 }: AttachmentMenuPropsType) {
-  const { state, t, dark } = useEditor()
+  const { state, t } = useEditor()
   //菜单组件实例
   const menuRef = useRef<MenuRefType | null>(null)
   //远程附件数据
@@ -46,17 +46,22 @@ export default function AttachmentMenu({
         }
       ].find(v => v.value == item)!
     })
-  }, [tabs])
+  }, [tabs.data])
+
   //是否激活
   const isActive = useMemo(() => {
+    if (!state.editor.value?.isEditable()) {
+      return false
+    }
     return !!state.editor.value?.commands.getAttachment?.()
   }, [state.editor])
+
   //是否禁用
   const isDisabled = useMemo(() => {
-    if (!state.editor.value?.selection.focused()) {
+    if (!state.editor.value?.isEditable()) {
       return true
     }
-    if (state.editor.value.commands.hasMath?.()) {
+    if (!state.editor.value?.selection.focused()) {
       return true
     }
     if (state.editor.value.commands.hasCodeBlock?.()) {
@@ -65,11 +70,8 @@ export default function AttachmentMenu({
     if (state.editor.value.commands.hasLink?.()) {
       return true
     }
-    if (state.editor.value.commands.hasAttachment?.() && !isActive) {
-      return true
-    }
     return props.disabled ?? false
-  }, [state.editor, props.disabled, isActive])
+  }, [state.editor, props.disabled])
 
   //浮层显示
   const menuShowing = () => {
@@ -87,8 +89,8 @@ export default function AttachmentMenu({
     }
   }
   //选择本地文件
-  const fileChange = async (e: React.ChangeEvent) => {
-    const file = (e.currentTarget as HTMLInputElement).files?.[0]
+  const fileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.currentTarget.files?.[0]
     if (!file || !state.editor.value) {
       return
     }
@@ -138,7 +140,7 @@ export default function AttachmentMenu({
         isActive ? (
           <div
             className={classNames(styles['kaitify-attachment-update'], {
-              [styles['kaitify-dark']]: dark
+              [styles['kaitify-dark']]: state.editor.value?.isDark()
             })}
           >
             <input value={updateData.text} onChange={e => setUpdateData(oldValue => ({ ...oldValue, text: e.target.value }))} placeholder={t('附件名称')} type='text' />
@@ -156,7 +158,7 @@ export default function AttachmentMenu({
                 {current === 'remote' && (
                   <div
                     className={classNames(styles['kaitify-attachment-remote'], {
-                      [styles['kaitify-dark']]: dark
+                      [styles['kaitify-dark']]: state.editor.value?.isDark()
                     })}
                   >
                     <input value={remoteData.text} onChange={e => setRemoteData(oldValue => ({ ...oldValue, text: e.target.value }))} placeholder={t('附件名称')} type='text' />
@@ -171,7 +173,7 @@ export default function AttachmentMenu({
                 {current === 'upload' && (
                   <div
                     className={classNames(styles['kaitify-attachment-upload'], {
-                      [styles['kaitify-dark']]: dark
+                      [styles['kaitify-dark']]: state.editor.value?.isDark()
                     })}
                   >
                     <input type='file' accept='*' onChange={fileChange} />

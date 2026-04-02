@@ -1,15 +1,13 @@
-import { useCallback, useMemo, useRef } from 'react'
+import { useCallback, useMemo } from 'react'
 import { HeadingLevelType } from '@kaitify/core'
 import { useEditor } from '@/hooks'
-import { MenuDataType, MenuRefType } from '../../props'
+import { MenuDataType } from '../../props'
 import Menu from '../../menu'
 import { HeadingMenuPropsType } from './props'
 
 export default function HeadingMenu(props: HeadingMenuPropsType) {
   const { state, t } = useEditor()
 
-  //菜单组件实例
-  const menuRef = useRef<MenuRefType | null>(null)
   //选项
   const options = useMemo<MenuDataType[]>(() => {
     const baseOptions: MenuDataType[] = [
@@ -60,14 +58,21 @@ export default function HeadingMenu(props: HeadingMenuPropsType) {
 
   //是否禁用
   const isDisabled = useMemo(() => {
+    if (!state.editor.value?.isEditable()) {
+      return true
+    }
     if (!state.editor.value?.selection.focused()) {
       return true
     }
     return props.disabled ?? false
   }, [state.editor, props.disabled])
+
   //选项是否激活
   const isActive = useCallback(
     (value: HeadingLevelType) => {
+      if (!state.editor.value?.isEditable()) {
+        return false
+      }
       //正文处理
       if (value === 0) {
         if (isActive(1) || isActive(2) || isActive(3) || isActive(4) || isActive(5) || isActive(6)) {
@@ -94,7 +99,7 @@ export default function HeadingMenu(props: HeadingMenuPropsType) {
   }
 
   return (
-    <Menu ref={menuRef} disabled={isDisabled} active={false} popover data={options} itemActive={item => isActive(item.value as HeadingLevelType)} shortcut={props.shortcut} popoverProps={{ width: props.popoverProps?.width, maxHeight: props.popoverProps?.maxHeight ?? 240, minWidth: props.popoverProps?.minWidth ?? 120, animation: props.popoverProps?.animation, arrow: props.popoverProps?.arrow, placement: props.popoverProps?.placement, trigger: props.popoverProps?.trigger, zIndex: props.popoverProps?.zIndex }} onSelect={onSelect} customLabel={option => <span style={{ fontSize: fontSizeMap[option.value as number] }}>{option.label}</span>}>
+    <Menu disabled={isDisabled} active={false} popover data={options} itemActive={item => isActive(item.value as HeadingLevelType)} shortcut={props.shortcut} popoverProps={{ width: props.popoverProps?.width, maxHeight: props.popoverProps?.maxHeight ?? 240, minWidth: props.popoverProps?.minWidth ?? 120, animation: props.popoverProps?.animation, arrow: props.popoverProps?.arrow, placement: props.popoverProps?.placement, trigger: props.popoverProps?.trigger, zIndex: props.popoverProps?.zIndex }} onSelect={onSelect} customLabel={option => <span style={{ fontSize: fontSizeMap[option.value as number] }}>{option.label}</span>}>
       {selectedData.label ?? ''}
     </Menu>
   )

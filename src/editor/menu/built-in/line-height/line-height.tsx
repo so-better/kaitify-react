@@ -47,14 +47,21 @@ export default function LineHeightMenu({
 
   //是否禁用
   const isDisabled = useMemo(() => {
+    if (!state.editor.value?.isEditable()) {
+      return true
+    }
     if (!state.editor.value?.selection.focused()) {
       return true
     }
     return props.disabled ?? false
   }, [state.editor, props.disabled])
+
   //选项是否激活
   const isActive = useCallback(
     (item: MenuDataType) => {
+      if (!state.editor.value?.isEditable()) {
+        return false
+      }
       return state.editor.value?.commands.isLineHeight?.(item.value) ?? false
     },
     [state.editor]

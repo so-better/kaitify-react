@@ -9,16 +9,22 @@ export default function AlignCenterMenu(props: AlignCenterMenuPropsType) {
 
   //是否激活
   const isActive = useMemo(() => {
+    if (!state.editor.value?.isEditable()) {
+      return false
+    }
     return state.editor.value?.commands.isAlign?.('center') ?? false
   }, [state.editor])
 
   //是否禁用
   const isDisabled = useMemo(() => {
+    if (!state.editor.value?.isEditable()) {
+      return true
+    }
     if (!state.editor.value?.selection.focused()) {
       return true
     }
-    return props.disabled
-  }, [state.editor])
+    return props.disabled ?? false
+  }, [state.editor, props.disabled])
 
   //方法
   const onOperate = () => {

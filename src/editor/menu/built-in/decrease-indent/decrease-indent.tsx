@@ -9,6 +9,9 @@ export default function DecreaseIndentMenu(props: DecreaseIndentMenuPropsType) {
 
   //是否禁用
   const isDisabled = useMemo(() => {
+    if (!state.editor.value?.isEditable()) {
+      return true
+    }
     if (!state.editor.value?.selection.focused()) {
       return true
     }

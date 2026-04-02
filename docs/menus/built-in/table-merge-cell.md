@@ -4,7 +4,7 @@ title: table-merge-cell 表格单元格合并
 
 # table-merge-cell 表格单元格合并
 
-删除表格行
+合并表格单元格
 
 ## 使用方法
 
@@ -14,7 +14,7 @@ import { Wrapper, TableMergeCellMenu } from '@kaitify/react'
 
 export default function App() {
   const [content, setContent] = useState('<p>hello</p>')
-  return <Wrapper value={content} onChange={v => setContent(v)} before={<TableMergeCellMenu />}></Wrapper>
+  return <Wrapper value={content} onChange={v => setContent(v)} before={<TableMergeCellMenu direction="right" />}></Wrapper>
 }
 ```
 

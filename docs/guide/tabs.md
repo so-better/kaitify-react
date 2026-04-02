@@ -13,15 +13,13 @@ import { Tabs } from '@kaitify/react'
 export default function App() {
   return (
     <Tabs
-      default-value='A'
+      defaultValue='A'
       data={[
         { label: '我是A', value: 'A' },
         { label: '我是B', value: 'B' }
       ]}
     >
-      {current => {
-        current
-      }}
+      {current => <div>{current === 'A' ? 'A的内容' : 'B的内容'}</div>}
     </Tabs>
   )
 }

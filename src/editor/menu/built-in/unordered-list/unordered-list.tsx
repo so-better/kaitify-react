@@ -13,10 +13,13 @@ export default function UnorderedListMenu(props: UnorderedListMenuPropsType) {
 
   //菜单组件实例
   const menuRef = useRef<MenuRefType | null>(null)
-  //有序列表序标列表
+  //无序列表序标列表
   const listTypes: UnorderListType[] = ['disc', 'square', 'circle']
   //是否禁用
   const isDisabled = useMemo(() => {
+    if (!state.editor.value?.isEditable()) {
+      return true
+    }
     if (!state.editor.value?.selection.focused()) {
       return true
     }
@@ -26,6 +29,9 @@ export default function UnorderedListMenu(props: UnorderedListMenuPropsType) {
   //选项是否激活
   const itemActive = useCallback(
     (item: UnorderListType) => {
+      if (!state.editor.value?.isEditable()) {
+        return false
+      }
       return (
         state.editor.value?.commands.allList?.({
           ordered: false,
@@ -37,6 +43,9 @@ export default function UnorderedListMenu(props: UnorderedListMenuPropsType) {
   )
   //菜单是否激活
   const isActive = useMemo(() => {
+    if (!state.editor.value?.isEditable()) {
+      return false
+    }
     return (
       state.editor.value?.commands.allList?.({
         ordered: false

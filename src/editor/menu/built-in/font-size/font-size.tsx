@@ -1,6 +1,6 @@
-import { useCallback, useMemo, useRef } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useEditor } from '@/hooks'
-import { MenuDataType, MenuRefType } from '../../props'
+import { MenuDataType } from '../../props'
 import Menu from '../../menu'
 import { FontSizeMenuPropsType } from './props'
 
@@ -51,8 +51,6 @@ export default function FontSizeMenu({
 }: FontSizeMenuPropsType) {
   const { state, t } = useEditor()
 
-  //菜单组件实例
-  const menuRef = useRef<MenuRefType | null>(null)
   //选项
   const options = useMemo<MenuDataType[]>(() => {
     return [
@@ -65,13 +63,13 @@ export default function FontSizeMenu({
   }, [data])
   //是否禁用
   const isDisabled = useMemo(() => {
+    if (!state.editor.value?.isEditable()) {
+      return true
+    }
     if (!state.editor.value?.selection.focused()) {
       return true
     }
     if (!state.editor.value.selection.collapsed() && !state.editor.value.getFocusNodesBySelection('text').length) {
-      return true
-    }
-    if (state.editor.value.selection.collapsed() && (!!state.editor.value.commands.getAttachment?.() || !!state.editor.value.commands.getMath?.())) {
       return true
     }
     if (!!state.editor.value.commands.getCodeBlock?.()) {
@@ -82,6 +80,9 @@ export default function FontSizeMenu({
   //选项是否激活
   const isActive = useCallback(
     (item: MenuDataType) => {
+      if (!state.editor.value?.isEditable()) {
+        return false
+      }
       return state.editor.value?.commands.isFontSize?.(item.value as string) ?? false
     },
     [state.editor]
@@ -103,7 +104,7 @@ export default function FontSizeMenu({
   }
 
   return (
-    <Menu ref={menuRef} disabled={isDisabled} active={false} popover data={options} itemActive={isActive} shortcut={props.shortcut} popoverProps={{ width: props.popoverProps?.width, maxHeight: props.popoverProps?.maxHeight ?? 240, minWidth: props.popoverProps?.minWidth ?? 80, animation: props.popoverProps?.animation, arrow: props.popoverProps?.arrow, placement: props.popoverProps?.placement, trigger: props.popoverProps?.trigger, zIndex: props.popoverProps?.zIndex }} onSelect={onSelect}>
+    <Menu disabled={isDisabled} active={false} popover data={options} itemActive={isActive} shortcut={props.shortcut} popoverProps={{ width: props.popoverProps?.width, maxHeight: props.popoverProps?.maxHeight ?? 240, minWidth: props.popoverProps?.minWidth ?? 80, animation: props.popoverProps?.animation, arrow: props.popoverProps?.arrow, placement: props.popoverProps?.placement, trigger: props.popoverProps?.trigger, zIndex: props.popoverProps?.zIndex }} onSelect={onSelect}>
       {selectedData.label ?? ''}
     </Menu>
   )

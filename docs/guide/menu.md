@@ -16,7 +16,7 @@ import { Wrapper, Menu } from '@kaitify/react'
 
 export default function App() {
   const [content, setContent] = useState('<p>hello</p>')
-  return <Wrapper value={content} onChange={v => setContent(v)} placeholder='输入正文内容...' before={<Menu>菜单按钮</Menu>}></Wrapper>
+  return <Wrapper value={content} onChange={v => setContent(v)} options={{ placeholder: '输入正文内容...' }} before={<Menu>菜单按钮</Menu>}></Wrapper>
 }
 ```
 
@@ -44,7 +44,7 @@ export default function App() {
 - placement <Badge type="danger" text="PopoverPlacementType" /> 浮层默认显示位置，可取值 `'auto' | 'auto-start' | 'auto-end' | 'bottom-start' | 'bottom' | 'bottom-end' | 'top-start' | 'top' | 'top-end' | 'left-start' | 'left' | 'left-end' | 'right-start' | 'right' | 'right-end'`，如果指定位置的空间不足以显示浮层，会自适应匹配其他位置
 - arrow <Badge type="danger" text="boolean" />：浮层是否显示三角形
 - trigger <Badge type="danger" text="hover | click | custom" />：浮层触发显示的方式，如果指定为 `custom`，则需要手动调用 `showPopover`/`hidePopover` 方法
-- animation <Badge type="danger" text="'fade' | 'translate' | string" />：浮层显示动画，默认支持 `fade` 和 `translate`，可以自定义其他动画名称，例如定义动画名称`'a'`，则对应的 `Transition` 组件 `name` 值为 `kaitify-popover-a`
+- animation <Badge type="danger" text="'fade' | 'translate'" />：浮层显示动画，可取 `fade`（淡入淡出）和 `translate`（位移），默认为 `translate`
 - zIndex <Badge type="danger" text="number" />：浮层的 `z-index` 层级，默认为 10
 - onShow <Badge type="danger" text="(el: Element) => void" />：浮层显示前触发的事件
 - onShowing <Badge type="danger" text="(el: Element) => void" />：浮层显示时触发的事件
@@ -59,7 +59,7 @@ export default function App() {
 
 - label <Badge type="danger" text="string" />：选项内容
 - value <Badge type="danger" text="string | number" />：选项的值
-- icon <Badge type="danger" text="string | number" />：选项左侧显示的图标，只能是 `kaitify-react` 内置的图标名称，如果需要自定义图标只能通过 `icon` 插槽来实现
+- icon <Badge type="danger" text="string" />：选项左侧显示的图标，只能是 `kaitify-react` 内置的图标名称，如果需要自定义图标只能通过 `icon` 插槽来实现
 
 ##### itemDisabled <Badge type="danger" text="(item: MenuDataType) => boolean" />
 

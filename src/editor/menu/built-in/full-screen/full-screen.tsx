@@ -20,6 +20,9 @@ export default function FullScreenMenu({ zIndex = 100, ...props }: FullScreenMen
 
   //是否禁用
   const isDisabled = useMemo(() => {
+    if (!state.editor.value?.isEditable()) {
+      return true
+    }
     if (!state.editor.value?.selection.focused()) {
       return true
     }

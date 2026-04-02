@@ -45,17 +45,19 @@ export default function App() {
           <div id='before' style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 100, background: dark ? '#1b1b1f' : '#fff' }}></div>
           {show && (
             <EditorWrapper
-              autofocus
+              options={{
+                autofocus: true,
+                editable: !disabled,
+                dark: dark,
+                placeholder: '输入正文内容...',
+                allowPasteHtml: true,
+                onCreated
+              }}
               ref={v => setState(v?.state)}
               locale='zh-CN'
-              disabled={disabled}
-              dark={dark}
               style={{ width: '100%', height: 500 }}
-              allow-paste-html
-              placeholder='输入正文内容...'
               value={content}
               onChange={setContent}
-              onCreated={onCreated}
               appendBeforeTo={'#before'}
               before={state => (
                 <>

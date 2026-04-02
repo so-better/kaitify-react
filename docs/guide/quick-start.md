@@ -14,7 +14,7 @@ import { Wrapper } from '@kaitify/react'
 
 export default function App() {
   const [content, setContent] = useState('<p>hello</p>')
-  return <Wrapper value={content} onChange={v => setContent(v)} placeholder='输入正文内容...'></Wrapper>
+  return <Wrapper value={content} onChange={v => setContent(v)} options={{ placeholder: '输入正文内容...' }}></Wrapper>
 }
 ```
 
@@ -34,13 +34,13 @@ import { Wrapper } from '@kaitify/react'
 
 export default function App() {
   const [content, setContent] = useState('<p>hello</p>')
-  return <Wrapper value={content} onChange={v => setContent(v)} placeholder='输入正文内容...'></Wrapper>
+  return <Wrapper value={content} onChange={v => setContent(v)} options={{ placeholder: '输入正文内容...' }}></Wrapper>
 }
 ```
 
 ##### Bubble
 
-`Bubble` 气泡栏组件是编辑器内置的组件，它会跟随编辑器光标进行浮动显示，我们可以通过直接引入 `Bubble` 组件并在 `Wrapper` 组件的 `default` 插槽中放置来使用
+`Bubble` 气泡栏组件是编辑器内置的组件，它会跟随编辑器光标进行浮动显示，我们可以通过直接引入 `Bubble` 组件并在 `Wrapper` 组件的 `children` 中放置来使用
 
 具体的属性配置和使用方法，参考 [Bubble 组件](/guide/bubble)
 
@@ -51,7 +51,7 @@ import { Wrapper, Bubble } from '@kaitify/react'
 export default function App() {
   const [content, setContent] = useState('<p>hello</p>')
   return (
-    <Wrapper value={content} onChange={v => setContent(v)} placeholder='输入正文内容...'>
+    <Wrapper value={content} onChange={v => setContent(v)} options={{ placeholder: '输入正文内容...' }}>
       <Bubble visible={true}>我是气泡栏</Bubble>
     </Wrapper>
   )
@@ -70,7 +70,6 @@ import { Wrapper,Menu } from '@kaitify/react'
 
 export default function App() {
   const [content, setContent] = useState('<p>hello</p>')
-  return <Wrapper value={content} onChange={v => setContent(v)} placeholder='输入正文内容...' before={<Menu>菜单按钮</Menu>}></Wrapper>
+  return <Wrapper value={content} onChange={v => setContent(v)} options={{ placeholder: '输入正文内容...' }} before={<Menu>菜单按钮</Menu>}></Wrapper>
 }
-</script>
 ```

@@ -18,14 +18,21 @@ export default function OrderedListMenu(props: OrderedListMenuPropsType) {
 
   //是否禁用
   const isDisabled = useMemo(() => {
+    if (!state.editor.value?.isEditable()) {
+      return true
+    }
     if (!state.editor.value?.selection.focused()) {
       return true
     }
     return props.disabled ?? false
   }, [state.editor, props.disabled])
+
   //选项是否激活
   const itemActive = useCallback(
     (item: OrderedListType) => {
+      if (!state.editor.value?.isEditable()) {
+        return false
+      }
       return (
         state.editor.value?.commands.allList?.({
           ordered: true,
@@ -35,8 +42,12 @@ export default function OrderedListMenu(props: OrderedListMenuPropsType) {
     },
     [state.editor]
   )
+
   //菜单是否激活
   const isActive = useMemo(() => {
+    if (!state.editor.value?.isEditable()) {
+      return false
+    }
     return (
       state.editor.value?.commands.allList?.({
         ordered: true

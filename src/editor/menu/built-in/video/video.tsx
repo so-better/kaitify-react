@@ -1,5 +1,6 @@
 import React, { useMemo, useRef, useState } from 'react'
 import { file as DapFile } from 'dap-util'
+import classNames from 'classnames'
 import { useEditor } from '@/hooks'
 import { SetVideoOptionType } from '@kaitify/core'
 import { Tabs, TabsPropsType } from '@/core/tabs'
@@ -10,7 +11,6 @@ import { MenuRefType } from '../../props'
 import Menu from '../../menu'
 import { VideoMenuPropsType } from './props'
 import styles from './style.module.less'
-import classNames from 'classnames'
 
 export default function VideoMenu({
   tabs = {
@@ -19,7 +19,7 @@ export default function VideoMenu({
   },
   ...props
 }: VideoMenuPropsType) {
-  const { state, t, dark } = useEditor()
+  const { state, t } = useEditor()
 
   //菜单组件实例
   const menuRef = useRef<MenuRefType | null>(null)
@@ -42,16 +42,17 @@ export default function VideoMenu({
         }
       ].find(v => v.value == item)!
     })
-  }, [tabs])
+  }, [tabs.data])
+
   //是否禁用
   const isDisabled = useMemo(() => {
+    if (!state.editor.value?.isEditable()) {
+      return true
+    }
     if (!state.editor.value?.selection.focused()) {
       return true
     }
-    if (state.editor.value.commands.hasAttachment?.()) {
-      return true
-    }
-    if (state.editor.value.commands.hasMath?.()) {
+    if (state.editor.value.commands.hasLink?.()) {
       return true
     }
     if (state.editor.value.commands.hasCodeBlock?.()) {
@@ -61,8 +62,8 @@ export default function VideoMenu({
   }, [state.editor, props.disabled])
 
   //选择本地视频
-  const fileChange = async (e: React.ChangeEvent) => {
-    const file = (e.currentTarget as HTMLInputElement).files?.[0]
+  const fileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.currentTarget.files?.[0]
     if (!file) {
       return
     }
@@ -104,7 +105,7 @@ export default function VideoMenu({
               {current === 'remote' && (
                 <div
                   className={classNames(styles['kaitify-video-remote'], {
-                    [styles['kaitify-dark']]: dark
+                    [styles['kaitify-dark']]: state.editor.value?.isDark()
                   })}
                 >
                   <input value={remoteData.src} onChange={e => setRemoteData(oldValue => ({ ...oldValue, src: e.target.value }))} placeholder={t('视频地址')} type='url' />

@@ -6,11 +6,11 @@ import styles from './style.module.less'
  * 分隔线
  */
 export default function Divider() {
-  const { dark } = useEditor()
+  const { state } = useEditor()
   return (
     <div
       className={classNames(styles['kaitify-divider'], {
-        [styles['kaitify-dark']]: dark
+        [styles['kaitify-dark']]: state.editor.value?.isDark()
       })}
     />
   )

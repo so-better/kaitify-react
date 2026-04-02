@@ -14,7 +14,11 @@ import { Wrapper, FullScreenMenu } from '@kaitify/react'
 
 export default function App() {
   const [content, setContent] = useState('<p>hello</p>')
-  return <Wrapper value={content} onChange={v => setContent(v)} before={<FullScreenMenu />}></Wrapper>
+  return (
+    <div id="editor-container">
+      <Wrapper value={content} onChange={v => setContent(v)} before={<FullScreenMenu target="#editor-container" />}></Wrapper>
+    </div>
+  )
 }
 ```
 

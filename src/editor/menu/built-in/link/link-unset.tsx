@@ -9,6 +9,9 @@ export default function LinkUnsetMenu(props: LinkUnsetMenuPropsType) {
 
   //是否禁用
   const isDisabled = useMemo(() => {
+    if (!state.editor.value?.isEditable()) {
+      return true
+    }
     if (!state.editor.value?.selection.focused()) {
       return true
     }

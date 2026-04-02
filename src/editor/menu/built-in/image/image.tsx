@@ -18,7 +18,7 @@ export default function ImageMenu({
   },
   ...props
 }: ImageMenuPropsType) {
-  const { state, t, dark } = useEditor()
+  const { state, t } = useEditor()
 
   //菜单组件实例
   const menuRef = useRef<MenuRefType | null>(null)
@@ -49,15 +49,16 @@ export default function ImageMenu({
       ].find(v => v.value == item)!
     })
   }, [tabs.data])
+
   //是否禁用
   const isDisabled = useMemo(() => {
+    if (!state.editor.value?.isEditable()) {
+      return true
+    }
     if (!state.editor.value?.selection.focused()) {
       return true
     }
-    if (state.editor.value.commands.hasAttachment?.()) {
-      return true
-    }
-    if (state.editor.value.commands.hasMath?.()) {
+    if (state.editor.value.commands.hasLink?.()) {
       return true
     }
     if (state.editor.value.commands.hasCodeBlock?.()) {
@@ -65,8 +66,12 @@ export default function ImageMenu({
     }
     return props.disabled ?? false
   }, [state.editor, props.disabled])
+
   //是否激活
   const isActive = useMemo(() => {
+    if (!state.editor.value?.isEditable()) {
+      return false
+    }
     return !!state.editor.value?.commands.getImage?.()
   }, [state.editor])
 
@@ -75,7 +80,7 @@ export default function ImageMenu({
     const imageNode = state.editor.value?.commands.getImage?.()
     if (imageNode) {
       setUpdateData({
-        src: imageNode.marks!['data-scr'] as string,
+        src: imageNode.marks!['data-src'] as string,
         alt: (imageNode.marks!['data-alt'] as string) || ''
       })
     } else {
@@ -86,8 +91,8 @@ export default function ImageMenu({
     }
   }
   //选择本地图片
-  const fileChange = async (e: React.ChangeEvent) => {
-    const file = (e.currentTarget as HTMLInputElement).files?.[0]
+  const fileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.currentTarget.files?.[0]
     if (!file) {
       return
     }
@@ -137,7 +142,7 @@ export default function ImageMenu({
         isActive ? (
           <div
             className={classNames(styles['kaitify-image-update'], {
-              [styles['kaitify-dark']]: dark
+              [styles['kaitify-dark']]: state.editor.value?.isDark()
             })}
           >
             <input value={updateData.alt} onChange={e => setUpdateData(oldValue => ({ ...oldValue, alt: e.target.value }))} placeholder={t('图片名称')} type='text' />
@@ -155,7 +160,7 @@ export default function ImageMenu({
                 {current === 'remote' && (
                   <div
                     className={classNames(styles['kaitify-image-remote'], {
-                      [styles['kaitify-dark']]: dark
+                      [styles['kaitify-dark']]: state.editor.value?.isDark()
                     })}
                   >
                     <input value={remoteData.alt} onChange={e => setRemoteData(oldValue => ({ ...oldValue, alt: e.target.value }))} placeholder={t('图片名称')} type='text' />
@@ -170,10 +175,10 @@ export default function ImageMenu({
                 {current === 'upload' && (
                   <div
                     className={classNames(styles['kaitify-image-upload'], {
-                      [styles['kaitify-dark']]: dark
+                      [styles['kaitify-dark']]: state.editor.value?.isDark()
                     })}
                   >
-                    <input type='file' accept='*' onChange={fileChange} />
+                    <input type='file' accept='image/*' onChange={fileChange} />
                     <Icon name='kaitify-icon-upload' />
                   </div>
                 )}

@@ -19,7 +19,7 @@ export default function App() {
 
   const shortcut = (e: KeyboardEvent) => {
     //按下ctrl + b 触发
-    return e => e.key == 'b' && e.ctrlKey
+    return e.key == 'b' && e.ctrlKey
   }
 
   //除了点击触发此事件外，当你按下 ctrl + b 也会触发此事件
@@ -31,7 +31,7 @@ export default function App() {
     <Wrapper
       value={content}
       onChange={v => setContent(v)}
-      placeholder='输入正文内容...'
+      options={{ placeholder: '输入正文内容...' }}
       before={
         <Menu onOperate={onOperate} shortcut={shortcut}>
           菜单
@@ -44,7 +44,7 @@ export default function App() {
 
 ## 有浮层的菜单的快捷键绑定
 
-浮层菜单的 `shortcut` 属性是一个对象，对象的 `key` 是 `data` 的 `value` 值，对象的值是一个函数，返回 `boolean` 值，当返回 `true` 时会触发 `operate` 事件
+浮层菜单的 `shortcut` 属性是一个对象，对象的 `key` 是 `data` 的 `value` 值，对象的值是一个函数，返回 `boolean` 值，当返回 `true` 时会触发 `select` 事件
 
 如果是自定义浮层内容的菜单，即没有配置 `data` 属性，通过 `popover` 插槽设置内容，此时无法通过 `shortcut` 绑定快捷键
 
@@ -57,9 +57,9 @@ export default function App() {
 
   const shortcut = {
     //按下 ctrl + b 选择第一项，触发select事件
-    0: e => e.key == 'b' && e.ctrlKey
+    0: e => e.key == 'b' && e.ctrlKey,
     //按下 ctrl + w 选择第二项，触发select事件
-    1: e => e.key == 'w' && e.ctrlKey
+    1: e => e.key == 'w' && e.ctrlKey,
     //按下 ctrl + e 选择第三项，触发select事件
     2: e => e.key == 'e' && e.ctrlKey
   }
@@ -68,7 +68,7 @@ export default function App() {
     console.log('选项选择',item)
   }
 
-  return <Wrapper value={content} onChange={v => setContent(v)} placeholder='输入正文内容...' before={<Menu onOperate={onOperate} shortcut={shortcut} popover data={[
+  return <Wrapper value={content} onChange={v => setContent(v)} options={{ placeholder: '输入正文内容...' }} before={<Menu onSelect={onSelect} shortcut={shortcut} popover data={[
     { label: '选项1', value: 0 },
     { label: '选项2', value: 1 },
     { label: '选项3', value: 2 }

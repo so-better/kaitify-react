@@ -8,7 +8,7 @@ import { TableGridType, TableMenuPropsType } from './props'
 import styles from './style.module.less'
 
 export default function TableMenu({ maxRows = 10, maxColumns = 10, ...props }: TableMenuPropsType) {
-  const { state, dark } = useEditor()
+  const { state } = useEditor()
 
   //菜单组件实例
   const menuRef = useRef<MenuRefType | null>(null)
@@ -39,35 +39,18 @@ export default function TableMenu({ maxRows = 10, maxColumns = 10, ...props }: T
       .filter(item => {
         return item.inside
       })
-      .sort((a, b) => {
-        if (a.x > b.x && a.y > b.y) {
-          return -1
-        }
-        if (a.x > b.x) {
-          return -1
-        }
-        if (a.y > b.y) {
-          return -1
-        }
-        return 1
-      })[0]
+      .sort((a, b) => (b.x !== a.x ? b.x - a.x : b.y - a.y))[0]
   }, [tableGrids])
 
   //是否禁用
   const isDisabled = useMemo(() => {
+    if (!state.editor.value?.isEditable()) {
+      return true
+    }
     if (!state.editor.value?.selection.focused()) {
       return true
     }
     if (state.editor.value.commands.hasTable?.()) {
-      return true
-    }
-    if (state.editor.value.commands.hasCodeBlock?.()) {
-      return true
-    }
-    if (state.editor.value.commands.hasAttachment?.()) {
-      return true
-    }
-    if (state.editor.value.commands.hasMath?.()) {
       return true
     }
     if (state.editor.value.commands.hasCodeBlock?.()) {
@@ -78,12 +61,7 @@ export default function TableMenu({ maxRows = 10, maxColumns = 10, ...props }: T
 
   //改变表格大小
   const changeTableSize = (data: TableGridType) => {
-    for (let i = 0; i < tableGrids.length; i++) {
-      const grid = tableGrids[i]
-      for (let j = 0; j < grid.length; j++) {
-        setTableGrids(oldValue => [...oldValue.slice(0, i), [...oldValue[i].slice(0, j), { ...oldValue[i][j], inside: grid[j].x <= data.x && grid[j].y <= data.y }, ...oldValue[i].slice(j + 1)], ...oldValue.slice(i + 1)])
-      }
-    }
+    setTableGrids(oldValue => oldValue.map(row => row.map(cell => ({ ...cell, inside: cell.x <= data.x && cell.y <= data.y }))))
   }
   //插入表格
   const insert = async (data: TableGridType) => {
@@ -107,7 +85,7 @@ export default function TableMenu({ maxRows = 10, maxColumns = 10, ...props }: T
       customPopover={
         <div
           className={classNames(styles['kaitify-table'], {
-            [styles['kaitify-dark']]: dark
+            [styles['kaitify-dark']]: state.editor.value?.isDark()
           })}
         >
           <table>

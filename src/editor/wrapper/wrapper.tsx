@@ -15,7 +15,7 @@ import styles from './style.module.less'
  */
 const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
   //dom
-  const elRef = useRef<HTMLDivElement | null>(null)
+  const wrapperRef = useRef<HTMLDivElement | null>(null)
   //编辑器实例
   const editor = useRef<Editor | undefined>(undefined)
   //是否编辑器内部修改值
@@ -37,6 +37,7 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
   }, [updateKey])
   //编辑器是否创建完成
   const isCreated = useRef(false)
+
   const rootRef = useRef<Root | null>(null)
 
   //渲染插槽
@@ -56,7 +57,7 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
         flushSync(() => {
           //初始创建
           if (!rootRef.current) {
-            rootRef.current = createRoot(elRef.current!)
+            rootRef.current = createRoot(wrapperRef.current!)
           }
           rootRef.current.render(<>{createReactNodes(editor.current!)}</>)
         })
@@ -72,54 +73,22 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
       return
     }
     Editor.configure({
-      el: elRef.current!,
+      ...(props.options ?? {}),
+      el: wrapperRef.current!,
       value: props.value ?? '',
-      placeholder: props.placeholder,
-      dark: props.dark,
-      editable: !props.disabled,
-      autofocus: props.autofocus,
-      allowCopy: props.allowCopy,
-      allowCut: props.allowCut,
-      allowPaste: props.allowPaste,
-      allowPasteHtml: props.allowPasteHtml,
-      priorityPasteFiles: props.priorityPasteFiles,
-      textRenderTag: props.textRenderTag,
-      blockRenderTag: props.blockRenderTag,
-      emptyRenderTags: props.emptyRenderTags,
-      extraKeepTags: props.extraKeepTags,
-      extensions: [...(props.extensions ?? [])],
-      formatRules: props.formatRules,
-      onDomParseNode: props.onDomParseNode,
-      onPasteKeepMarks: props.onPasteKeepMarks,
-      onPasteKeepStyles: props.onPasteKeepStyles,
-      onPasteText: props.onPasteText,
-      onPasteHtml: props.onPasteHtml,
-      onPasteImage: props.onPasteImage,
-      onPasteVideo: props.onPasteVideo,
-      onPasteFile: props.onPasteFile,
-      onDetachMentBlockFromParent: props.onDetachMentBlockFromParent,
-      onBeforePatchNodeToFormat: props.onBeforePatchNodeToFormat,
-      onRedressSelection: props.onRedressSelection,
-      onInsertParagraph: props.onInsertParagraph,
-      onDeleteComplete: props.onDeleteComplete,
-      onKeydown: props.onKeydown,
-      onKeyup: props.onKeyup,
-      onFocus: props.onFocus,
-      onBlur: props.onBlur,
-      onBeforeUpdateView: props.onBeforeUpdateView,
-      onAfterUpdateView: props.onAfterUpdateView,
       onCreate(ed) {
         editor.current = ed
         setUpdateKey(oldValue => oldValue + 1)
+        props.options?.onCreate?.(ed)
       },
       onCreated(ed) {
-        props.onCreated?.(ed)
         setUpdateKey(oldValue => oldValue + 1)
         isCreated.current = true
+        props.options?.onCreated?.(ed)
       },
       onSelectionUpdate(selection) {
-        props.onSelectionUpdate?.apply(this, [selection])
         setUpdateKey(oldValue => oldValue + 1)
+        props.options?.onSelectionUpdate?.apply(this, [selection])
       },
       async onUpdateView() {
         //渲染内容并等待视图渲染完成后
@@ -135,7 +104,7 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
   }
 
   useImperativeHandle(ref, () => ({
-    elRef,
+    wrapperRef,
     state
   }))
 
@@ -150,29 +119,29 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
       //外部改变，进行视图更新
       else {
         editor.current.review(props.value ?? '').then(() => {
-          if (!props.disabled && props.autofocus) {
+          if (editor.current?.isEditable() && props.options?.autofocus) {
             editor.current?.setSelectionAfter()
             editor.current?.updateRealSelection()
-            setUpdateKey(oldValue => oldValue + 1)
           }
+          setUpdateKey(oldValue => oldValue + 1)
         })
       }
     }
   }, [props.value])
 
-  //监听以下属性变化，对编辑器进行更新
+  //监听options变化，对编辑器进行更新
   useEffect(() => {
     if (editor.current && isCreated.current) {
-      editor.current.setEditable(!props.disabled)
-      editor.current.setDark(props.dark ?? false)
-      editor.current.allowCopy = props.allowCopy ?? true
-      editor.current.allowCut = props.allowCut ?? true
-      editor.current.allowPaste = props.allowPaste ?? true
-      editor.current.allowPasteHtml = props.allowPasteHtml ?? false
-      editor.current.priorityPasteFiles = props.priorityPasteFiles ?? false
+      editor.current.setEditable(props.options?.editable ?? false)
+      editor.current.setDark(props.options?.dark ?? false)
+      editor.current.allowCopy = props.options?.allowCopy ?? true
+      editor.current.allowCut = props.options?.allowCut ?? true
+      editor.current.allowPaste = props.options?.allowPaste ?? true
+      editor.current.allowPasteHtml = props.options?.allowPasteHtml ?? false
+      editor.current.priorityPasteFiles = props.options?.priorityPasteFiles ?? false
       setUpdateKey(oldValue => oldValue + 1)
     }
-  }, [props.disabled, props.dark, props.allowCopy, props.allowCut, props.allowPaste, props.allowPasteHtml, props.priorityPasteFiles])
+  }, [props.options])
 
   //初始化
   useEffect(() => {
@@ -198,17 +167,15 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
       value={{
         state,
         isMouseDown,
-        disabled: props.disabled ?? false,
-        el: elRef.current,
-        t: (key: string) => translate(props.locale ?? 'zh-CN', key),
-        dark: props.dark ?? false
+        wrapperRef,
+        t: (key: string) => translate(props.locale ?? 'zh-CN', key)
       }}
     >
       <>
         {/* before */}
         {!!props.appendBeforeTo ? <Teleport to={props.appendBeforeTo}>{renderSlot(props.before)}</Teleport> : renderSlot(props.before)}
         {/* 编辑区域 */}
-        <div ref={elRef} className={classNames(styles['kaitify-border'], props.className)} style={props.style} onMouseDown={() => setIsMouseDown(true)} onMouseUp={() => setIsMouseDown(false)} />
+        <div ref={wrapperRef} className={classNames(styles['kaitify-border'], props.className)} style={props.style} onMouseDown={() => setIsMouseDown(true)} onMouseUp={() => setIsMouseDown(false)} />
         {/* after */}
         {!!props.appendAfterTo ? <Teleport to={props.appendAfterTo}>{renderSlot(props.after)}</Teleport> : renderSlot(props.after)}
         {/* 插槽 */}

@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode } from 'react';
+import { CSSProperties, MouseEventHandler, ReactNode } from 'react';
 /**
  * 按钮组件的属性类型
  */
@@ -34,5 +34,5 @@ export type ButtonPropsType = {
     /**
      * 点击
      */
-    onClick?: React.MouseEventHandler<HTMLButtonElement>;
+    onClick?: MouseEventHandler<HTMLButtonElement>;
 };

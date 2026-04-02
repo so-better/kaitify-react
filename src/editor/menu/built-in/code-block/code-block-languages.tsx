@@ -27,6 +27,9 @@ export default function CodeBlockLanguagesMenu({ languages = [...HljsLanguages],
 
   //是否禁用
   const isDisabled = useMemo(() => {
+    if (!state.editor.value?.isEditable()) {
+      return true
+    }
     if (!state.editor.value?.selection.focused()) {
       return true
     }
@@ -35,9 +38,13 @@ export default function CodeBlockLanguagesMenu({ languages = [...HljsLanguages],
     }
     return props.disabled ?? false
   }, [state.editor, props.disabled])
+
   //选项是否激活
   const isActive = useCallback(
     (item: MenuDataType) => {
+      if (!state.editor.value?.isEditable()) {
+        return false
+      }
       if (!state.editor.value?.selection.focused()) {
         return false
       }

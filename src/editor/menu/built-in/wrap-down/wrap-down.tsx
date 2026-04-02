@@ -10,6 +10,12 @@ export default function WrapDownMenu(props: WrapDownMenuPropsType) {
 
   //是否禁用
   const isDisabled = useMemo(() => {
+    if (!state.editor.value?.isEditable()) {
+      return true
+    }
+    if (!state.editor.value?.selection.focused()) {
+      return true
+    }
     const matchNode = state.editor.value?.getMatchNodeBySelection(props.match)
     if (!matchNode || !matchNode.isBlock() || matchNode.void || matchNode.fixed || matchNode.nested) {
       return true

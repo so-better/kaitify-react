@@ -18,7 +18,7 @@ import { Wrapper } from '@kaitify/react'
 
 export default function App() {
   const [content, setContent] = useState('<p>hello</p>')
-  return <Wrapper locale='zh-CN' value={content} onChange={v => setContent(v)} placeholder='输入正文内容...'></Wrapper>
+  return <Wrapper locale='zh-CN' value={content} onChange={v => setContent(v)} options={{ placeholder: '输入正文内容...' }}></Wrapper>
 }
 ```
 
@@ -32,7 +32,7 @@ import { Wrapper } from '@kaitify/react'
 
 export default function App() {
   const [content, setContent] = useState('<p>hello</p>')
-  return <Wrapper locale='en-US' value={content} onChange={v => setContent(v)} placeholder='输入正文内容...'></Wrapper>
+  return <Wrapper locale='en-US' value={content} onChange={v => setContent(v)} options={{ placeholder: '输入正文内容...' }}></Wrapper>
 }
 ```
 
@@ -46,7 +46,7 @@ import { Wrapper } from '@kaitify/react'
 
 export default function App() {
   const [content, setContent] = useState('<p>hello</p>')
-  return <Wrapper locale='ko-KR' value={content} onChange={v => setContent(v)} placeholder='输入正文内容...'></Wrapper>
+  return <Wrapper locale='ko-KR' value={content} onChange={v => setContent(v)} options={{ placeholder: '输入正文内容...' }}></Wrapper>
 }
 ```
 
@@ -60,7 +60,7 @@ import { Wrapper } from '@kaitify/react'
 
 export default function App() {
   const [content, setContent] = useState('<p>hello</p>')
-  return <Wrapper locale='ja-JP' value={content} onChange={v => setContent(v)} placeholder='输入正文内容...'></Wrapper>
+  return <Wrapper locale='ja-JP' value={content} onChange={v => setContent(v)} options={{ placeholder: '输入正文内容...' }}></Wrapper>
 }
 ```
 

@@ -9,6 +9,9 @@ export default function VideoLoopMenu(props: VideoLoopMenuPropsType) {
 
   //是否激活
   const isActive = useMemo(() => {
+    if (!state.editor.value?.isEditable()) {
+      return false
+    }
     const videoNode = state.editor.value?.commands.getVideo?.()
     if (!videoNode) {
       return false
@@ -17,6 +20,9 @@ export default function VideoLoopMenu(props: VideoLoopMenuPropsType) {
   }, [state.editor])
   //是否禁用
   const isDisabled = useMemo(() => {
+    if (!state.editor.value?.isEditable()) {
+      return true
+    }
     if (!state.editor.value?.selection.focused()) {
       return true
     }

@@ -105,8 +105,12 @@ export default function EmojiMenu({ data = defaultEmoji, ...props }: EmojiMenuPr
 
   //菜单组件实例
   const menuRef = useRef<MenuRefType | null>(null)
+
   //是否禁用
   const isDisabled = useMemo(() => {
+    if (!state.editor.value?.isEditable()) {
+      return true
+    }
     if (!state.editor.value?.selection.focused()) {
       return true
     }
@@ -129,8 +133,8 @@ export default function EmojiMenu({ data = defaultEmoji, ...props }: EmojiMenuPr
       popoverProps={{ width: props.popoverProps?.width, maxHeight: props.popoverProps?.maxHeight, minWidth: props.popoverProps?.minWidth, animation: props.popoverProps?.animation, arrow: props.popoverProps?.arrow, placement: props.popoverProps?.placement, trigger: props.popoverProps?.trigger, zIndex: props.popoverProps?.zIndex }}
       customPopover={
         <div className={styles['kaitify-emoji-panel']}>
-          {data.map((item, index) => (
-            <div key={index} className={styles['kaitify-emoji-el']}>
+          {data.map(item => (
+            <div key={item} className={styles['kaitify-emoji-el']}>
               <div onClick={() => setEmoji(item)}>{item}</div>
             </div>
           ))}

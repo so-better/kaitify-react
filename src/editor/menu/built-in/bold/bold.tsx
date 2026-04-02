@@ -9,17 +9,20 @@ export default function BoldMenu(props: BoldMenuPropsType) {
 
   //是否激活
   const isActive = useMemo(() => {
+    if (!state.editor.value?.isEditable()) {
+      return false
+    }
     return state.editor.value?.commands.isBold?.() ?? false
   }, [state.editor])
   //是否禁用
   const isDisabled = useMemo(() => {
+    if (!state.editor.value?.isEditable()) {
+      return true
+    }
     if (!state.editor.value?.selection.focused()) {
       return true
     }
     if (!state.editor.value.selection.collapsed() && !state.editor.value.getFocusNodesBySelection('text').length) {
-      return true
-    }
-    if (state.editor.value.selection.collapsed() && (!!state.editor.value.commands.getAttachment?.() || !!state.editor.value.commands.getMath?.())) {
       return true
     }
     if (!!state.editor.value.commands.getCodeBlock?.()) {
