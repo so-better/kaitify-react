@@ -1,0 +1,15 @@
+# 忽略目录
+examples/
+public/
+docs/
+src/
+skills/
+
+# 忽略指定文件
+index.html
+vite.config.ts
+tsconfig.json
+tsconfig.node.json
+LICENSE
+package-lock.json
+vite-env.d.ts
