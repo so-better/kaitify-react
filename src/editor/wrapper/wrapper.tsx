@@ -132,7 +132,7 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
   //监听options变化，对编辑器进行更新
   useEffect(() => {
     if (editor.current && isCreated.current) {
-      editor.current.setEditable(props.options?.editable ?? false)
+      editor.current.setEditable(props.options?.editable ?? true)
       editor.current.setDark(props.options?.dark ?? false)
       editor.current.allowCopy = props.options?.allowCopy ?? true
       editor.current.allowCut = props.options?.allowCut ?? true

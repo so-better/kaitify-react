@@ -34,7 +34,7 @@ export default function App() {
 
 是否为带浮层的菜单，默认为 `false`
 
-##### popoverProps <Badge type="danger" text="PopoverPropsType" />
+##### popoverProps <Badge type="danger" text="Omit<PopoverPropsType, 'disabled' | 'delay' | 'refer' | 'children'>" />
 
 浮层属性配置，包含以下属性：
 
