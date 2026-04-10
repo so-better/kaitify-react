@@ -118,13 +118,18 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
       }
       //外部改变，进行视图更新
       else {
+        let cancelled = false
         editor.current.review(props.value ?? '').then(() => {
+          if (cancelled) return
           if (editor.current?.isEditable() && props.options?.autofocus) {
             editor.current?.setSelectionAfter()
             editor.current?.updateRealSelection()
           }
           setUpdateKey(oldValue => oldValue + 1)
         })
+        return () => {
+          cancelled = true
+        }
       }
     }
   }, [props.value])
@@ -141,7 +146,7 @@ const Wrapper = forwardRef<WrapperRefType, WrapperPropsType>((props, ref) => {
       editor.current.priorityPasteFiles = props.options?.priorityPasteFiles ?? false
       setUpdateKey(oldValue => oldValue + 1)
     }
-  }, [props.options])
+  }, [props.options?.editable, props.options?.dark, props.options?.allowCopy, props.options?.allowCut, props.options?.allowPaste, props.options?.allowPasteHtml, props.options?.priorityPasteFiles])
 
   //初始化
   useEffect(() => {

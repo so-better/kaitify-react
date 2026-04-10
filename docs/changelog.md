@@ -5,6 +5,11 @@ title: 更新日志
 
 # 更新日志
 
+## v0.0.1-beta.16 <Badge type="tip" text='2026.04.10' />
+
+- 修复 `Wrapper` 组件监听 `options` 变化的 `useEffect` 依赖项问题：将依赖从整个 `options` 对象引用改为具体的属性值，避免父组件每次渲染时因对象引用变化导致该副作用不必要地重复触发
+- 修复 `Wrapper` 组件在 `value` 快速变化时的异步竞态问题：在 `review` 异步回调中增加取消标志，防止过期的回调干扰最新状态
+
 ## v0.0.1-beta.15 <Badge type="tip" text='2026.04.10' />
 
 - 修复 `Wrapper` 组件在 `options` 变化时 `editable` 默认值错误的问题（默认值应为 `true`）

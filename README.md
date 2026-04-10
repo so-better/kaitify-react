@@ -30,7 +30,7 @@
 npm install @kaitify/react
 
 # 安装指定版本
-npm install @kaitify/react@0.0.1-beta.15
+npm install @kaitify/react@0.0.1-beta.16
 ```
 
 ```bash
@@ -38,7 +38,7 @@ npm install @kaitify/react@0.0.1-beta.15
 yarn add @kaitify/react
 
 # 安装指定版本
-yarn add @kaitify/react@0.0.1-beta.15
+yarn add @kaitify/react@0.0.1-beta.16
 ```
 
 ```bash
@@ -46,14 +46,14 @@ yarn add @kaitify/react@0.0.1-beta.15
 pnpm install @kaitify/react
 
 # 安装指定版本
-pnpm install @kaitify/react@0.0.1-beta.15
+pnpm install @kaitify/react@0.0.1-beta.16
 ```
 
 ### CDN
 
 ```html
 <!-- 引入固定版本 -->
-<script src="https://unpkg.com/@kaitify/react@0.0.1-beta.15/lib/kaitify-react.umd.js"></script>
+<script src="https://unpkg.com/@kaitify/react@0.0.1-beta.16/lib/kaitify-react.umd.js"></script>
 <!-- 始终引入最新版本 -->
 <script src="https://unpkg.com/@kaitify/react/lib/kaitify-react.umd.js"></script>
 ```
